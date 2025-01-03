@@ -1,0 +1,79 @@
+.container {
+  min-width: 68rem;
+  height: 100vh;
+  padding: 2rem 4rem;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, #FFE9E9, #FF9FB1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.wrapper {
+  width: 60rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+/* ------------------------------------------------------------ */
+.coin {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 8rem;
+  height: 2rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+  font-weight: bold;
+}
+.coin > img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.coin > p {
+  font-size: 1.5rem;
+}
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+.header > h1 {
+  font-size: 3rem;
+}
+.header > p {
+  font-size: 1.25rem;
+}
+
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+.main > button {
+  width: 10rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
+  border-radius: 5px;
+  text-decoration: none;
+  color: black;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
