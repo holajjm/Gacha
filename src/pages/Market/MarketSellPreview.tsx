@@ -16,7 +16,7 @@ function MarketSellPreview({item}:{item:Item}) {
     <div className={style.header}>
       <div className={style.header_background}></div>
       <div className={style.header_image}>
-        <img src={`/${item?.image}`} alt={""} />
+        <img src={`/images/${item?.image}`} alt={""} />
       </div>
       <div className={style.header_item}>
         <p>Name: {item?.name}</p>

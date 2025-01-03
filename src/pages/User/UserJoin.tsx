@@ -15,8 +15,8 @@ function UserJoin() {
         <main className={style.main}>
           <header className={style.main_header}>
             <div className={style.main_header_img}>
-              <img className={style.main_img1} src="/src/assets/Camera.svg" alt="profile" />
-              <img className={style.main_img2} src="/src/assets/Camera.svg" alt="Camera" />
+              <img className={style.main_img1} src="/images/Camera.svg" alt="profile" />
+              <img className={style.main_img2} src="/images/Camera.svg" alt="Camera" />
             </div>
             <button>기본 이미지로 설정</button>
           </header>

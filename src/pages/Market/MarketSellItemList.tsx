@@ -54,13 +54,13 @@ function MarketSellItemList() {
         <header className={style.main_header}>내 아이템</header>
         <section onClick={handleClick} className={style.main_body}>
           <div>
-            <img data-text={1} src="/Sample.svg" alt="sample" />
+            <img data-text={1} src="/images/Sample.svg" alt="sample" />
           </div>
           <div>
-            <img data-text={2} src="/Sample.svg" alt="sample" />
+            <img data-text={2} src="/images/Sample.svg" alt="sample" />
           </div>
           <div>
-            <img data-text={3} src="/Sample.svg" alt="sample" />
+            <img data-text={3} src="/images/Sample.svg" alt="sample" />
           </div>
           <div data-text={3}>3</div>
           <div data-text={3}>3</div>

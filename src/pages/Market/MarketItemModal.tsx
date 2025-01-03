@@ -9,7 +9,7 @@ function MarketItemModal() {
         <button className={style.button}>X</button>
         <section className={style.contents}>
           <aside className={style.aside}>
-            <img src="/src/assets/Sample.svg" alt="sample" />
+            <img src="/images/Sample.svg" alt="sample" />
           </aside>
           <main className={style.main}>
             <p>이름 | Name</p>

@@ -6,7 +6,7 @@ function MarketSell() {
   return (
     <div className={style.container}>
       <div className={style.coin}>
-        <img src="/coin.svg" alt="coin" />
+        <img src="/images/coin.svg" alt="coin" />
         <p>19,500</p>
       </div>
       <section className={style.wrapper}>

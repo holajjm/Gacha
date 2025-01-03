@@ -17,7 +17,7 @@ function MarketMain() {
   return (
     <div className={style.container}>
       <div className={style.coin}>
-        <img src="/coin.svg" alt="coin" />
+        <img src="/images/coin.svg" alt="coin" />
         <p>19,500</p>
       </div>
       <section className={style.wrapper}>
@@ -46,8 +46,10 @@ function MarketMain() {
             <button>D등급</button>
           </nav>
           <section className={style.main_items}>
-            {getItemList()}
-            {/* <MarketItem /> */}
+            <div className={style.main_items_wrapper}>
+              {getItemList()}
+              {/* <MarketItem /> */}
+            </div>
           </section>
         </main>
       </section>

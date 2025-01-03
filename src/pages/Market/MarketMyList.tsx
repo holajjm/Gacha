@@ -5,7 +5,7 @@ function MarketMyList() {
   return (
     <div className={style.container}>
       <div className={style.coin}>
-        <img src="/coin.svg" alt="coin" />
+        <img src="/images/coin.svg" alt="coin" />
         <p>19,500</p>
       </div>
       <section className={style.wrapper}>
@@ -43,7 +43,7 @@ function MarketMyList() {
             <main className={style.main_items_main}>
               <div className={style.main_items_item}>
                 <div>
-                  <img src="/Sample.svg" alt="sample" />
+                  <img src="/images/Sample.svg" alt="sample" />
                 </div>
                 <p>chick</p>
                 <p>A</p>

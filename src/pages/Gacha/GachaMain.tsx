@@ -6,7 +6,7 @@ function GachaMain() {
     <div className={style.container}>
       <section className={style.wrapper}>
         <div className={style.coin}>
-          <img src="/coin.svg" alt="coin" />
+          <img src="/images/coin.svg" alt="coin" />
           <p>19,500</p>
         </div>
         <header className={style.header}>
@@ -15,7 +15,7 @@ function GachaMain() {
         </header>
         <main className={style.main}>
           <div>
-            <img src="/GachaSample.svg" alt="Gacha" />
+            <img src="/images/GachaSample.svg" alt="Gacha" />
           </div>
           <button>아이템 뽑기</button>
         </main>

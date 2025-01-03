@@ -25,7 +25,7 @@ function UserLogin() {
         <main className={style.main}>
           <div className={style.main_wrapper}>
             <button onClick={handleClick} className={style.kakao}>
-              <img src="/KakaoLogin.png" alt="KakaoLogin" />
+              <img src="/images/KakaoLogin.png" alt="KakaoLogin" />
             </button>
             <button onClick={handleClick} className={style.github}>
               <img

@@ -39,6 +39,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .main_nav {
   height: 5%;
@@ -69,16 +70,19 @@
 }
 .main_contents {
   height: 100%;
+}
+.main_contents_wrapper {
+  height: 100%;
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   gap: 1rem;
   padding-top: 0.5rem;
   box-sizing: border-box;
   overflow: scroll;
   scrollbar-width: none;
 }
-.main_contents > div {
+.main_contents_wrapper > div {
   aspect-ratio: 1/1;
   background-color: white;
   border-radius: 10px;

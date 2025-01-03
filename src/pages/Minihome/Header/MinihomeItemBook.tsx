@@ -22,39 +22,42 @@ function MinihomeItemBook() {
             <button className={click === "D" ? style.active_button : style.button} datatype="D">D등급</button>
           </nav>
           <section className={style.main_contents}>
-            <div>
-              <img src="/Sample.svg" alt="sample" />
-              <div className={style.item}>
-                <p>S</p>
-                <p>주황 고양이 / 1개</p>
+            <div className={style.main_contents_wrapper}>
+              <div>
+                <img src="/images/Sample.svg" alt="sample" />
+                <div className={style.item}>
+                  <p>S</p>
+                  <p>주황 고양이 / 1개</p>
+                </div>
               </div>
+              <div>
+                <img src="/images/Sample.svg" alt="sample" />
+              </div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+
             </div>
-            <div>
-              <img src="/Sample.svg" alt="sample" />
-            </div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
           </section>
         </main>
       </div>
