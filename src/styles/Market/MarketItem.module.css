@@ -1,0 +1,10 @@
+.item {
+  background-color: white;
+  aspect-ratio: 1/1;
+  border-radius: 10px;
+}
+.item > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}

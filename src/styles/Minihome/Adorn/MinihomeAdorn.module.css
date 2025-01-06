@@ -1,0 +1,86 @@
+.container {
+  min-width: 68rem;
+  height: 100vh;
+  padding: 2rem 4rem;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, #D8FAFF, #B6CDFF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper {
+  width: 60rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+/* ---------------------------------------------- */
+.aside {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.aside_button, .aside_save {
+  width: 20%;
+  padding: 0.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
+  border-radius: 5px;
+  text-decoration: none;
+  color: black;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  overflow: hidden;
+}
+.header {
+  min-height: 30rem;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+.main_nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.button {
+  height: 100%;
+  border: none;
+  background: none;
+  font-weight: bold;
+  color: gray;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.button:hover {
+  color: white;
+}
+.active {
+  color: white;
+  border: none;
+  background: none;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  border-bottom: 5px soild white;
+}

@@ -1,0 +1,102 @@
+.container {
+  min-width: 1280px;
+  height: 100vh;
+  padding: 4rem 20rem;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, #D8FAFF, #B6CDFF);
+}
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* ------------------------------------------------------------ */
+.header {
+  width: 100%;
+  height: 30%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title {
+  font-size: 3rem;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.main_header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.main_header_img {
+  position: relative;
+}
+.main_img1 {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 100%;
+  background-color: lightgray;
+}
+.main_img2 {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+}
+.main_header > button {
+  border: none;
+  background-color: inherit;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.main_main {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.main_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.main_main_title {
+  font-weight: bold;
+}
+.main_main_contents {
+  display: flex;
+  gap: 1rem;
+}
+.main_main_contents > input {
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: none;
+}
+.main_main_contents > button {
+  padding: 0.5rem;
+  border: 1px solid black;
+  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
+  border-radius: 5px;
+  text-decoration: none;
+  color: black;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.main_main_error {
+  font-size: 0.8rem;
+  color: red;
+  font-weight: bold;
+}
