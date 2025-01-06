@@ -13,8 +13,8 @@ function Header() {
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
-        <a className={style.title} href="/">
-          <img src="/images//MainLogo.svg" alt="MainLogo" />
+        <a className={style.title} href="/main">
+          <img src="/images/MainLogo.svg" alt="MainLogo" />
         </a>
         {sessionStorage.getItem("fake") ? (
           <div className={style.link_wrapper}>
