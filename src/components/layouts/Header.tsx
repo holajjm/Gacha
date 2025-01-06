@@ -8,7 +8,7 @@ function Header() {
   const handleLogout = () => {
     sessionStorage.removeItem("fake")
     alert("로그아웃 완료")
-    navigate("/")
+    navigate("/main")
   }
   return (
     <div className={style.container}>
