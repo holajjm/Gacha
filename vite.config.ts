@@ -5,7 +5,7 @@ import * as path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/main/',
+  base: '/',
   plugins: [react(),
     alias({
       entries: [
