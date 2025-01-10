@@ -38,8 +38,11 @@
   flex-direction: column;
   align-items: center;
 }
-.main_header_img {
+.main_header_label {
   position: relative;
+}
+.main_header_img {
+  display: none;
 }
 .main_img1 {
   width: 10rem;
