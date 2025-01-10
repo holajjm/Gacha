@@ -19,6 +19,7 @@ import MarketMyList from "@pages/Market/MarketMyList";
 //User
 import UserLogin from "@pages/User/UserLogin";
 import UserJoin from "@pages/User/UserJoin";
+import OAuth from "@pages/OAuth";
 
 export const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
           {
             path: 'join',
             element: <UserJoin />
+          },
+          {
+            path: 'auth/kakao',
+            element: <OAuth />,
           },
         ]
       }
