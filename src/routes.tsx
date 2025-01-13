@@ -85,7 +85,7 @@ export const router = createBrowserRouter([
             element: <UserJoin />
           },
           {
-            path: 'auth/kakao',
+            path: 'auth',
             element: <OAuth />,
           },
         ]
