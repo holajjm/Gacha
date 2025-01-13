@@ -16,7 +16,8 @@
       "@Explore/*": ["Explore/*"],
       "@Gacha/*": ["Gacha/*"],
       "@Main/*": ["Main/*"],
-      "@User/*": ["User/*"]
+      "@User/*": ["User/*"],
+      "@store/*": ["store/*"],
     },
     "composite": true,
     "lib": ["dom", "ESNext"],
