@@ -19,6 +19,7 @@ export default defineConfig({
         {find: "@Gacha", replacement: path.resolve(__dirname,'src/Gacha')},
         {find: "@Main", replacement: path.resolve(__dirname,'src/Main')},
         {find: "@User", replacement: path.resolve(__dirname,'src/User')},
+        {find: "@store", replacement: path.resolve(__dirname,'src/store')},
       ]
     })
   ],
