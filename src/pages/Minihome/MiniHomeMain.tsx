@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react"
-import style from "@styles/Minihome/MiniHomeMain.module.css"
-import MinihomeReplyNew from "./MinihomeReplyNew"
-import MinihomeHeader from "./Header/MinihomeHeader"
-import { useUserStore } from "@store/store"
+import React, { useEffect, useState } from "react";
+import style from "@styles/Minihome/MiniHomeMain.module.css";
+import MinihomeReplyNew from "./MinihomeReplyNew";
+import MinihomeHeader from "./Header/MinihomeHeader";
+import { useUserStore } from "@store/store";
 
 interface MiniHomeMainData {
-  followersCnt: number
-  followingCnt: number
-  isOwner: boolean
-  layout: null
-  nickname: string
-  profileImageUrl: string
-  score: number
-  totalVisitorCnt: number
+  followersCnt: number;
+  followingCnt: number;
+  isOwner: boolean;
+  layout: null;
+  nickname: string;
+  profileImageUrl: string;
+  score: number;
+  totalVisitorCnt: number;
 }
 
 function MiniHomeMain() {
-  const { user } = useUserStore((state) => state)
+  const { user } = useUserStore((state) => state);
   const [minihomeData, setMinihomeData] = useState<MiniHomeMainData>({
     followersCnt: 0,
     followingCnt: 0,
@@ -26,11 +26,11 @@ function MiniHomeMain() {
     profileImageUrl: "",
     score: 0,
     totalVisitorCnt: 0,
-  })
+  });
   const getMinihomeInfo = async () => {
     if (!user?.nickname || !user?.accessToken) {
-      console.warn("User information is missing")
-      return
+      console.warn("User information is missing");
+      return;
     }
     try {
       const response = await fetch(
@@ -44,23 +44,23 @@ function MiniHomeMain() {
             "Access-Control-Allow-Credentials": "true",
           },
         },
-      )
-      const data = await response.json()
+      );
+      const data = await response.json();
       // console.log(data);
-      setMinihomeData(data)
+      setMinihomeData(data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
   useEffect(() => {
-    getMinihomeInfo()
-  }, [user])
+    getMinihomeInfo();
+  }, [user]);
   // console.log(minihomeData);
-  
+
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
-        <MinihomeHeader minihomeData={minihomeData}/>
+        <MinihomeHeader minihomeData={minihomeData} />
         <main className={style.main}>
           <aside className={style.main_people}>총 방문자 수 78</aside>
           <section className={style.main_section_1}>꾸민 모습</section>
@@ -71,7 +71,7 @@ function MiniHomeMain() {
         </main>
       </section>
     </div>
-  )
+  );
 }
 
-export default MiniHomeMain
+export default MiniHomeMain;
