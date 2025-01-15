@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import style from "@styles/Minihome/Header/MinihomeHeader.module.css"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 // import MinihomeFollowing from "./MinihomeFollowing";
 interface MiniHomeMainData {
   followersCnt: number
@@ -14,8 +14,10 @@ interface MiniHomeMainData {
 }
 
 function MinihomeHeader({minihomeData}:{minihomeData:MiniHomeMainData}) {
-  console.log(minihomeData);
-
+  // console.log(minihomeData);
+  const {nickname} = useParams<{nickname: string}>();
+  // console.log(nickname);
+  
   const navigate = useNavigate();
   const [followingClick, setFollowingClick] = useState<boolean>(false);
   const handleFollowingClick = (e:React.MouseEvent<HTMLElement>) => {
@@ -32,11 +34,11 @@ function MinihomeHeader({minihomeData}:{minihomeData:MiniHomeMainData}) {
       </div>
       <main className={style.header_user}>
         <div className={style.header_user_info}>
-          <p className={style.header_user_name}>{minihomeData?.nickname}</p>
+          <p className={style.header_user_name}>{nickname}</p>
           <div className={style.header_info}>
-            <p>스코어 {minihomeData?.score}</p>
-            <p>팔로워 {minihomeData?.followersCnt}</p>
-            <p datatype="Following" onClick={handleFollowingClick}>팔로잉 {minihomeData?.followingCnt}</p>
+            <p>스코어 {minihomeData?.score ? minihomeData?.score : 0}</p>
+            <p>팔로워 {minihomeData?.followersCnt ? minihomeData?.followersCnt : 0}</p>
+            <p datatype="Following" onClick={handleFollowingClick}>팔로잉 {minihomeData?.followingCnt ? minihomeData?.followingCnt : 0}</p>
           </div>
         </div>
         {minihomeData && minihomeData.isOwner ? (
