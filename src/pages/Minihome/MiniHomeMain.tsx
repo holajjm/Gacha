@@ -17,6 +17,8 @@ interface MiniHomeMainData {
 
 function MiniHomeMain() {
   const { user } = useUserStore((state) => state);
+  // console.log(user);
+  
   const [minihomeData, setMinihomeData] = useState<MiniHomeMainData>({
     followersCnt: 0,
     followingCnt: 0,
@@ -34,7 +36,7 @@ function MiniHomeMain() {
     }
     try {
       const response = await fetch(
-        `http://61.79.183.245:80/minihomes/${user && user?.nickname}`,
+        `https://61.79.183.245:80/minihomes/${user && user?.nickname}`,
         {
           method: "GET",
           headers: {
@@ -62,7 +64,7 @@ function MiniHomeMain() {
       <section className={style.wrapper}>
         <MinihomeHeader minihomeData={minihomeData} />
         <main className={style.main}>
-          <aside className={style.main_people}>총 방문자 수 78</aside>
+          <aside className={style.main_people}>총 방문자 수 {minihomeData?.totalVisitorCnt ? minihomeData?.totalVisitorCnt : 0}</aside>
           <section className={style.main_section_1}>꾸민 모습</section>
           <section className={style.main_section_2}>
             <div className={style.background_section}></div>
