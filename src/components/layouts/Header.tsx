@@ -22,9 +22,9 @@ function Header() {
         <a className={style.title} href="/main">
           <img src="/images/MainLogo.svg" alt="MainLogo" />
         </a>
-        {user && user?.isNewUser ? (
+        {user && user?.accessToken ? (
           <div className={style.link_wrapper}>
-            <Link to={"/minihome"} className={style.link}>
+            <Link to={`/minihome/${user?.nickname}`} className={style.link}>
               MINIHOME
             </Link>
             <Link to={"/explore"} className={style.link}>
