@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
           },
           //Minihome
           {
-            path: 'minihome',
+            path: 'minihome/:nickname',
             element: <MiniHomeMain />
           },
           {
