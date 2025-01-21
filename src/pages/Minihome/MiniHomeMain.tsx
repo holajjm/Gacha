@@ -3,6 +3,7 @@ import style from "@styles/Minihome/MiniHomeMain.module.css";
 import MinihomeReplyNew from "./MinihomeReplyNew";
 import MinihomeHeader from "./Header/MinihomeHeader";
 import { useUserStore } from "@store/store";
+import { useParams } from "react-router-dom";
 
 interface MiniHomeMainData {
   followersCnt: number;
@@ -17,8 +18,7 @@ interface MiniHomeMainData {
 
 function MiniHomeMain() {
   const { user } = useUserStore((state) => state);
-  // console.log(user);
-  
+  const {nickname} = useParams<{nickname: string}>();
   const [minihomeData, setMinihomeData] = useState<MiniHomeMainData>({
     followersCnt: 0,
     followingCnt: 0,
@@ -36,7 +36,7 @@ function MiniHomeMain() {
     }
     try {
       const response = await fetch(
-        `https://222.121.46.20:80/minihomes/${user && user?.nickname}`,
+        `https://222.121.46.20:80/minihomes/${nickname && nickname}`,
         {
           method: "GET",
           headers: {
@@ -48,7 +48,6 @@ function MiniHomeMain() {
         },
       );
       const data = await response.json();
-      // console.log(data);
       setMinihomeData(data);
     } catch (error) {
       console.error(error);
@@ -57,7 +56,6 @@ function MiniHomeMain() {
   useEffect(() => {
     getMinihomeInfo();
   }, []);
-  // console.log(minihomeData);
 
   return (
     <div className={style.container}>
