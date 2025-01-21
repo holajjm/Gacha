@@ -14,9 +14,8 @@ interface MiniHomeMainData {
 }
 
 function MinihomeHeader({minihomeData}:{minihomeData:MiniHomeMainData}) {
-  console.log(minihomeData);
+  // console.log(minihomeData);
   const {nickname} = useParams<{nickname: string}>();
-  // console.log(nickname);
   
   const navigate = useNavigate();
   const [followingClick, setFollowingClick] = useState<boolean>(false);
