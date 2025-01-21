@@ -18,7 +18,7 @@ function MinihomeReplyItem({
   replys: ReplyData;
   getReply: () => void;
 }) {
-  console.log(replys);
+  // console.log(replys);
   const { user } = useUserStore((state) => state);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const editReply = () => {
