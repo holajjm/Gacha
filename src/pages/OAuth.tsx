@@ -1,12 +1,21 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import { useUserStore } from "@store/store";
 
 interface QueryParams {
   [key: string]: string;
 }
+interface JwtPayload {
+  exp: number
+  iat: number,
+  nickname: string,
+  profile: string
+}
 function OAuth() {
   const { user,setUser } = useUserStore((state) => state);
+  console.log(user);
+  
   const navigate = useNavigate();
   const location = useLocation();
   console.log(location);
@@ -28,10 +37,18 @@ function OAuth() {
       const queryParams = parseQueryString(data);
       console.log(queryParams);
 
+      const token = queryParams?.accessToken;
+      const decodedToken:JwtPayload = jwtDecode(token);
+      console.log(decodedToken);
+      
+
+
       if (queryParams?.accessToken) { 
         setUser({
           ...user,
           // isNewUser: queryParams.isNewUser,
+          nickname: decodedToken?.nickname,
+          profileUrl: decodedToken?.profile,
           accessToken: queryParams.accessToken,
           refreshToken: queryParams.refreshToken,
         });
@@ -55,7 +72,7 @@ function OAuth() {
     handleData();
   }, []);
 
-  return <div>카카오 로그인 진행중...</div>;
+  return <div>소셜 로그인 진행중...</div>;
 }
 
 export default OAuth;
