@@ -30,13 +30,13 @@ function MiniHomeMain() {
     totalVisitorCnt: 0,
   });
   const getMinihomeInfo = async () => {
-    if (!user?.nickname || !user?.accessToken) {
+    if (!user?.accessToken) {
       console.warn("User information is missing");
       return;
     }
     try {
       const response = await fetch(
-        `https://61.79.183.245:80/minihomes/${user && user?.nickname}`,
+        `https://222.121.46.20:80/minihomes/${user && user?.nickname}`,
         {
           method: "GET",
           headers: {
@@ -56,7 +56,7 @@ function MiniHomeMain() {
   };
   useEffect(() => {
     getMinihomeInfo();
-  }, [user]);
+  }, []);
   // console.log(minihomeData);
 
   return (
