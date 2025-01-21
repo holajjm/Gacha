@@ -46,7 +46,7 @@ function UserJoin() {
     console.log(formData);
     
     try {
-      const response = await fetch("https://61.79.183.245:80/join", {
+      const response = await fetch("https://222.121.46.20:80/join", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
