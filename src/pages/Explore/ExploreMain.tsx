@@ -1,15 +1,50 @@
-import React from "react"
-import style from "@styles/Explore/ExploreMain.module.css"
+import React, { useEffect, useState } from "react";
+import { useUserStore } from "@store/store";
+import ExploreItem from "./ExploreItem";
+
+import style from "@styles/Explore/ExploreMain.module.css";
+
+interface ExploreItemData {
+  imageUrl: string,
+  nickname: string,
+  totalVisitorCnt: number
+}
 
 function ExploreMain() {
+  const {user} = useUserStore((state) => state);
+  const [exporeList, setExploreList] = useState<ExploreItemData[]>([]);
+  // const [select, setSelect] = useState<string>("");
+  const getUserList = async () => {
+    const response = await fetch("https://222.121.46.20:80/explore/minihome",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.accessToken}`
+        }
+      }
+    );
+    const data = await response.json();
+    setExploreList(data?.content)
+  };
+  useEffect(() => {
+    getUserList();
+  },[])
+  
+  // const onSelect = (e:React.ChangeEvent<HTMLSelectElement>) => {
+  //   setSelect(e.target.value);
+  // }
+  const userList = exporeList.map((e,i) => <ExploreItem key={i} data={e}/>)
+  
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
         <header className={style.header}>
           <aside className={style.header_aside}>
             <select name="select" id="select">
-              <option value="time">가입순</option>
-              <option value="popular">인기순</option>
+              <option value="createdAt">가입순</option>
+              <option value="totalVisitCnt">인기순</option>
+              <option value="score">스코어순</option>
             </select>
           </aside>
           <main className={style.header_main}>
@@ -22,77 +57,12 @@ function ExploreMain() {
         </header>
         <main className={style.main}>
           <ul className={style.main_upperlist}>
-            <li className={style.main_list}>
-              <div className={style.main_background}></div>
-              <div>
-                <img></img>
-              </div>
-              <div>olsohee</div>
-              <div>1000</div>
-              <div>
-                <button>방문</button>
-              </div>
-            </li>
-            <li className={style.main_list}>
-              <div className={style.main_background}></div>
-              <div>
-                <img></img>
-              </div>
-              <div>olsohee</div>
-              <div>1000</div>
-              <div>
-                <button>방문</button>
-              </div>
-            </li>
-            <li className={style.main_list}>
-              <div className={style.main_background}></div>
-              <div>
-                <img></img>
-              </div>
-              <div>olsohee</div>
-              <div>1000</div>
-              <div>
-                <button>방문</button>
-              </div>
-            </li>
-            <li className={style.main_list}>
-              <div className={style.main_background}></div>
-              <div>
-                <img></img>
-              </div>
-              <div>olsohee</div>
-              <div>1000</div>
-              <div>
-                <button>방문</button>
-              </div>
-            </li>
-            <li className={style.main_list}>
-              <div className={style.main_background}></div>
-              <div>
-                <img></img>
-              </div>
-              <div>olsohee</div>
-              <div>1000</div>
-              <div>
-                <button>방문</button>
-              </div>
-            </li>
-            <li className={style.main_list}>
-              <div className={style.main_background}></div>
-              <div>
-                <img></img>
-              </div>
-              <div>olsohee</div>
-              <div>1000</div>
-              <div>
-                <button>방문</button>
-              </div>
-            </li>
+            {userList}
           </ul>
         </main>
       </section>
     </div>
-  )
+  );
 }
 
-export default ExploreMain
+export default ExploreMain;
