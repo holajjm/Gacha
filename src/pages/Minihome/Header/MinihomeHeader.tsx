@@ -14,7 +14,7 @@ interface MiniHomeMainData {
 }
 
 function MinihomeHeader({minihomeData}:{minihomeData:MiniHomeMainData}) {
-  // console.log(minihomeData);
+  console.log(minihomeData);
   const {nickname} = useParams<{nickname: string}>();
   // console.log(nickname);
   
@@ -41,7 +41,7 @@ function MinihomeHeader({minihomeData}:{minihomeData:MiniHomeMainData}) {
             <p datatype="Following" onClick={handleFollowingClick}>팔로잉 {minihomeData?.followingCnt ? minihomeData?.followingCnt : 0}</p>
           </div>
         </div>
-        {minihomeData && minihomeData.isOwner ? (
+        {nickname === minihomeData?.nickname ? (
           <div className={style.header_bottom}>
             <button onClick={() => navigate(`/minihome/itembook`)} className={style.header_button}>아이템 북 관리</button>
             <button onClick={() => navigate(`/minihome/adorn`)} className={style.header_button}>미니홈 꾸미기</button>
