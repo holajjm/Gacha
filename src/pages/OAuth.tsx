@@ -37,16 +37,12 @@ function OAuth() {
       const queryParams = parseQueryString(data);
       console.log(queryParams);
 
-      const token = queryParams?.accessToken;
+      const token = String(queryParams?.accessToken);
       const decodedToken:JwtPayload = jwtDecode(token);
-      console.log(decodedToken);
-      
-
 
       if (queryParams?.accessToken) { 
         setUser({
           ...user,
-          // isNewUser: queryParams.isNewUser,
           nickname: decodedToken?.nickname,
           profileUrl: decodedToken?.profile,
           accessToken: queryParams.accessToken,
