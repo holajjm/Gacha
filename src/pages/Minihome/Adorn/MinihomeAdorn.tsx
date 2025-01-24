@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css"
 import MinihomeAdornBackground from "./MinihomeAdornBackground"
-import MinihomeAdornItem from "./MinihomeAdornItem"
+import MinihomeAdornItemList from "./MinihomeAdornItemList";
 
 function MinihomeAdorn() {
   const [active, setActive] = useState<string>("");
@@ -29,7 +29,7 @@ function MinihomeAdorn() {
               <button datatype="BACKGROUND" className={active === "BACKGROUND" || !active ? style.active : style.button}>BACKGROUND</button>
               <button datatype="ITEM" className={active === "ITEM" ? style.active : style.button}>ITEM</button>
             </nav>
-            {active === "BACKGROUND" || !active ? <MinihomeAdornBackground /> : <MinihomeAdornItem />}
+            {active === "BACKGROUND" || !active ? <MinihomeAdornBackground /> : <MinihomeAdornItemList />}
           </main>
         </section>
       </div>
