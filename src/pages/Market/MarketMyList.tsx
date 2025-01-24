@@ -1,7 +1,80 @@
-import React from "react"
-import style from "@styles/Market/MarketMyList.module.css"
+import React, { useEffect, useState } from "react";
+import { useUserStore } from "@store/store";
+import MarketMySellingItem from "./MarketMySellingItem";
+
+import style from "@styles/Market/MarketMyList.module.css";
+
+interface MySellingItemData {
+  grade: string;
+  imageUrl: string;
+  name: string;
+  price: number;
+  productId: number;
+  status: string;
+  transactionDate: null;
+}
 
 function MarketMyList() {
+  const { user } = useUserStore((state) => state);
+  const [sellingItem, setSellingItem] = useState<MySellingItemData[]>([]);
+  const [selected, setSelected] = useState<string>("");
+  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelected(e.target.value);
+  };
+  const getMySellItems = async () => {
+    const response = await fetch("https://222.121.46.20:80/products/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user?.accessToken}`,
+      },
+    });
+    const data = await response.json();
+    setSellingItem(data?.content);
+  };
+  useEffect(() => {
+    getMySellItems();
+  }, []);
+
+  const sellingItemList = sellingItem.map((e) => (
+    <MarketMySellingItem key={e.productId} data={e} />
+  ));
+  useEffect(() => {
+    if (selected === "latest") {
+      const sortByLatest = async () => {
+        const response = await fetch(
+          "https://222.121.46.20:80/products/me?sort=createdAt,desc",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user?.accessToken}`,
+            },
+          },
+        );
+        const data = await response.json();
+        setSellingItem(data?.content);
+      };
+      sortByLatest();
+    } else if (selected === "oldest") {
+      const sortByOldest = async () => {
+        const response = await fetch(
+          "https://222.121.46.20:80/products/me?sort=createdAt,asc",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user?.accessToken}`,
+            },
+          },
+        );
+        const data = await response.json();
+        setSellingItem(data?.content);
+      };
+      sortByOldest();
+    }
+  }, [selected]);
+
   return (
     <div className={style.container}>
       <div className={style.coin}>
@@ -17,7 +90,7 @@ function MarketMyList() {
           >
             &larr; 뒤로 가기
           </button>
-          <select className={style.aside_filter}>
+          <select onChange={handleSort} className={style.aside_filter}>
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
           </select>
@@ -40,25 +113,12 @@ function MarketMyList() {
               <div>판매 상태</div>
               <div></div>
             </header>
-            <main className={style.main_items_main}>
-              <div className={style.main_items_item}>
-                <div>
-                  <img src="/images/Sample.svg" alt="sample" />
-                </div>
-                <p>chick</p>
-                <p>A</p>
-                <p>1000</p>
-                <p>판매 완료</p>
-                <div>
-                  <button>Info</button>
-                </div>
-              </div>
-            </main>
+            <main className={style.main_items_main}>{sellingItemList}</main>
           </section>
         </main>
       </section>
     </div>
-  )
+  );
 }
 
-export default MarketMyList
+export default MarketMyList;
