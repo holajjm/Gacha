@@ -1,19 +1,38 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import style from "@styles/Market/MarketMain.module.css"
 import { useNavigate } from "react-router-dom"
 import MarketItem from "./MarketItem"
+import { useUserStore } from "@store/store"
 // import MarketItemModal from "./MarketItemModal";
 
-function MarketMain() {
-  const navigate = useNavigate();
+interface MarketItemData {
+  hasStock: string,
+  imageUrl: string,
+  itemId: number
+}
 
-  function getItemList(){
-    const itemList = []
-    for(let i=0; i<10; i++){
-      itemList.push(<MarketItem key={i}/>)
+function MarketMain() {
+  const {user} = useUserStore((state) => state);
+  const [itemList, setItemList] = useState<MarketItemData[]>([])
+  const navigate = useNavigate();
+  useEffect(() => {
+    const getMarketItem = async () => {
+      const response = await fetch("https://222.121.46.20:80/products",{
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.accessToken}`
+        }
+      })
+      const data = await response.json();
+      setItemList(data);
     }
-    return itemList
-  }
+    getMarketItem();
+  },[])
+  // console.log(itemList);
+  
+  const renderItemList = itemList.map(e => <MarketItem key={e.itemId} data={e}/>)
+  
   return (
     <div className={style.container}>
       <div className={style.coin}>
@@ -47,8 +66,7 @@ function MarketMain() {
           </nav>
           <section className={style.main_items}>
             <div className={style.main_items_wrapper}>
-              {getItemList()}
-              {/* <MarketItem /> */}
+              {renderItemList}
             </div>
           </section>
         </main>
