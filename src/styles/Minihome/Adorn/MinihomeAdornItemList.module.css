@@ -1,0 +1,20 @@
+.main {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1rem;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+.main > div {
+  background-color: white;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main > div > img {
+  width: 6rem;
+  height: 6rem;
+}
