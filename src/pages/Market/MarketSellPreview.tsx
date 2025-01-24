@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "@styles/Market/MarketSellPreview.module.css"
 import { useUserStore } from "@store/store";
 
@@ -29,11 +29,26 @@ function MarketSellPreview({item}:{item:Item}) {
       console.error(error);
     }
   }
+  const [imageList, setImageList] = useState<string>();
+      const image = async () => {
+        const response = await fetch(`https://222.121.46.20:80${item?.imageUrl}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "image/png, image/jif"
+          },
+        });
+        const blob = await response.blob();
+        const imageObjUrl = URL.createObjectURL(blob);
+        setImageList(imageObjUrl);
+      };
+      useEffect(() => {
+        image();
+      }, [item]);
   return (
     <div className={style.header}>
       <div className={style.header_background}></div>
       <div className={style.header_image}>
-        <img src={`/images/${item?.imageUrl}`} alt={""} />
+        <img src={imageList} alt="image" />
       </div>
       <div className={style.header_item}>
         <p>Name: {item?.name}</p>
