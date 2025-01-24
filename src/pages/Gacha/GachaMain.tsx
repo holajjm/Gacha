@@ -1,7 +1,20 @@
-import React from "react"
-import style from "@styles/Gacha/GachaMain.module.css"
+import React from "react";
+import style from "@styles/Gacha/GachaMain.module.css";
+import { useUserStore } from "@store/store";
 
 function GachaMain() {
+  const { user } = useUserStore((state) => state);
+  const getGacha = async () => {
+    const response = await fetch("https://222.121.46.20:80/gacha", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user?.accessToken}`,
+      },
+    });
+    const data = await response.text();
+    console.log(data);
+  };
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
@@ -17,11 +30,11 @@ function GachaMain() {
           <div>
             <img src="/images/GachaSample.svg" alt="Gacha" />
           </div>
-          <button>아이템 뽑기</button>
+          <button onClick={getGacha}>아이템 뽑기</button>
         </main>
       </section>
     </div>
-  )
+  );
 }
 
-export default GachaMain
+export default GachaMain;
