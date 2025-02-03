@@ -3,19 +3,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useUserStore } from "@store/store";
 
+import style from "@styles/OAuth.module.css";
+
 interface QueryParams {
   [key: string]: string;
 }
 interface JwtPayload {
-  exp: number
-  iat: number,
-  nickname: string,
-  profile: string
+  exp: number;
+  iat: number;
+  nickname: string;
+  profile: string;
 }
 function OAuth() {
-  const { user,setUser } = useUserStore((state) => state);
+  const { user, setUser } = useUserStore((state) => state);
   console.log(user);
-  
+
   const navigate = useNavigate();
   const location = useLocation();
   console.log(location);
@@ -38,9 +40,9 @@ function OAuth() {
       console.log(queryParams);
 
       const token = String(queryParams?.accessToken);
-      const decodedToken:JwtPayload = jwtDecode(token);
+      const decodedToken: JwtPayload = jwtDecode(token);
 
-      if (queryParams?.accessToken) { 
+      if (queryParams?.accessToken) {
         setUser({
           ...user,
           nickname: decodedToken?.nickname,
@@ -68,7 +70,13 @@ function OAuth() {
     handleData();
   }, []);
 
-  return <div>소셜 로그인 진행중...</div>;
+  return (
+    <div className={style.container}>
+      <section className={style.wrapper}>
+        <p>로그인 진행중...</p>
+      </section>
+    </div>
+  );
 }
 
 export default OAuth;
