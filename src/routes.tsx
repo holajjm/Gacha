@@ -14,8 +14,8 @@ import ExploreMain from "@pages/Explore/ExploreMain";
 import GachaMain from "@pages/Gacha/GachaMain";
 //Market
 import MarketMain from "@pages/Market/MarketMain";
-import MarketSell from "@pages/Market/MarketSell";
-import MarketMyList from "@pages/Market/MarketMyList";
+import MarketEnroll from "@pages/Market/Enroll/MarketEnroll";
+import MarketMySellingList from "@pages/Market/Sell/MarketMySellingList";
 //User
 import UserLogin from "@pages/User/UserLogin";
 import UserJoin from "@pages/User/UserJoin";
@@ -23,73 +23,73 @@ import OAuth from "@pages/OAuth";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Index />,
         children: [
           {
             index: true,
-            element: <MainPage />
+            element: <MainPage />,
           },
           //Main
           {
-            path: 'main',
-            element: <MainPage />
+            path: "main",
+            element: <MainPage />,
           },
           //Minihome
           {
-            path: 'minihome/:nickname',
-            element: <MiniHomeMain />
+            path: "minihome/:nickname",
+            element: <MiniHomeMain />,
           },
           {
-            path: 'minihome/adorn',
-            element: <MinihomeAdorn />
+            path: "minihome/adorn",
+            element: <MinihomeAdorn />,
           },
           {
-            path: 'minihome/itembook',
-            element: <MinihomeItemBook />
+            path: "minihome/itembook",
+            element: <MinihomeItemBook />,
           },
           //Gacha
           {
-            path: 'gacha',
-            element: <GachaMain />
+            path: "gacha",
+            element: <GachaMain />,
           },
           //Explore
           {
-            path: 'explore',
-            element: <ExploreMain />
+            path: "explore",
+            element: <ExploreMain />,
           },
           //Market
           {
-            path: 'market',
-            element: <MarketMain />
+            path: "market",
+            element: <MarketMain />,
           },
           {
-            path: 'market/sell',
-            element: <MarketSell />
+            path: "market/enroll",
+            element: <MarketEnroll />,
           },
           {
-            path: 'market/myitem',
-            element: <MarketMyList />
+            path: "market/mysellingitem",
+            element: <MarketMySellingList />,
           },
           //User
           {
-            path: 'login',
-            element: <UserLogin />
+            path: "login",
+            element: <UserLogin />,
           },
           {
-            path: 'join',
-            element: <UserJoin />
+            path: "join",
+            element: <UserJoin />,
           },
           {
-            path: 'auth',
+            path: "auth",
             element: <OAuth />,
           },
-        ]
-      }
-    ]
-  }
-])
+        ],
+      },
+    ],
+  },
+]);
