@@ -1,0 +1,34 @@
+.open_capsule {
+  width: 25rem;
+  height: 25rem;
+  animation-name: open;
+  animation-duration: 3s;
+  animation-delay: 200ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+/* -------------------------- */
+.result_capsule {
+  position: absolute;
+}
+.result_capsule > img {
+  width: 15rem;
+  height: 15rem;
+  animation-name: open;
+  animation-duration: 3s;
+  animation-delay: 200ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes open {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
