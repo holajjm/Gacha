@@ -7,9 +7,9 @@ interface ItemBookData {
   imageUrl: string;
   itemCnt: number;
   itemGrade: string;
-  itemId: number,
-  itemName: string,
-  userItemIds: null,
+  itemId: number;
+  itemName: string;
+  userItemIds: null;
 }
 
 function MinihomeItemBook() {
@@ -19,9 +19,10 @@ function MinihomeItemBook() {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setClick((e.target as HTMLElement).getAttribute("datatype") as string);
   };
+  const text = (click ? `?grade=${click}` : click)
   const getItemList = async () => {
     const response = await fetch(
-      `https://222.121.46.20:80/items/${user?.nickname}`,
+      `https://222.121.46.20:80/items/${user?.nickname}${text && text}`,
       {
         method: "GET",
         headers: {
@@ -31,12 +32,12 @@ function MinihomeItemBook() {
       },
     );
     const data = await response.json();
-    setItemList(data)
+    setItemList(data);
   };
   useEffect(() => {
     getItemList();
-  }, []);
-  const items = itemList.map(e => <MinihomeItems key={e.itemId} data={e}/>)
+  }, [click]);
+  const items = itemList.map((e) => <MinihomeItems key={e.itemId} data={e} />);
   return (
     <div className={style.container}>
       <div className={style.wrapper}>
@@ -51,8 +52,8 @@ function MinihomeItemBook() {
         <main className={style.main}>
           <nav onClick={handleClick} className={style.main_nav}>
             <button
-              className={click === "All" ? style.active_button : style.button}
-              datatype="All"
+              className={click === "" ? style.active_button : style.button}
+              datatype=""
             >
               All
             </button>
@@ -88,9 +89,7 @@ function MinihomeItemBook() {
             </button>
           </nav>
           <section className={style.main_contents}>
-            <div className={style.main_contents_wrapper}>
-              {items}
-            </div>
+            <div className={style.main_contents_wrapper}>{items}</div>
           </section>
         </main>
       </div>
