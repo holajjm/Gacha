@@ -13,38 +13,51 @@ interface MarketItemData {
 }
 
 function MarketMain() {
+  const navigate = useNavigate();
   const { user } = useUserStore((state) => state);
   const [itemList, setItemList] = useState<MarketItemData[]>([]);
-  const [clicked, setClicked] = useState<boolean>(false);
+  const [itemClicked, setItemClicked] = useState<boolean>(false);
   const [clickItemId, setClickItemId] = useState<number>(0);
+  const [navClick, setNavClick] = useState<string>("");
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    setNavClick((e.target as HTMLElement).getAttribute("datatype") as string);
+  };
+  const text = navClick ? `?grade=${navClick}` : navClick;
 
-  const navigate = useNavigate();
   useEffect(() => {
     const getMarketItem = async () => {
-      const response = await fetch("https://222.121.46.20:80/products", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
+      const response = await fetch(
+        `https://222.121.46.20:80/products${text && text}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user?.accessToken}`,
+          },
         },
-      });
+      );
       const data = await response.json();
       setItemList(data);
     };
     getMarketItem();
-  }, []);
+  }, [navClick]);
 
   const handleClicked = () => {
-    setClicked(true)
-  }
+    setItemClicked(true);
+  };
   const handleModalClicked = () => {
-    setClicked(false)
-  }
+    setItemClicked(false);
+  };
   const handleClickItemId = useCallback((itemId: number) => {
     setClickItemId(itemId);
   }, []);
   const renderItemList = itemList.map((e) => (
-    <MarketItem key={e.itemId} data={e} onSelect={handleClickItemId} onClick={handleClicked}/>
+    <MarketItem
+      key={e.itemId}
+      data={e}
+      onSelect={handleClickItemId}
+      onClick={handleClicked}
+    />
   ));
 
   return (
@@ -70,20 +83,55 @@ function MarketMain() {
           </button>
         </aside>
         <main className={style.main}>
-          <nav className={style.main_nav}>
-            <button>All</button>
-            <button>S등급</button>
-            <button>A등급</button>
-            <button>B등급</button>
-            <button>C등급</button>
-            <button>D등급</button>
+          <nav onClick={handleClick} className={style.main_nav}>
+            <button
+              datatype=""
+              className={navClick === "" ? style.active_button : style.button}
+            >
+              All
+            </button>
+            <button
+              datatype="S"
+              className={navClick === "S" ? style.active_button : style.button}
+            >
+              S등급
+            </button>
+            <button
+              datatype="A"
+              className={navClick === "A" ? style.active_button : style.button}
+            >
+              A등급
+            </button>
+            <button
+              datatype="B"
+              className={navClick === "B" ? style.active_button : style.button}
+            >
+              B등급
+            </button>
+            <button
+              datatype="C"
+              className={navClick === "C" ? style.active_button : style.button}
+            >
+              C등급
+            </button>
+            <button
+              datatype="D"
+              className={navClick === "D" ? style.active_button : style.button}
+            >
+              D등급
+            </button>
           </nav>
           <section className={style.main_items}>
             <div className={style.main_items_wrapper}>{renderItemList}</div>
           </section>
         </main>
       </section>
-      {clicked ? <MarketItemModal clickItemId={clickItemId} onClick={handleModalClicked}/> : null}
+      {itemClicked ? (
+        <MarketItemModal
+          clickItemId={clickItemId}
+          onClick={handleModalClicked}
+        />
+      ) : null}
     </div>
   );
 }
