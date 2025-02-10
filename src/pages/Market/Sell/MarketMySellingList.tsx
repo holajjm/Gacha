@@ -24,8 +24,13 @@ function MarketMyList() {
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);
   };
+  const [navClick, setNavClick] = useState<string>("");
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+      setNavClick((e.target as HTMLElement).getAttribute("datatype") as string);
+    };
+    const text = navClick ? `?grade=${navClick}` : navClick;
   const getMySellItems = async () => {
-    const response = await fetch("https://222.121.46.20:80/products/me", {
+    const response = await fetch(`https://222.121.46.20:80/products/me${text && text}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +42,7 @@ function MarketMyList() {
   };
   useEffect(() => {
     getMySellItems();
-  }, []);
+  }, [navClick]);
 
   
   useEffect(() => {
@@ -110,13 +115,13 @@ function MarketMyList() {
           </select>
         </aside>
         <main className={style.main}>
-          <nav className={style.main_nav}>
-            <button>All</button>
-            <button>S등급</button>
-            <button>A등급</button>
-            <button>B등급</button>
-            <button>C등급</button>
-            <button>D등급</button>
+          <nav onClick={handleClick} className={style.main_nav}>
+            <button datatype="" className={navClick === "" ? style.active_button : style.button}>All</button>
+            <button datatype="S" className={navClick === "S" ? style.active_button : style.button}>S등급</button>
+            <button datatype="A" className={navClick === "A" ? style.active_button : style.button}>A등급</button>
+            <button datatype="B" className={navClick === "B" ? style.active_button : style.button}>B등급</button>
+            <button datatype="C" className={navClick === "C" ? style.active_button : style.button}>C등급</button>
+            <button datatype="D" className={navClick === "D" ? style.active_button : style.button}>D등급</button>
           </nav>
           <section className={style.main_items}>
             <header className={style.main_items_header}>
