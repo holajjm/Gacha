@@ -3,10 +3,13 @@
   height: 100vh;
   padding: 2rem 4rem;
   box-sizing: border-box;
-  background: linear-gradient(to bottom, #D8FAFF, #B6CDFF);
+  background: linear-gradient(to bottom, #d8faff, #b6cdff);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  display: flex;
+  flex-direction: column;
 }
 .wrapper {
   width: 60rem;
