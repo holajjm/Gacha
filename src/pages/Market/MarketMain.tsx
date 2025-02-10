@@ -5,6 +5,7 @@ import { useUserStore } from "@store/store";
 import MarketItem from "./MarketItem";
 import MarketItemModal from "./MarketItemModal";
 import style from "@styles/Market/MarketMain.module.css";
+import Coin from "@components/Coin";
 
 interface MarketItemData {
   hasStock: string;
@@ -62,10 +63,7 @@ function MarketMain() {
 
   return (
     <div className={style.container}>
-      <div className={style.coin}>
-        <img src="/images/coin.svg" alt="coin" />
-        <p>19,500</p>
-      </div>
+      <Coin />
       <section className={style.wrapper}>
         <div className={style.background}></div>
         <aside className={style.aside}>

@@ -3,6 +3,7 @@ import { useUserStore } from "@store/store";
 
 import GachaCapsule from "./GachaCapsule";
 import style from "@styles/Gacha/GachaMain.module.css";
+import Coin from "@components/Coin";
 
 interface GachaData {
   itemGrade: string;
@@ -40,10 +41,7 @@ function GachaMain() {
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
-        <div className={style.coin}>
-          <img src="/images/coin.svg" alt="coin" />
-          <p>19,500</p>
-        </div>
+        <Coin />
         <header className={style.header}>
           <h1>GACHA SHOP</h1>
           <p>랜덤 아이템을 뽑아봐요!</p>
