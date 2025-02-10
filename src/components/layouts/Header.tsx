@@ -1,13 +1,20 @@
-import React from "react"
-import { Link, useNavigate } from "react-router-dom"
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserStore } from "@store/store";
-import style from "@styles/Layouts/Header.module.css"
+import style from "@styles/Layouts/Header.module.css";
 
 function Header() {
-  const {user} = useUserStore((state) => state);
+  const { user } = useUserStore((state) => state);
   const navigate = useNavigate();
-  const handleLogout = () => {
-    if(confirm("로그아웃 하시겠습니까?")){
+  const handleLogout = async () => {
+    if (confirm("로그아웃 하시겠습니까?")) {
+      await fetch("https://222.121.46.20:80/logout", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.accessToken}`,
+        },
+      });
       sessionStorage.removeItem("user");
       localStorage.removeItem("AccessToken");
       localStorage.removeItem("RefreshToken");
@@ -15,7 +22,7 @@ function Header() {
       navigate("/main");
       window.location.reload();
     }
-  }
+  };
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
@@ -49,7 +56,7 @@ function Header() {
         )}
       </section>
     </div>
-  )
+  );
 }
 
-export default Header
+export default Header;
