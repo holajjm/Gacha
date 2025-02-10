@@ -8,6 +8,9 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  z-index: 10;
+  /* ----------------- */
+  flex-direction: column;
 }
 .wrapper {
   width: 60rem;
@@ -16,6 +19,7 @@
   flex-direction: column;
   gap: 1.5rem;
   align-items: center;
+
 }
 /* ------------------------------------------------------------ */
 .coin {
