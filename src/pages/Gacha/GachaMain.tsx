@@ -1,9 +1,23 @@
-import React from "react";
-import style from "@styles/Gacha/GachaMain.module.css";
+import React, { useState } from "react";
 import { useUserStore } from "@store/store";
+
+import GachaCapsule from "./GachaCapsule";
+import style from "@styles/Gacha/GachaMain.module.css";
+
+interface GachaData {
+  itemGrade: string;
+  itemImageUrl: string;
+  itemName: string;
+}
 
 function GachaMain() {
   const { user } = useUserStore((state) => state);
+  const [open, setOpen] = useState<boolean>(false);
+  const [gachaData, setGachaData] = useState<GachaData>({
+    itemGrade: "",
+    itemImageUrl: "",
+    itemName: "",
+  });
   const getGacha = async () => {
     const response = await fetch("https://222.121.46.20:80/gacha", {
       method: "POST",
@@ -13,8 +27,16 @@ function GachaMain() {
       },
     });
     const data = await response.text();
-    console.log(data);
+    console.log(JSON.parse(data));
+    setGachaData(JSON.parse(data));
   };
+  const handleGachaClick = () => {
+    getGacha();
+    setOpen(true);
+  };
+  const handleModalClose = () => {
+    setOpen(false)
+  }
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
@@ -30,9 +52,10 @@ function GachaMain() {
           <div>
             <img src="/images/GachaSample.svg" alt="Gacha" />
           </div>
-          <button onClick={getGacha}>아이템 뽑기</button>
+          <button onClick={handleGachaClick}>아이템 뽑기</button>
         </main>
       </section>
+      {open ? <GachaCapsule imageData={gachaData} onClick={handleModalClose} /> : null}
     </div>
   );
 }
