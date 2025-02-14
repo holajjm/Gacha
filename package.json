@@ -12,6 +12,7 @@
     "predeploy": "npm run build"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.66.0",
     "@types/node": "^22.10.2",
     "axios": "^1.7.9",
     "gh-pages": "^6.2.0",
