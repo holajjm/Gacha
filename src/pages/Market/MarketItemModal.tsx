@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "@styles/Market/MarketItemModal.module.css";
 import { useUserStore } from "@store/store";
+import useImage from "@hooks/useImage";
 
 interface ModalData {
   grade: string;
@@ -16,6 +17,7 @@ function MarketItemModal({
   clickItemId: number;
   onClick: () => void;
 }) {
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const [modalData, setModalData] = useState<ModalData>({
     grade: "",
     imageUrl: "",
@@ -25,7 +27,7 @@ function MarketItemModal({
   const { user } = useUserStore((state) => state);
   const getModalData = async () => {
     const response = await fetch(
-      `https://222.121.46.20:80/items/${clickItemId}/products`,
+      `${SERVER_API}/items/${clickItemId}/products`,
       {
         method: "GET",
         headers: {
@@ -41,24 +43,24 @@ function MarketItemModal({
     getModalData();
   }, []);
 
-  const [imageList, setImageList] = useState<string>();
-  const image = async () => {
-    const response = await fetch(
-      `https://222.121.46.20:80${modalData?.imageUrl}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "image/png, image/jif",
-        },
-      },
-    );
-    const blob = await response.blob();
-    const imageObjUrl = URL.createObjectURL(blob);
-    setImageList(imageObjUrl);
-  };
-  useEffect(() => {
-    image();
-  }, [modalData]);
+  // const [imageList, setImageList] = useState<string>();
+  // const image = async () => {
+  //   const response = await fetch(
+  //     `${SERVER_API}${modalData?.imageUrl}`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "image/png, image/jif",
+  //       },
+  //     },
+  //   );
+  //   const blob = await response.blob();
+  //   const imageObjUrl = URL.createObjectURL(blob);
+  //   setImageList(imageObjUrl);
+  // };
+  // useEffect(() => {
+  //   image();
+  // }, [modalData]);
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
@@ -68,7 +70,7 @@ function MarketItemModal({
         </button>
         <section className={style.contents}>
           <aside className={style.aside}>
-            <img src={imageList} alt="sample" />
+            <img src={useImage(modalData?.imageUrl)} alt="sample" />
           </aside>
           <main className={style.main}>
             <p>이름 | {modalData?.name}</p>

@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from "react";
-import style from "@styles/Minihome/Header/MinihomeFollowing.module.css";
-import { useParams } from "react-router-dom";
+import style from "@styles/Minihome/Header/MinihomeFollower.module.css";
 import { useUserStore } from "@store/store";
+import { useParams } from "react-router-dom";
 
-interface Followings {
+interface Followers {
   userId: number;
   nickname: string;
   profileImageUrl: string;
   isFollowing: boolean;
+  isRemovable: boolean;
   isCurrentUser: boolean;
 }
 
-function MinihomeFollowing({
-  handleFollowingClose,
+function MinihomeFollower({
+  handleFollowerClose,
 }: {
-  handleFollowingClose: () => void;
+  handleFollowerClose: () => void;
 }) {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const { nickname } = useParams<{ nickname: string }>();
-  const [followings, setFollowings] = useState<Followings[]>([]);
-  const getFollowing = async () => {
+  const [followers, setFollowers] = useState<Followers[]>([]);
+  const getFollower = async () => {
     const response = await fetch(
-      `${SERVER_API}/users/${nickname}/followings`,
+      `${SERVER_API}/users/${nickname}/followers`,
       {
         method: "GET",
         headers: {
@@ -33,20 +34,19 @@ function MinihomeFollowing({
     );
     const data = await response.json();
     console.log(data);
-    setFollowings(data?.content);
+    setFollowers(data?.content);
   };
   useEffect(() => {
-    getFollowing();
+    getFollower();
   }, []);
-  console.log("followings: ",followings);
-  
+  console.log("followers :", followers);
   return (
     <div className={style.container}>
       <div className={style.background}></div>
       <section className={style.wrapper}>
         <header className={style.header}>
-          <h1 className={style.header_title}>팔로잉</h1>
-          <button onClick={handleFollowingClose} className={style.header_close}>
+          <h1 className={style.header_title}>팔로워</h1>
+          <button onClick={handleFollowerClose} className={style.header_close}>
             X
           </button>
         </header>
@@ -71,4 +71,4 @@ function MinihomeFollowing({
   );
 }
 
-export default MinihomeFollowing;
+export default MinihomeFollower;

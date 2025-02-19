@@ -15,15 +15,15 @@ interface ReplyData {
 }
 function MinihomeReplyEdit({
   replys,
-  getReply,
+  getPageReply,
   editReplyResult,
 }: {
   replys: ReplyData;
-  getReply: () => void;
+  getPageReply: () => void;
   editReplyResult: () => void;
 }) {
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
-
   const {
     register,
     handleSubmit,
@@ -32,7 +32,7 @@ function MinihomeReplyEdit({
   const editReply = async (formData: ReplySendData) => {
     if (confirm("수정하시겠습니까?")) {
       await fetch(
-        `https://222.121.46.20:80/guestbooks/${replys?.guestbookId}`,
+        `${SERVER_API}/guestbooks/${replys?.guestbookId}`,
         {
           method: "PUT",
           headers: {
@@ -44,7 +44,7 @@ function MinihomeReplyEdit({
           }),
         },
       );
-      getReply();
+      getPageReply();
       editReplyResult();
     }
     return;

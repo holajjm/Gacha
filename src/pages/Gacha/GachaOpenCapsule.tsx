@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import style from "@styles/Gacha/GachaOpenCapsule.module.css";
+import useImage from "@hooks/useImage";
 
 function GachaOpenCapsule({
   color,
@@ -9,21 +10,23 @@ function GachaOpenCapsule({
   color: string;
   imageUrl: string;
 }) {
-  const [imageList, setImageList] = useState<string>();
-  const image = async () => {
-    const response = await fetch(`https://222.121.46.20:80${imageUrl}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "image/png, image/jif",
-      },
-    });
-    const blob = await response.blob();
-    const imageObjUrl = URL.createObjectURL(blob);
-    setImageList(imageObjUrl);
-  };
-  useEffect(() => {
-    image();
-  }, [imageUrl]);
+  // const SERVER_API = import.meta.env.VITE_SERVER_API;
+  // const [imageList, setImageList] = useState<string>();
+  // const image = async () => {
+  //   const response = await fetch(`${SERVER_API}${imageUrl}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "image/png, image/jif",
+  //     },
+  //   });
+  //   const blob = await response.blob();
+  //   const imageObjUrl = URL.createObjectURL(blob);
+  //   setImageList(imageObjUrl);
+  // };
+  // useEffect(() => {
+  //   image();
+  // }, [imageUrl]);
+  const image = useImage(imageUrl);
   return (
     <>
       <img
@@ -31,9 +34,9 @@ function GachaOpenCapsule({
         src={`/images/${color}OpenCapsule.svg`}
         alt="Open"
       />
-      {imageList ? (
+      {image ? (
         <div className={style.result_capsule}>
-          <img src={imageList} alt="item" />
+          <img src={image} alt="item" />
         </div>
       ) : null}
     </>

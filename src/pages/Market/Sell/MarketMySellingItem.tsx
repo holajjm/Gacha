@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import style from "@styles/Market/Sell/MarketMySellingItem.module.css";
+import useImage from "@hooks/useImage";
 
 interface MySellingItemData {
   grade: string;
@@ -11,29 +12,36 @@ interface MySellingItemData {
   transactionDate: null;
 }
 
-function MarketMySellingItem({data,modalOpen}:{data:MySellingItemData,modalOpen:(itemId:number) => void}) {
-  const [imageList, setImageList] = useState<string>();
-  const image = async () => {
-    const response = await fetch(`https://222.121.46.20:80${data?.imageUrl}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "image/png, image/jif"
-      },
-    });
-    const blob = await response.blob();
-    const imageObjUrl = URL.createObjectURL(blob);
-    setImageList(imageObjUrl);
-  };
-  useEffect(() => {
-    image();
-  }, []);
+function MarketMySellingItem({
+  data,
+  modalOpen,
+}: {
+  data: MySellingItemData;
+  modalOpen: (itemId: number) => void;
+}) {
+  // const SERVER_API = import.meta.env.VITE_SERVER_API;
+  // const [imageList, setImageList] = useState<string>();
+  // const image = async () => {
+  //   const response = await fetch(`${SERVER_API}${data?.imageUrl}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "image/png, image/jif"
+  //     },
+  //   });
+  //   const blob = await response.blob();
+  //   const imageObjUrl = URL.createObjectURL(blob);
+  //   setImageList(imageObjUrl);
+  // };
+  // useEffect(() => {
+  //   image();
+  // }, []);
   const handleClick = () => {
     modalOpen(data?.productId);
-  }
+  };
   return (
     <div className={style.main_items_item}>
       <div>
-        <img src={imageList} alt="sample" />
+        <img src={useImage(data?.imageUrl)} alt="sample" />
       </div>
       <p>{data?.name}</p>
       <p>{data?.grade}</p>

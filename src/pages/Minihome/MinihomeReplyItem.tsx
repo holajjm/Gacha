@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import style from "@styles/Minihome/MinihomeReplyItem.module.css";
+
 import { useUserStore } from "@store/store";
 import MinihomeReplyEdit from "./MinihomeReplyEdit";
+import useImage from "@hooks/useImage";
+import style from "@styles/Minihome/MinihomeReplyItem.module.css";
 
 interface ReplyData {
   content: string;
@@ -13,12 +15,12 @@ interface ReplyData {
 
 function MinihomeReplyItem({
   replys,
-  getReply,
+  getPageReply,
 }: {
   replys: ReplyData;
-  getReply: () => void;
+  getPageReply: () => void;
 }) {
-  // console.log(replys);
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const editReply = () => {
@@ -28,7 +30,7 @@ function MinihomeReplyItem({
   const deleteReply = async () => {
     if (confirm("댓글을 삭제할까요?")) {
       await fetch(
-        `https://222.121.46.20:80/guestbooks/${replys?.guestbookId}`,
+        `${SERVER_API}/guestbooks/${replys?.guestbookId}`,
         {
           method: "DELETE",
           headers: {
@@ -37,7 +39,7 @@ function MinihomeReplyItem({
           },
         },
       );
-      getReply();
+      getPageReply();
     }
     return;
   };
@@ -49,11 +51,12 @@ function MinihomeReplyItem({
       return `${resultTime[1]} ${resultTime[2]}`;
     }
   };
+  
   return (
     <div className={style.main_reply}>
       <header className={style.main_reply_header}>
         <div className={style.main_reply_user}>
-          <img src={user?.profileUrl} alt="profile" />
+          <img src={useImage(user?.profileUrl)} alt="profile" />
           <p>{replys?.nickname}</p>
         </div>
         <p className={style.main_reply_date}>{replyTime()}</p>
@@ -63,7 +66,7 @@ function MinihomeReplyItem({
           {isEdit ? (
             <MinihomeReplyEdit
               replys={replys}
-              getReply={getReply}
+              getPageReply={getPageReply}
               editReplyResult={editReply}
             />
           ) : (
