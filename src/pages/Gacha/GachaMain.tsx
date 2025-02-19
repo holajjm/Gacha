@@ -12,6 +12,7 @@ interface GachaData {
 }
 
 function GachaMain() {
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [open, setOpen] = useState<boolean>(false);
   const [gachaData, setGachaData] = useState<GachaData>({
@@ -20,7 +21,7 @@ function GachaMain() {
     itemName: "",
   });
   const getGacha = async () => {
-    const response = await fetch("https://222.121.46.20:80/gacha", {
+    const response = await fetch(`${SERVER_API}/gacha`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

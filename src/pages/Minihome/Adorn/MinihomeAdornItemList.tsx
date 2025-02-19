@@ -13,10 +13,11 @@ interface ItemData {
 }
 
 function MinihomeAdornItemList() {
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [itemList, setItemList] = useState<ItemData[]>([]);
   const getItems = async () => {
-    const response = await fetch(`https://222.121.46.20:80/items/${user?.nickname}`,{
+    const response = await fetch(`${SERVER_API}/items/${user?.nickname}`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -13,6 +13,7 @@ interface ItemBookData {
 }
 
 function MinihomeItemBook() {
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [itemList, setItemList] = useState<ItemBookData[]>([]);
   const [click, setClick] = useState<string>("");
@@ -22,7 +23,7 @@ function MinihomeItemBook() {
   const text = (click ? `?grade=${click}` : click)
   const getItemList = async () => {
     const response = await fetch(
-      `https://222.121.46.20:80/items/${user?.nickname}${text && text}`,
+      `${SERVER_API}/items/${user?.nickname}${text && text}`,
       {
         method: "GET",
         headers: {

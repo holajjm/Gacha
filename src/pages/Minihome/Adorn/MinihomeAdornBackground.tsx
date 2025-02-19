@@ -9,10 +9,11 @@ interface BackgroundItemData {
 }
 
 function MinihomeAdornBackground() {
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const {user} = useUserStore((state) => state);
   const [backgroundItemList, setBackgroundItemList] = useState<BackgroundItemData[]>([]);
   const getBackgroundItems = async () => {
-    const response = await fetch(`https://222.121.46.20:80/backgrounds/${user?.nickname}`,{
+    const response = await fetch(`${SERVER_API}/backgrounds/${user?.nickname}`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -4,11 +4,12 @@ import { useUserStore } from "@store/store";
 import style from "@styles/Layouts/Header.module.css";
 
 function Header() {
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const navigate = useNavigate();
   const handleLogout = async () => {
     if (confirm("로그아웃 하시겠습니까?")) {
-      await fetch("https://222.121.46.20:80/logout", {
+      await fetch(`${SERVER_API}/logout`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -14,6 +14,7 @@ interface MarketItemData {
 }
 
 function MarketMain() {
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const navigate = useNavigate();
   const { user } = useUserStore((state) => state);
   const [itemList, setItemList] = useState<MarketItemData[]>([]);
@@ -28,7 +29,7 @@ function MarketMain() {
   useEffect(() => {
     const getMarketItem = async () => {
       const response = await fetch(
-        `https://222.121.46.20:80/products${text && text}`,
+        `${SERVER_API}/products${text && text}`,
         {
           method: "GET",
           headers: {
