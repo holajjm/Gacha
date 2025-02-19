@@ -44,11 +44,23 @@
 .main_header_img {
   display: none;
 }
+.main_header > div {
+  font-weight: bold;
+}
+.main_header > div:hover {
+  color: gray;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .main_img1 {
   width: 10rem;
   height: 10rem;
+  padding: 0.2rem;
+  box-sizing: border-box;
   border-radius: 100%;
-  background-color: lightgray;
+  border: 1px solid white;
+  background-color: white;
 }
 .main_img2 {
   width: 2rem;
