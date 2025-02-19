@@ -1,30 +1,36 @@
-import React, { useEffect, useState } from "react";
-import style from "@styles/Layouts/Coin.module.css";
+import React from "react";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
+import Loading from "./Loading";
 import { useUserStore } from "@store/store";
+import style from "@styles/Layouts/Coin.module.css";
 
 function Coin() {
-  const [coin, setCoin] = useState<number>(0);
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const getCoin = async () => {
-    const response = await fetch("https://222.121.46.20:80/coin", {
-      method: "GET",
+    const response = await axios.get(`${SERVER_API}/coin`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${user?.accessToken}`,
       },
     });
-    const data = await response.json();
-    setCoin(data?.coin);
+    return response;
   };
-  useEffect(() => {
-    getCoin();
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: ["coin"],
+    queryFn: getCoin,
+    select: (data) => data?.data,
+  });
+  console.log(data);
+  if (isLoading) return <Loading />;
   return (
     <div className={style.coin}>
       <img src="/images/coin.svg" alt="coin" />
-      <p>{coin}</p>
+      <p>{data?.coin}</p>
     </div>
   );
 }
 
-export default Coin;
+export default React.memo(Coin);
