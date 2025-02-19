@@ -11,6 +11,7 @@
       "@assets/*": ["assets/*"],
       "@styles": ["styles/*"],
       "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
       "@layouts/*": ["layouts/*"],
       "@pages/*": ["pages/*"],
       "@Explore/*": ["Explore/*"],
