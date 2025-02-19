@@ -42,6 +42,10 @@
   font-size: 1.5rem;
   background: none;
   border: none;
+  cursor: pointer;
+}
+.button:hover {
+  color: red;
 }
 .contents {
   display: flex;
