@@ -17,40 +17,65 @@ interface MySellingItemData {
 }
 
 function MarketMyList() {
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [sellingItem, setSellingItem] = useState<MySellingItemData[]>([]);
-  // console.log(sellingItem);
-
+  console.log(sellingItem);
   const [selected, setSelected] = useState<string>("");
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);
   };
   const [navClick, setNavClick] = useState<string>("");
-    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-      setNavClick((e.target as HTMLElement).getAttribute("datatype") as string);
-    };
-    const text = navClick ? `?grade=${navClick}` : navClick;
+  console.log(navClick);
+  
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    setNavClick((e.target as HTMLElement).getAttribute("datatype") as string);
+  };
+  const text = navClick ? `&grade=${navClick}` : navClick;
+  console.log(text);
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const getMySellItems = async () => {
-    const response = await fetch(`https://222.121.46.20:80/products/me${text && text}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user?.accessToken}`,
+    const response = await fetch(
+      `${SERVER_API}/products/me?sort=createdAt,desc&page=${currentPage}&size=5${text && text}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.accessToken}`,
+        },
       },
-    });
+    );
     const data = await response.json();
-    setSellingItem(data?.content);
+    setSellingItem((prevList) => [...prevList, ...(data?.content || [])]);
+    setCurrentPage((prev) => prev + 1);
   };
   useEffect(() => {
     getMySellItems();
   }, [navClick]);
 
-  
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const handleScroll = () => {
+    const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
+    if (sellingItem.length > 0 && scrollTop + clientHeight >= scrollHeight)
+      getMySellItems();
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [sellingItem]);
+
   useEffect(() => {
     if (selected === "latest") {
       const sortByLatest = async () => {
         const response = await fetch(
-          "https://222.121.46.20:80/products/me?sort=createdAt,desc",
+          `${SERVER_API}/products/me?sort=createdAt,desc`,
           {
             method: "GET",
             headers: {
@@ -66,7 +91,7 @@ function MarketMyList() {
     } else if (selected === "oldest") {
       const sortByOldest = async () => {
         const response = await fetch(
-          "https://222.121.46.20:80/products/me?sort=createdAt,asc",
+          `${SERVER_API}/products/me?sort=createdAt,asc`,
           {
             method: "GET",
             headers: {
@@ -85,15 +110,20 @@ function MarketMyList() {
   const [clicked, setClicked] = useState<boolean>(false);
   const [clickedItemId, setClickedItemId] = useState<number>(0);
 
-  const handleModalOpen = (productId:number) => {
+  const handleModalOpen = (productId: number) => {
     setClicked(true);
-    setClickedItemId(productId)
+    setClickedItemId(productId);
   };
   const handleModalClose = () => {
     setClicked(false);
   };
+
   const sellingItemList = sellingItem.map((e) => (
-    <MarketMySellingItem key={e.productId} data={e} modalOpen={handleModalOpen} />
+    <MarketMySellingItem
+      key={e.productId}
+      data={e}
+      modalOpen={handleModalOpen}
+    />
   ));
   return (
     <div className={style.container}>
@@ -114,12 +144,42 @@ function MarketMyList() {
         </aside>
         <main className={style.main}>
           <nav onClick={handleClick} className={style.main_nav}>
-            <button datatype="" className={navClick === "" ? style.active_button : style.button}>All</button>
-            <button datatype="S" className={navClick === "S" ? style.active_button : style.button}>S등급</button>
-            <button datatype="A" className={navClick === "A" ? style.active_button : style.button}>A등급</button>
-            <button datatype="B" className={navClick === "B" ? style.active_button : style.button}>B등급</button>
-            <button datatype="C" className={navClick === "C" ? style.active_button : style.button}>C등급</button>
-            <button datatype="D" className={navClick === "D" ? style.active_button : style.button}>D등급</button>
+            <button
+              datatype=""
+              className={navClick === "" ? style.active_button : style.button}
+            >
+              All
+            </button>
+            <button
+              datatype="S"
+              className={navClick === "S" ? style.active_button : style.button}
+            >
+              S등급
+            </button>
+            <button
+              datatype="A"
+              className={navClick === "A" ? style.active_button : style.button}
+            >
+              A등급
+            </button>
+            <button
+              datatype="B"
+              className={navClick === "B" ? style.active_button : style.button}
+            >
+              B등급
+            </button>
+            <button
+              datatype="C"
+              className={navClick === "C" ? style.active_button : style.button}
+            >
+              C등급
+            </button>
+            <button
+              datatype="D"
+              className={navClick === "D" ? style.active_button : style.button}
+            >
+              D등급
+            </button>
           </nav>
           <section className={style.main_items}>
             <header className={style.main_items_header}>
@@ -134,7 +194,12 @@ function MarketMyList() {
           </section>
         </main>
       </section>
-      {clicked ? <MarketSellingItemModal clickedItemId={clickedItemId} onClick={handleModalClose} /> : null}
+      {clicked ? (
+        <MarketSellingItemModal
+          clickedItemId={clickedItemId}
+          onClick={handleModalClose}
+        />
+      ) : null}
     </div>
   );
 }
