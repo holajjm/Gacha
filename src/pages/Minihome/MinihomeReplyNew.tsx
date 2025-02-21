@@ -15,37 +15,32 @@ interface ReplyData {
   isAuthor: boolean;
   nickname: string;
 }
-// interface GetReplyData {
-//   content: ReplyData[],
-//   empty: boolean,
-//   first: boolean,
-//   last: boolean,
-//   number: number,
-//   numberOfElements: number,
+// interface ReplyTotalData {
+//   content: ReplyData[];
+//   empty: boolean;
+//   first: boolean;
+//   last: boolean;
+//   number: number;
+//   numberOfElements: number;
 //   pageable: {
-//     offset: number,
-//     pageNumber: number,
-//     pageSize: number,
-//     paged: boolean,
-//     sort: {
-//       unsorted: boolean,
-//       sorted: boolean,
-//       empty: boolean
-//     }
-//   }
-//   size: number,
-//   sort: {
-//     unsorted: boolean,
-//     sorted: boolean,
-//     empty: boolean
-//   }
+//     pageNumber: number;
+//     pageSize: number;
+//     sort: { empty: string; sorted: string; unsorted: string };
+//     offset: number;
+//     unpaged: boolean;
+//   };
+//   size: number;
+//   sort: { unsorted: boolean; sorted: boolean; empty: boolean };
+//   totalElements: number;
+//   totalPages: number;
 // }
 function MinihomeReplyNew() {
-  const [replys, setReplys] = useState<ReplyData[]>([]);
-  const { nickname } = useParams<{ nickname: string }>();
+  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
-  // console.log("user :",user);
-  // console.log("nickname :",nickname);
+  // const [replys, setReplys] = useState<ReplyData[]>([]);
+  const [pageReplys, setPageReplys] = useState<ReplyData[]>([]);
+  const [pageNum1, setPageNum1] = useState<number>(0);
+  const { nickname } = useParams<{ nickname: string }>();
   const {
     register,
     handleSubmit,
@@ -54,9 +49,9 @@ function MinihomeReplyNew() {
 
   //useForm의 타입과 handleSubmit에 들어가는 form 제출 함수의 매개변수 타입을 일치 시켜주어야 한다.
 
-  const onSubmit = async (formData:ReplySendData) => {
+  const onSubmit = async (formData: ReplySendData) => {
     try {
-      await fetch(`https://222.121.46.20:80/guestbooks/${nickname}`, {
+      await fetch(`${SERVER_API}/guestbooks/${nickname}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,15 +61,40 @@ function MinihomeReplyNew() {
           content: formData.content,
         }),
       });
-      getReply();
+      getPageReply();
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
-  const getReply = async () => {
+
+  // const getReply = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `${SERVER_API}/guestbooks/${nickname}`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${user?.accessToken}`,
+  //         },
+  //       },
+  //     );
+  //     const data = await response.json();
+  //     setReplys(data?.content);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getReply();
+  // }, []);
+
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const getPageReply = async () => {
     try {
       const response = await fetch(
-        `https://222.121.46.20:80/guestbooks/${nickname}`,
+        `${SERVER_API}/guestbooks/${nickname}?sorted=createdAt,desc&page=${currentPage}&size=3`,
         {
           method: "GET",
           headers: {
@@ -84,23 +104,43 @@ function MinihomeReplyNew() {
         },
       );
       const data = await response.json();
-      // console.log(data);
-      setReplys(data?.content);
+      setPageNum1(data?.totalPages);
+      setPageReplys(data?.content);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
-  // console.log(replys);
-  
   useEffect(() => {
-    getReply();
-  }, []);
-  
-  const replyList = replys?.map((e) => (
-    <MinihomeReplyItem key={e.guestbookId} replys={e} getReply={getReply}/>
+    getPageReply();
+  }, [currentPage]);
+
+  // const replyList = replys?.map((e) => (
+  //   <MinihomeReplyItem key={e.guestbookId} replys={e} getReply={getReply} />
+  // ));
+  const replyList = pageReplys?.map((e) => (
+    <MinihomeReplyItem
+      key={e.guestbookId}
+      replys={e}
+      getPageReply={getPageReply}
+    />
   ));
-  
+  const pageNum = () => {
+    const numList = [];
+    for (let i = 0; i < pageNum1; i++) {
+      numList.push(
+        <li
+          className={currentPage == i ? style.active_pageNum : style.pageNum}
+          value={i}
+          key={i}
+          onClick={() => setCurrentPage(i)}
+        >
+          {i + 1}
+        </li>,
+      );
+    }
+    return numList;
+  };
   return (
     <div className={style.main_reply}>
       <form
@@ -113,11 +153,10 @@ function MinihomeReplyNew() {
           {...register("content", { required: "내용을 입력해주세요" })}
         />
         <button>등록</button>
-        <p className={style.main_replyError}>
-          {errors.content?.message}
-        </p>
+        <p className={style.main_replyError}>{errors.content?.message}</p>
       </form>
       <main className={style.main_replyList}>{replyList}</main>
+      <ul className={style.pageList}>{pageNum()}</ul>
     </div>
   );
 }
