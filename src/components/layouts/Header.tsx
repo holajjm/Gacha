@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import { useUserStore } from "@store/store";
 import style from "@styles/Layouts/Header.module.css";
 
@@ -13,7 +14,7 @@ function Header() {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
+          Authorization: `Bearer ${user?.refreshToken}`,
         },
       });
       sessionStorage.removeItem("user");
@@ -24,6 +25,25 @@ function Header() {
       window.location.reload();
     }
   };
+  // 임시 회원 탈퇴 기능
+  const handleWithDraw = async () => {
+    if(confirm("탈퇴할까요?")){
+      await fetch(`${SERVER_API}/withdraw`,{
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.refreshToken}`
+        }
+      })
+      sessionStorage.removeItem("user");
+      localStorage.removeItem("AccessToken");
+      localStorage.removeItem("RefreshToken");
+      alert("회원 탈퇴 완료");
+      navigate("/main");
+      window.location.reload();
+    }
+  }
+
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
@@ -32,6 +52,7 @@ function Header() {
         </a>
         {user && user?.accessToken ? (
           <div className={style.link_wrapper}>
+            <button onClick={() => handleWithDraw()}>회원 탈퇴</button>
             <Link to={`/minihome/${user?.nickname}`} className={style.link}>
               MINIHOME
             </Link>
