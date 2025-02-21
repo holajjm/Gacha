@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "@styles/Minihome/Header/MinihomeFollower.module.css";
 import { useUserStore } from "@store/store";
 import { useParams } from "react-router-dom";
+import MiniHomeFollowerItem from "./MiniHomeFollowerItem";
 
 interface Followers {
   userId: number;
@@ -39,7 +40,7 @@ function MinihomeFollower({
   useEffect(() => {
     getFollower();
   }, []);
-  console.log("followers :", followers);
+  const followerList = followers.map(e => <MiniHomeFollowerItem key={e?.userId} followers={e}/>)
   return (
     <div className={style.container}>
       <div className={style.background}></div>
@@ -51,20 +52,7 @@ function MinihomeFollower({
           </button>
         </header>
         <main className={style.main}>
-          <li className={style.list}>
-            <div>
-              {!user?.profileUrl ? <img src="" alt="profile" /> : <div></div>}
-            </div>
-            <p>holajjm</p>
-            <button>삭제</button>
-          </li>
-          <li className={style.list}>
-            <div>
-              <img src="" alt="profile" />
-            </div>
-            <p>holajjm</p>
-            <button>삭제</button>
-          </li>
+          {followerList}
         </main>
       </section>
     </div>
