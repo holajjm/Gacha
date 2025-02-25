@@ -3,6 +3,7 @@ import React from "react";
 import style from "@styles/Explore/ExploreItem.module.css";
 import { useNavigate } from "react-router-dom";
 import useImage from "@hooks/useImage";
+import Button from "@components/Button";
 
 interface ExploreItemData {
   profileImageStoreFileName: string,
@@ -12,7 +13,6 @@ interface ExploreItemData {
 
 function ExploreItem({data}:{data:ExploreItemData}) {
   const navigate = useNavigate();
-
   return (
     <li className={style.main_list}>
       <div className={style.main_background}></div>
@@ -22,7 +22,7 @@ function ExploreItem({data}:{data:ExploreItemData}) {
       <div>{data?.nickname}</div>
       <div>{data?.totalVisitorCnt}</div>
       <div>
-        <button onClick={() => navigate(`/minihome/${data?.nickname}`)}>방문</button>
+        <Button text={"방문"} width={"6rem"} onClick={() => navigate(`/minihome/${data?.nickname}`)}></Button>
       </div>
     </li>
   );
