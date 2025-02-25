@@ -4,6 +4,7 @@ import { useUserStore } from "@store/store";
 import GachaCapsule from "./GachaCapsule";
 import style from "@styles/Gacha/GachaMain.module.css";
 import Coin from "@components/Coin";
+import Button from "@components/Button";
 
 interface GachaData {
   itemGrade: string;
@@ -29,8 +30,8 @@ function GachaMain() {
       },
     });
     const data = await response.text();
-    console.log(JSON.parse(data));
-    setGachaData(JSON.parse(data));
+    console.log(JSON.parse(data)?.data);
+    setGachaData(JSON.parse(data)?.data);
   };
   const handleGachaClick = () => {
     getGacha();
@@ -51,7 +52,7 @@ function GachaMain() {
           <div>
             <img src="/images/GachaSample.svg" alt="Gacha" />
           </div>
-          <button onClick={handleGachaClick}>아이템 뽑기</button>
+          <Button text={"아이템 뽑기"} width={"10rem"} onClick={handleGachaClick}></Button>
         </main>
       </section>
       {open ? <GachaCapsule imageData={gachaData} onClick={handleModalClose} /> : null}
