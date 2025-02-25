@@ -104,8 +104,10 @@ function MinihomeReplyNew() {
         },
       );
       const data = await response.json();
-      setPageNum1(data?.totalPages);
-      setPageReplys(data?.content);
+      console.log(data?.data);
+      
+      setPageNum1(data?.data?.totalPages);
+      setPageReplys(data?.data?.content);
     } catch (error) {
       console.error(error);
     }
@@ -149,7 +151,7 @@ function MinihomeReplyNew() {
       >
         <input
           type="text"
-          placeholder="방명록을 남겨보세요"
+          placeholder="방명록을 남겨보세요!"
           {...register("content", { required: "내용을 입력해주세요" })}
         />
         <button>등록</button>
