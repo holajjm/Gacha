@@ -21,12 +21,12 @@ function MinihomeAdornBackground() {
       }
     })
     const data = await response.json();
-    setBackgroundItemList(data);
+    setBackgroundItemList(data?.data);
   }
   useEffect(() => {
     getBackgroundItems()
   },[])
-  console.log(backgroundItemList);
+  // console.log(backgroundItemList);
   const backgroundItems = backgroundItemList.map(e => <MinihomeAdornBackgroundItem key={e.backgroundId} data={e}/>)
   return (
     <section className={style.main}>
