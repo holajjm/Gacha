@@ -6,6 +6,7 @@ import MarketItem from "./MarketItem";
 import MarketItemModal from "./MarketItemModal";
 import style from "@styles/Market/MarketMain.module.css";
 import Coin from "@components/Coin";
+import Button from "@components/Button";
 
 interface MarketItemData {
   hasStock: string;
@@ -39,7 +40,7 @@ function MarketMain() {
         },
       );
       const data = await response.json();
-      setItemList(data);
+      setItemList(data?.data);
     };
     getMarketItem();
   }, [navClick]);
@@ -68,18 +69,20 @@ function MarketMain() {
       <section className={style.wrapper}>
         <div className={style.background}></div>
         <aside className={style.aside}>
-          <button
+          <Button
+            text={"내 판매 목록"}
+            width={"10rem"}
             onClick={() => navigate("/market/mysellingitem")}
-            className={style.aside_button}
+            // className={style.aside_button}
           >
-            내 판매 목록
-          </button>
-          <button
+          </Button>
+          <Button
+            text={"내 상품 등록"}
+            width={"10rem"}
             onClick={() => navigate("/market/enroll")}
-            className={style.aside_button}
+            // className={style.aside_button}
           >
-            내 상품 등록
-          </button>
+          </Button>
         </aside>
         <main className={style.main}>
           <nav onClick={handleClick} className={style.main_nav}>
