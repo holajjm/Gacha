@@ -3,6 +3,7 @@ import { useUserStore } from "@store/store";
 import ExploreItem from "./ExploreItem";
 
 import style from "@styles/Explore/ExploreMain.module.css";
+import Button from "@components/Button";
 
 interface ExploreItemData {
   profileImageStoreFileName: string;
@@ -27,7 +28,9 @@ function ExploreMain() {
       },
     );
     const data = await response.json();
-    setExploreList((prevList) => [...prevList, ...(data?.content || []) ]);
+    console.log(data?.data);
+    
+    setExploreList((prevList) => [...prevList, ...(data?.data?.content || []) ]);
     setCurrentPage((prev) => prev + 1);
   };
   useEffect(() => {
@@ -65,7 +68,7 @@ function ExploreMain() {
           },
         );
         const data = await response.json();
-        setExploreList(data?.content);
+        setExploreList(data?.data?.content);
       };
       sortByCreatedAr();
     } else if (select === "totalVisitorCnt") {
@@ -81,7 +84,7 @@ function ExploreMain() {
           },
         );
         const data = await response.json();
-        setExploreList(data?.content);
+        setExploreList(data?.data?.content);
       };
       sortByTotalVisitorCnt();
     }
@@ -94,6 +97,10 @@ function ExploreMain() {
       <section className={style.wrapper}>
         <header className={style.header}>
           <aside className={style.header_aside}>
+            <div className={style.header_wrapper}>
+              <Button text={`<`} width={"2.5rem"} onClick={() => window.history.back()}/>
+              <h1 className={style.header_title}>둘러보기</h1>
+            </div>
             <select onChange={onSelect} name="select" id="select">
               <option value="createdAt">가입순</option>
               <option value="totalVisitorCnt">인기순</option>
