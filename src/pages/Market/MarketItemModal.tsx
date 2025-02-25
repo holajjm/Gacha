@@ -7,7 +7,7 @@ interface ModalData {
   grade: string;
   imageUrl: string;
   name: string;
-  quantity: number;
+  stock: number;
 }
 
 function MarketItemModal({
@@ -22,7 +22,7 @@ function MarketItemModal({
     grade: "",
     imageUrl: "",
     name: "",
-    quantity: 0,
+    stock: 0,
   });
   const { user } = useUserStore((state) => state);
   const getModalData = async () => {
@@ -37,30 +37,14 @@ function MarketItemModal({
       },
     );
     const data = await response.json();
-    setModalData(data);
+    console.log(data?.data);
+    
+    setModalData(data?.data);
   };
   useEffect(() => {
     getModalData();
   }, []);
 
-  // const [imageList, setImageList] = useState<string>();
-  // const image = async () => {
-  //   const response = await fetch(
-  //     `${SERVER_API}${modalData?.imageUrl}`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "image/png, image/jif",
-  //       },
-  //     },
-  //   );
-  //   const blob = await response.blob();
-  //   const imageObjUrl = URL.createObjectURL(blob);
-  //   setImageList(imageObjUrl);
-  // };
-  // useEffect(() => {
-  //   image();
-  // }, [modalData]);
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
@@ -73,10 +57,13 @@ function MarketItemModal({
             <img src={useImage(modalData?.imageUrl)} alt="sample" />
           </aside>
           <main className={style.main}>
-            <p>이름 | {modalData?.name}</p>
-            <p>등급 | {modalData?.grade}</p>
-            <p>수량 | {modalData?.quantity}</p>
-            <button>구매</button>
+            <div className={style.main_wrapper}>
+              <p>이름 <span>{modalData?.name}</span></p>
+              <p>등급 <span>{modalData?.grade}</span></p>
+              <p>수량 <span>{modalData?.stock}</span></p>
+            </div>
+            {/* 구매 기능 구현 및 공용 버튼 컴포넌트로 변경 */}
+            <button className={style.main_button}>구매</button>
           </main>
         </section>
       </section>
