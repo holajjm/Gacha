@@ -13,15 +13,18 @@ interface ItemBookData {
 }
 
 function MinihomeItems({data}:{data:ItemBookData}) {
+  const grade = data?.itemGrade;
   return (
-    <div className={style.wrapper}>
+    <div className={style[`wrapper_${grade}`]}>
+      {!data?.itemCnt ? <div className={style.disabled}></div> : null}
       <div className={style.img}>
         <img src={useImage(data?.imageUrl)} alt="sample" />
+        {data?.itemCnt ? <p className={style.count}>{data?.itemCnt}</p> : null}
       </div>
-      <div className={style.item}>
+      {/* <div className={style.item}>
         <p>{data?.itemGrade}</p>
         <p>{data?.itemName} / {data?.itemCnt}개</p>
-      </div>
+      </div> */}
     </div>
   );
 }
