@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import MinihomeFollowing from "./Header/MinihomeFollowing";
 import MinihomeFollower from "./Header/MinihomeFollower";
 import useImage from "@hooks/useImage";
+import Button from "@components/Button";
 
 interface MiniHomeMainData {
   followersCnt: number;
@@ -52,7 +53,8 @@ function MiniHomeMain() {
         },
       );
       const data = await response.json();
-      setMinihomeData(data);
+      // console.log(data?.data);
+      setMinihomeData(data?.data);
     } catch (error) {
       console.error(error);
     }
@@ -160,35 +162,41 @@ function MiniHomeMain() {
             </div>
             {minihomeData?.isOwner ? (
               <div className={style.header_bottom}>
-                <button
+                <Button
+                  text={"아이템 북 관리"}
+                  width={"100%"}
                   onClick={() => navigate(`/minihome/itembook`)}
-                  className={style.header_button}
-                >
-                  아이템 북 관리
-                </button>
-                <button
+                  // className={style.header_button}
+                ></Button>
+                <Button
+                  text={"미니홈 꾸미기"}
+                  width={"100%"}
                   onClick={() => navigate(`/minihome/adorn`)}
-                  className={style.header_button}
+                  // className={style.header_button}
                 >
-                  미니홈 꾸미기
-                </button>
+                  {/* 미니홈 꾸미기 */}
+                </Button>
               </div>
             ) : (
               <div className={style.header_bottom}>
                 {minihomeData?.isFollowing ? (
-                  <button
+                  <Button
+                    text={"팔로우 끊기"}
+                    width={"100%"}
                     onClick={() => handleUnFollowing(minihomeData)}
-                    className={style.header_button}
+                    // className={style.header_button}
                   >
-                    팔로우 끊기
-                  </button>
+                    {/* 팔로우 끊기 */}
+                  </Button>
                 ) : (
-                  <button
+                  <Button
+                    text={"팔로잉하기"}
+                    width={"100%"}
                     onClick={() => handleFollowing(minihomeData)}
-                    className={style.header_button}
+                    // className={style.header_button}
                   >
-                    팔로잉하기
-                  </button>
+                    {/* 팔로잉하기 */}
+                  </Button>
                 )}
               </div>
             )}
