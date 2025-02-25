@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "@styles/Minihome/Header/MinihomeFollower.module.css";
 import { useUserStore } from "@store/store";
 import { useParams } from "react-router-dom";
-import MiniHomeFollowerItem from "./MiniHomeFollowerItem";
+import MinihomeFollowerItem from "./MinihomeFollowerItem";
 
 interface Followers {
   userId: number;
@@ -23,24 +23,23 @@ function MinihomeFollower({
   const { nickname } = useParams<{ nickname: string }>();
   const [followers, setFollowers] = useState<Followers[]>([]);
   const getFollower = async () => {
-    const response = await fetch(
-      `${SERVER_API}/users/${nickname}/followers`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
+    const response = await fetch(`${SERVER_API}/users/${nickname}/followers`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user?.accessToken}`,
       },
-    );
+    });
     const data = await response.json();
-    console.log(data);
-    setFollowers(data?.content);
+    console.log(data?.data);
+    setFollowers(data?.data?.content);
   };
   useEffect(() => {
     getFollower();
   }, []);
-  const followerList = followers.map(e => <MiniHomeFollowerItem key={e?.userId} followers={e}/>)
+  const followerList = followers.map((e) => (
+    <MinihomeFollowerItem key={e?.userId} followers={e} />
+  ));
   return (
     <div className={style.container}>
       <div className={style.background}></div>
@@ -51,9 +50,7 @@ function MinihomeFollower({
             X
           </button>
         </header>
-        <main className={style.main}>
-          {followerList}
-        </main>
+        <main className={style.main}>{followerList}</main>
       </section>
     </div>
   );
