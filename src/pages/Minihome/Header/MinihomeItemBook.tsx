@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "@styles/Minihome/Header/MinihomeItemBook.module.css";
 import { useUserStore } from "@store/store";
 import MinihomeItems from "./MinihomeItems";
+import Button from "@components/Button";
 
 interface ItemBookData {
   imageUrl: string;
@@ -33,7 +34,7 @@ function MinihomeItemBook() {
       },
     );
     const data = await response.json();
-    setItemList(data);
+    setItemList(data?.data);
   };
   useEffect(() => {
     getItemList();
@@ -43,12 +44,13 @@ function MinihomeItemBook() {
     <div className={style.container}>
       <div className={style.wrapper}>
         <header className={style.header}>
-          <button
+          <Button
+            text={"뒤로 가기"}
+            width={" 20%"}
             onClick={() => window.history.back()}
-            className={style.header_button}
+            // className={style.header_button}
           >
-            &larr; 뒤로 가기
-          </button>
+          </Button>
         </header>
         <main className={style.main}>
           <nav onClick={handleClick} className={style.main_nav}>
