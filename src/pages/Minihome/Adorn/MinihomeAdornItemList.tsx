@@ -25,7 +25,7 @@ function MinihomeAdornItemList() {
       }
     })
     const data = await response.json();
-    setItemList(data);
+    setItemList(data?.data);
   }
   useEffect(() => {
     getItems()
