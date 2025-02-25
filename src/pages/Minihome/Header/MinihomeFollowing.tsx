@@ -33,8 +33,8 @@ function MinihomeFollowing({
       },
     );
     const data = await response.json();
-    console.log(data);
-    setFollowings(data?.content);
+    console.log(data?.data);
+    setFollowings(data?.data?.content);
   };
   useEffect(() => {
     getFollowing();
