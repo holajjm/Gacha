@@ -6,7 +6,7 @@
   overflow: hidden;
   height: 100%;
 }
-.button {
+/* .button {
   width: 10rem;
   height: 5rem;
   display: flex;
@@ -20,7 +20,7 @@
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   position: relative;
-}
+} */
 .main {
   position: relative;
   width: 100%;
