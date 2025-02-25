@@ -5,6 +5,7 @@ import MarketMySellingItem from "./MarketMySellingItem";
 import style from "@styles/Market/Sell/MarketMySellingList.module.css";
 import MarketSellingItemModal from "./MarketSellingItemModal";
 import Coin from "@components/Coin";
+import Button from "@components/Button";
 
 interface MySellingItemData {
   grade: string;
@@ -50,7 +51,7 @@ function MarketMyList() {
       },
     );
     const data = await response.json();
-    setSellingItem((prevList) => [...prevList, ...(data?.content || [])]);
+    setSellingItem((prevList) => [...prevList, ...(data?.data?.content || [])]);
     setCurrentPage((prev) => prev + 1);
   };
   useEffect(() => {
@@ -131,12 +132,13 @@ function MarketMyList() {
       <section className={style.wrapper}>
         <div className={style.background}></div>
         <aside className={style.aside}>
-          <button
+          <Button
+            text={"뒤로가기"}
+            width={"10rem"}
             onClick={() => window.history.back()}
-            className={style.aside_button}
+            // className={style.aside_button}
           >
-            &larr; 뒤로 가기
-          </button>
+          </Button>
           <select onChange={handleSort} className={style.aside_filter}>
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
