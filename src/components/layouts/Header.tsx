@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useUserStore } from "@store/store";
 import style from "@styles/Layouts/Header.module.css";
+import Button from "@components/Button";
 
 function Header() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
@@ -65,9 +66,9 @@ function Header() {
             <Link to={"/market"} className={style.link}>
               MARKET
             </Link>
-            <button onClick={handleLogout} className={style.link}>
-              LOGOUT
-            </button>
+            <Button text={"LOGOUT"} width={"6rem"} onClick={handleLogout}>
+              {/* LOGOUT */}
+            </Button>
           </div>
         ) : (
           <div className={style.link_wrapper}>
