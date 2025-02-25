@@ -1,0 +1,16 @@
+.backBtn {
+  /* width: 2.5rem; */
+  font-size: 1rem;
+  /* font-weight: bold; */
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2D2D2D;
+  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
+  border-radius: 5px;
+  text-decoration: none;
+  color: #2D2D2D;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
