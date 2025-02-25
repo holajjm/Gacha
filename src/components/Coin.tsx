@@ -21,9 +21,9 @@ function Coin() {
   const { data, isLoading } = useQuery({
     queryKey: ["coin"],
     queryFn: getCoin,
-    select: (data) => data?.data,
+    select: (data) => data?.data?.data,
   });
-  console.log(data);
+  // console.log(data);
   if (isLoading) return <Loading />;
   return (
     <div className={style.coin}>
