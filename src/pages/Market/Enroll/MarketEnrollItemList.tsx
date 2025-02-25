@@ -4,13 +4,16 @@ import { useUserStore } from "@store/store";
 import MarketEnrollPreview from "./MarketEnrollPreview";
 import MarketEnrollItem from "./MarketEnrollItem";
 import style from "@styles/Market/Enroll/MarketEnrollItemList.module.css";
+import Button from "@components/Button";
 
 interface Item {
-  userItemId: number;
-  name: string;
-  grade: string;
-  price: number;
   imageUrl: string;
+  itemCnt: number;
+  itemGrade: string;
+  itemId: number;
+  itemName: string;
+  price: number;
+  stock: number;
 }
 
 function MarketSellItemList() {
@@ -18,11 +21,13 @@ function MarketSellItemList() {
   const { user } = useUserStore((state) => state);
   const [itemList, setItemList] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item>({
-    userItemId: 0,
-    name: "",
-    grade: "",
-    price: 0,
     imageUrl: "",
+    itemCnt: 0,
+    itemGrade: "",
+    itemId: 0,
+    itemName: "",
+    price: 0,
+    stock: 0,
   });
   const [pageNum, setPageNum] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -38,7 +43,7 @@ function MarketSellItemList() {
       },
     );
     const data = await response.json();
-    setItemList(data?.content);
+    setItemList(data?.data?.content);
     setPageNum(Math.floor(data?.totalElements / 10) + 1);
   };
   useEffect(() => {
@@ -67,17 +72,21 @@ function MarketSellItemList() {
 
   const myItemList = itemList.map((data) => (
     <MarketEnrollItem
-      key={data.userItemId}
+      key={data.itemId}
       item={data}
       onSelect={handleItemClick}
     />
   ));
+  console.log(itemList);
 
   return (
     <section className={style.itemList}>
-      <button onClick={() => window.history.back()} className={style.button}>
-        &larr; 뒤로 가기
-      </button>
+      <Button
+        text={"뒤로 가기"}
+        width={"10rem"}
+        onClick={() => window.history.back()}
+        // className={style.button}
+      ></Button>
       <MarketEnrollPreview item={selectedItem} />
       <main className={style.main}>
         <header className={style.main_header}>내 아이템</header>
