@@ -3,7 +3,10 @@ import MinihomeReplyItem from "./MinihomeReplyItem";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useUserStore } from "@store/store";
+
+import Button from "@components/Button";
 import style from "@styles/Minihome/MinihomeReplyNew.module.css";
+import usePageTitle from "@hooks/usePageTitle";
 
 interface ReplySendData {
   content: string;
@@ -15,25 +18,6 @@ interface ReplyData {
   isAuthor: boolean;
   nickname: string;
 }
-// interface ReplyTotalData {
-//   content: ReplyData[];
-//   empty: boolean;
-//   first: boolean;
-//   last: boolean;
-//   number: number;
-//   numberOfElements: number;
-//   pageable: {
-//     pageNumber: number;
-//     pageSize: number;
-//     sort: { empty: string; sorted: string; unsorted: string };
-//     offset: number;
-//     unpaged: boolean;
-//   };
-//   size: number;
-//   sort: { unsorted: boolean; sorted: boolean; empty: boolean };
-//   totalElements: number;
-//   totalPages: number;
-// }
 function MinihomeReplyNew() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
@@ -41,6 +25,7 @@ function MinihomeReplyNew() {
   const [pageReplys, setPageReplys] = useState<ReplyData[]>([]);
   const [pageNum1, setPageNum1] = useState<number>(0);
   const { nickname } = useParams<{ nickname: string }>();
+  usePageTitle(`미니홈 - ${nickname}`)
   const {
     register,
     handleSubmit,
@@ -66,29 +51,6 @@ function MinihomeReplyNew() {
       console.error(error);
     }
   };
-
-  // const getReply = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `${SERVER_API}/guestbooks/${nickname}`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${user?.accessToken}`,
-  //         },
-  //       },
-  //     );
-  //     const data = await response.json();
-  //     setReplys(data?.content);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getReply();
-  // }, []);
 
   const [currentPage, setCurrentPage] = useState<number>(0);
   const getPageReply = async () => {
@@ -154,7 +116,7 @@ function MinihomeReplyNew() {
           placeholder="방명록을 남겨보세요!"
           {...register("content", { required: "내용을 입력해주세요" })}
         />
-        <button>등록</button>
+        <Button text={"등록"} width={"5rem"} onClick={() => {}}></Button>
         <p className={style.main_replyError}>{errors.content?.message}</p>
       </form>
       <main className={style.main_replyList}>{replyList}</main>
