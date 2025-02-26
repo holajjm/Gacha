@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useUserStore } from "@store/store";
 import ExploreItem from "./ExploreItem";
 
-import style from "@styles/Explore/ExploreMain.module.css";
+import { SlArrowLeft } from "react-icons/sl";
 import Button from "@components/Button";
+import usePageTitle from "@hooks/usePageTitle";
+import style from "@styles/Explore/ExploreMain.module.css";
 
 interface ExploreItemData {
   profileImageStoreFileName: string;
@@ -12,6 +14,7 @@ interface ExploreItemData {
 }
 
 function ExploreMain() {
+  usePageTitle("둘러보기")
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [exploreList, setExploreList] = useState<ExploreItemData[]>([]);
@@ -98,7 +101,7 @@ function ExploreMain() {
         <header className={style.header}>
           <aside className={style.header_aside}>
             <div className={style.header_wrapper}>
-              <Button text={`<`} width={"2.5rem"} onClick={() => window.history.back()}/>
+              <Button text={<SlArrowLeft />} width={"2.5rem"} onClick={() => window.history.back()}/>
               <h1 className={style.header_title}>둘러보기</h1>
             </div>
             <select onChange={onSelect} name="select" id="select">
