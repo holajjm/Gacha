@@ -3,8 +3,11 @@ import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css";
 import MinihomeAdornBackground from "./MinihomeAdornBackground";
 import MinihomeAdornItemList from "./MinihomeAdornItemList";
 import Button from "@components/Button";
+import { SlArrowLeft } from "react-icons/sl";
+import usePageTitle from "@hooks/usePageTitle";
 
 function MinihomeAdorn() {
+  usePageTitle("미니홈 꾸미기")
   const [active, setActive] = useState<string | null>("BACKGROUND");
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setActive((e.target as HTMLElement).getAttribute("datatype"));
@@ -14,12 +17,15 @@ function MinihomeAdorn() {
     <div className={style.container}>
       <div className={style.wrapper}>
         <aside className={style.aside}>
-          <Button
-            text={"뒤로 가기"}
-            width={"20%"}
-            onClick={() => window.history.back()}
-            // className={style.aside_button}
-          ></Button>
+          <div className={style.aside_wrapper}>
+            <Button
+              text={<SlArrowLeft />}
+              width={"2.5rem"}
+              onClick={() => window.history.back()}
+              // className={style.header_button}
+            ></Button>
+            <h1 className={style.aside_title}>미니홈 꾸미기</h1>
+          </div>
           {/* 저장 버튼 공용 컴포넌트 사용 및 기능 구현하기 */}
           <button className={style.aside_save}>저장하기</button>
         </aside>
