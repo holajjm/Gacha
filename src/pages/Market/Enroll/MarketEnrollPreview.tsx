@@ -6,15 +6,15 @@ import Button from "@components/Button";
 
 interface Item {
   imageUrl: string;
-  itemCnt: number
+  itemCnt: number;
   itemGrade: string;
   itemId: number;
   itemName: string;
   price: number;
-  stock: number
+  stock: number;
 }
 
-function MarketSellPreview({ item }: { item: Item }) {
+function MarketEnrollPreview({ item }: { item: Item }) {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const enrollItem = async () => {
@@ -42,26 +42,36 @@ function MarketSellPreview({ item }: { item: Item }) {
       </div>
       <div className={style.header_item}>
         <div className={style.header_wrapper}>
-          <p>
-            <span>Name:</span> <strong>{item?.itemName ? item?.itemName : "-"}</strong>
-          </p>
-          <p>
-            <span>Grade:</span>{" "}
-            <strong>{item?.itemGrade ? item?.itemGrade : "-"}</strong>
-          </p>
-          <p>
-            <span>Price:</span> <strong>{item?.price ? item?.price : 0}</strong>
-          </p>
-          <Button
-            text={"판매 등록"}
-            width={"6rem"}
-            onClick={enrollItem}
-            // className={style.header_button}
-          ></Button>
+          <table>
+            <thead>
+              <tr>
+                <th>이름</th>
+                <th>등급</th>
+                <th>가격</th>
+                <th>마켓 재고</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{item?.itemName ? item?.itemName : "-"}</td>
+                <td>{item?.itemGrade ? item?.itemGrade : "-"}</td>
+                <td>{item?.price ? item?.price : "-"}코인</td>
+                <td>{item?.itemCnt ? item?.itemCnt : "-"}개</td>
+              </tr>
+            </tbody>
+          </table>
+          <div className={style.header_Btn}>
+            <Button
+              text={"판매 등록"}
+              width={"6rem"}
+              onClick={enrollItem}
+              // className={style.header_button}
+            ></Button>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default MarketSellPreview;
+export default MarketEnrollPreview;
