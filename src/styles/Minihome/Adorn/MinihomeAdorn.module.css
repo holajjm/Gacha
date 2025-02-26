@@ -21,6 +21,14 @@
   align-items: center;
   justify-content: space-between;
 }
+.aside_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.aside_title {
+  font-size: 1.5rem;
+}
 .aside_button, .aside_save {
   width: 20%;
   padding: 0.5rem;

@@ -23,7 +23,7 @@
   padding: 0 0.5rem;
   background: none;
 }
-.main_reply_input > button {
+/* .main_reply_input > button {
   padding: 0.5rem;
   width: 5rem;
   height: 2.5rem;
@@ -38,13 +38,13 @@
   color: black;
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-}
+} */
 .main_replyError {
   position: absolute;
   color: red;
+  bottom: -1rem;
+  font-size: 0.8rem;
   font-weight: bold;
-  bottom: -1.5rem;
-
 }
 .main_replyList {
   display: flex;

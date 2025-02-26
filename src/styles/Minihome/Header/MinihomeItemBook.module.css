@@ -19,6 +19,10 @@
 .header {
   display: flex;
   align-items: center;
+  gap: 1rem;
+}
+.header_title {
+  font-size: 1.5rem;
 }
 /* .header_button {
   width: 20%;
@@ -43,7 +47,7 @@
   overflow: hidden;
 }
 .main_nav {
-  height: 5%;
+  /* height: 5%; */
   display: flex;
   align-items: center;
   justify-content: space-between;
