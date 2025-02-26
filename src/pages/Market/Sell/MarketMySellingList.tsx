@@ -20,7 +20,7 @@ interface MySellingItemData {
 }
 
 function MarketMyList() {
-  usePageTitle("내 판매 목록");
+  usePageTitle("마켓 - 내 판매 목록");
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [sellingItem, setSellingItem] = useState<MySellingItemData[]>([]);
