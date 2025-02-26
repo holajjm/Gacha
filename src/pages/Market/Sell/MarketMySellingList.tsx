@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useUserStore } from "@store/store";
 import MarketMySellingItem from "./MarketMySellingItem";
 
-import style from "@styles/Market/Sell/MarketMySellingList.module.css";
 import MarketSellingItemModal from "./MarketSellingItemModal";
 import Coin from "@components/Coin";
 import Button from "@components/Button";
+import usePageTitle from "@hooks/usePageTitle";
+import { SlArrowLeft } from "react-icons/sl";
+import style from "@styles/Market/Sell/MarketMySellingList.module.css";
 
 interface MySellingItemData {
   grade: string;
@@ -18,6 +20,7 @@ interface MySellingItemData {
 }
 
 function MarketMyList() {
+  usePageTitle("내 판매 목록");
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [sellingItem, setSellingItem] = useState<MySellingItemData[]>([]);
@@ -28,13 +31,13 @@ function MarketMyList() {
   };
   const [navClick, setNavClick] = useState<string>("");
   console.log(navClick);
-  
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setNavClick((e.target as HTMLElement).getAttribute("datatype") as string);
   };
   const text = navClick ? `&grade=${navClick}` : navClick;
   console.log(text);
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -132,13 +135,15 @@ function MarketMyList() {
       <section className={style.wrapper}>
         <div className={style.background}></div>
         <aside className={style.aside}>
-          <Button
-            text={"뒤로가기"}
-            width={"10rem"}
-            onClick={() => window.history.back()}
-            // className={style.aside_button}
-          >
-          </Button>
+          <div className={style.aside_wrapper}>
+            <Button
+              text={<SlArrowLeft />}
+              width={"2.5rem"}
+              onClick={() => window.history.back()}
+              // className={style.aside_button}
+            ></Button>
+            <h1 className={style.aside_title}>내 판매 목록</h1>
+          </div>
           <select onChange={handleSort} className={style.aside_filter}>
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
