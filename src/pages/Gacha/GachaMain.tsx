@@ -5,6 +5,7 @@ import GachaCapsule from "./GachaCapsule";
 import style from "@styles/Gacha/GachaMain.module.css";
 import Coin from "@components/Coin";
 import Button from "@components/Button";
+import usePageTitle from "@hooks/usePageTitle";
 
 interface GachaData {
   itemGrade: string;
@@ -13,6 +14,7 @@ interface GachaData {
 }
 
 function GachaMain() {
+  usePageTitle("뽑기")
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [open, setOpen] = useState<boolean>(false);
