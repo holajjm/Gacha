@@ -3,8 +3,9 @@ import { useUserStore } from "@store/store";
 
 import MarketEnrollPreview from "./MarketEnrollPreview";
 import MarketEnrollItem from "./MarketEnrollItem";
-import style from "@styles/Market/Enroll/MarketEnrollItemList.module.css";
 import Button from "@components/Button";
+import { SlArrowLeft } from "react-icons/sl";
+import style from "@styles/Market/Enroll/MarketEnrollItemList.module.css";
 
 interface Item {
   imageUrl: string;
@@ -16,7 +17,7 @@ interface Item {
   stock: number;
 }
 
-function MarketSellItemList() {
+function MarketEnrollItemList() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [itemList, setItemList] = useState<Item[]>([]);
@@ -77,16 +78,18 @@ function MarketSellItemList() {
       onSelect={handleItemClick}
     />
   ));
-  console.log(itemList);
 
   return (
     <section className={style.itemList}>
-      <Button
-        text={"뒤로 가기"}
-        width={"10rem"}
-        onClick={() => window.history.back()}
-        // className={style.button}
-      ></Button>
+      <header className={style.header}>
+        <Button
+          text={<SlArrowLeft />}
+          width={"2.5rem"}
+          onClick={() => window.history.back()}
+          // className={style.button}
+        ></Button>
+        <h1 className={style.header_title}>내 상품 등록</h1>
+      </header>
       <MarketEnrollPreview item={selectedItem} />
       <main className={style.main}>
         <header className={style.main_header}>내 아이템</header>
@@ -97,4 +100,4 @@ function MarketSellItemList() {
   );
 }
 
-export default MarketSellItemList;
+export default MarketEnrollItemList;
