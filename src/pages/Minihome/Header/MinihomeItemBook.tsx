@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import style from "@styles/Minihome/Header/MinihomeItemBook.module.css";
 import { useUserStore } from "@store/store";
+
+import { SlArrowLeft } from "react-icons/sl";
 import MinihomeItems from "./MinihomeItems";
 import Button from "@components/Button";
+import style from "@styles/Minihome/Header/MinihomeItemBook.module.css";
+import usePageTitle from "@hooks/usePageTitle";
 
 interface ItemBookData {
   imageUrl: string;
@@ -14,6 +17,7 @@ interface ItemBookData {
 }
 
 function MinihomeItemBook() {
+  usePageTitle("아이템 북 관리");
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [itemList, setItemList] = useState<ItemBookData[]>([]);
@@ -21,7 +25,7 @@ function MinihomeItemBook() {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setClick((e.target as HTMLElement).getAttribute("datatype") as string);
   };
-  const text = (click ? `?grade=${click}` : click)
+  const text = click ? `?grade=${click}` : click;
   const getItemList = async () => {
     const response = await fetch(
       `${SERVER_API}/items/${user?.nickname}${text && text}`,
@@ -45,12 +49,12 @@ function MinihomeItemBook() {
       <div className={style.wrapper}>
         <header className={style.header}>
           <Button
-            text={"뒤로 가기"}
-            width={" 20%"}
+            text={<SlArrowLeft />}
+            width={"2.5rem"}
             onClick={() => window.history.back()}
             // className={style.header_button}
-          >
-          </Button>
+          ></Button>
+          <h1 className={style.header_title}>아이템 북 관리</h1>
         </header>
         <main className={style.main}>
           <nav onClick={handleClick} className={style.main_nav}>
