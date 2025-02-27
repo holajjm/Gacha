@@ -17,7 +17,7 @@ function MinihomeAdornItemList() {
   const { user } = useUserStore((state) => state);
   const [itemList, setItemList] = useState<ItemData[]>([]);
   const getItems = async () => {
-    const response = await fetch(`${SERVER_API}/items/${user?.nickname}`,{
+    const response = await fetch(`${SERVER_API}/items/me/forSale`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,9 @@ function MinihomeAdornItemList() {
       }
     })
     const data = await response.json();
-    setItemList(data?.data);
+    console.log(data?.data?.content);
+    
+    setItemList(data?.data?.content);
   }
   useEffect(() => {
     getItems()
