@@ -8,7 +8,7 @@ interface BackgroundItemData {
   imageUrl: string
 }
 
-function MinihomeAdornBackground() {
+function MinihomeAdornBackground({getBack}:{getBack:(data:BackgroundItemData) => void}) {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const {user} = useUserStore((state) => state);
   const [backgroundItemList, setBackgroundItemList] = useState<BackgroundItemData[]>([]);
@@ -27,7 +27,7 @@ function MinihomeAdornBackground() {
     getBackgroundItems()
   },[])
   // console.log(backgroundItemList);
-  const backgroundItems = backgroundItemList.map(e => <MinihomeAdornBackgroundItem key={e.backgroundId} data={e}/>)
+  const backgroundItems = backgroundItemList.map(e => <MinihomeAdornBackgroundItem key={e.backgroundId} data={e} getBack={getBack}/>)
   return (
     <section className={style.main}>
       {backgroundItems}
