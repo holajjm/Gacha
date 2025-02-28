@@ -10,9 +10,12 @@ interface ItemData {
   userItemIds: null,
 }
 
-function MinihomeAdornItem({data}:{data:ItemData}) {
+function MinihomeAdornItem({data,onClick}:{data:ItemData,onClick:(data:ItemData) => void}) {
+  const handle = () => {
+    onClick(data)
+  }
   return (
-    <div>
+    <div onClick={handle}>
       <img src={useImage(data?.imageUrl)} alt="" />
     </div>
   )
