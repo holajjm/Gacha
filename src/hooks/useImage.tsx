@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-function useImage(imageUrl:string) {
+function useImage(imageUrl: string) {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const [image, setImage] = useState<string>();
   const getImage = async () => {
-    const response = await fetch(`${SERVER_API}${imageUrl}`, {
+    const response = await fetch(`${SERVER_API}${imageUrl && imageUrl}`, {
       method: "GET",
       headers: {
         "Content-Type": "image/png, image/jif",
@@ -15,7 +15,7 @@ function useImage(imageUrl:string) {
     setImage(imageObjUrl);
   };
   useEffect(() => {
-    getImage();
+    if (imageUrl) getImage();
   }, [imageUrl]);
   return image;
 }
