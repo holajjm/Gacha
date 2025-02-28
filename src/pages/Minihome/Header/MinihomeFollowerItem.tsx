@@ -1,6 +1,6 @@
 import React from "react";
 
-import style from "@styles/Minihome/Header/MiniHomeFollowerItem.module.css";
+import style from "@styles/Minihome/Header/MinihomeFollowerItem.module.css";
 import useImage from "@hooks/useImage";
 
 interface Followers {
