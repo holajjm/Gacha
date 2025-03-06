@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useUserStore } from "@store/store";
-import ExploreItem from "./ExploreItem";
 
-import { SlArrowLeft } from "react-icons/sl";
+import { useUserStore } from "@store/store";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
+import usePageUpper from "@hooks/usePageUpper";
+
+import ExploreItem from "./ExploreItem";
+import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Explore/ExploreMain.module.css";
 
 interface ExploreItemData {
@@ -14,11 +16,14 @@ interface ExploreItemData {
 }
 
 function ExploreMain() {
-  usePageTitle("둘러보기")
+  usePageTitle("둘러보기");
+  usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [exploreList, setExploreList] = useState<ExploreItemData[]>([]);
   const [select, setSelect] = useState<string>("");
+
+  // Mount 시 사용자 리스트 최초 호출
   const getUserList = async () => {
     const response = await fetch(
       `${SERVER_API}/explore/minihome?sort=createdAt,desc&page=${currentPage}&size=6`,
@@ -31,15 +36,14 @@ function ExploreMain() {
       },
     );
     const data = await response.json();
-    console.log(data?.data);
-    
-    setExploreList((prevList) => [...prevList, ...(data?.data?.content || []) ]);
+    setExploreList((prevList) => [...prevList, ...(data?.data?.content || [])]);
     setCurrentPage((prev) => prev + 1);
   };
   useEffect(() => {
     getUserList();
   }, []);
-  
+
+  // 무한 스크롤 구현
   const [currentPage, setCurrentPage] = useState<number>(0);
   const handleScroll = () => {
     const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
@@ -53,10 +57,12 @@ function ExploreMain() {
     };
   }, [exploreList]);
 
+  // 정렬 방식 선택 로직
   const onSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelect(e.target.value);
   };
 
+  // 정렬 방식에 따른 정렬된 데이터 재호출
   useEffect(() => {
     if (select === "createdAt") {
       const sortByCreatedAr = async () => {
@@ -90,9 +96,25 @@ function ExploreMain() {
         setExploreList(data?.data?.content);
       };
       sortByTotalVisitorCnt();
+    } else if (select === "score") {
+      const sortByScore = async () => {
+        const response = await fetch(
+          `${SERVER_API}/explore/minihome/score?sort=score,desc`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user?.accessToken}`,
+            },
+          },
+        );
+        const data = await response.json();
+        setExploreList(data?.data?.content);
+      };
+      sortByScore();
     }
   }, [select]);
-  // 이중 배열 추후 수정, 상태값도 변경
+
   const userList = exploreList.map((e, i) => <ExploreItem key={i} data={e} />);
 
   return (
@@ -101,7 +123,11 @@ function ExploreMain() {
         <header className={style.header}>
           <aside className={style.header_aside}>
             <div className={style.header_wrapper}>
-              <Button text={<SlArrowLeft />} width={"2.5rem"} onClick={() => window.history.back()}/>
+              <Button
+                text={<SlArrowLeft />}
+                width={"2.5rem"}
+                onClick={() => window.history.back()}
+              />
               <h1 className={style.header_title}>둘러보기</h1>
             </div>
             <select onChange={onSelect} name="select" id="select">
@@ -112,9 +138,9 @@ function ExploreMain() {
           </aside>
           <main className={style.header_main}>
             <div className={style.header_background}></div>
-            <div>Profile</div>
-            <div>NickName</div>
-            <div>Visitor</div>
+            <div>프로필</div>
+            <div>닉네임</div>
+            <div>방문자 수</div>
             <div></div>
           </main>
         </header>
