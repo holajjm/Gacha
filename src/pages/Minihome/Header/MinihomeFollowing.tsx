@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import style from "@styles/Minihome/Header/MinihomeFollowing.module.css";
 import { useParams } from "react-router-dom";
+
 import { useUserStore } from "@store/store";
+
 import MinihomeFollowingItem from "./MinihomeFollowingItem";
+import style from "@styles/Minihome/Header/MinihomeFollowing.module.css";
 
 interface Followings {
   userId: number;
@@ -22,24 +24,22 @@ function MinihomeFollowing({
   const { nickname } = useParams<{ nickname: string }>();
   const [followings, setFollowings] = useState<Followings[]>([]);
   const getFollowing = async () => {
-    const response = await fetch(
-      `${SERVER_API}/users/${nickname}/followings`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
+    const response = await fetch(`${SERVER_API}/users/${nickname}/followings`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user?.accessToken}`,
       },
-    );
+    });
     const data = await response.json();
-    console.log(data?.data);
     setFollowings(data?.data?.content);
   };
   useEffect(() => {
     getFollowing();
   }, []);
-  const followingList = followings.map(e => <MinihomeFollowingItem key={e?.userId} followings={e}/>)
+  const followingList = followings.map((e) => (
+    <MinihomeFollowingItem key={e?.userId} followings={e} />
+  ));
   return (
     <div className={style.container}>
       <div className={style.background}></div>
@@ -50,9 +50,7 @@ function MinihomeFollowing({
             X
           </button>
         </header>
-        <main className={style.main}>
-          {followingList}
-        </main>
+        <main className={style.main}>{followingList}</main>
       </section>
     </div>
   );
