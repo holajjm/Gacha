@@ -1,36 +1,28 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
+import useImage from "@hooks/useImage";
 
 import style from "@styles/Gacha/GachaOpenCapsule.module.css";
-import useImage from "@hooks/useImage";
 
 function GachaOpenCapsule({
   color,
   imageUrl,
+  onClick,
 }: {
   color: string;
   imageUrl: string;
+  onClick: () => void;
 }) {
-  // const SERVER_API = import.meta.env.VITE_SERVER_API;
-  // const [imageList, setImageList] = useState<string>();
-  // const image = async () => {
-  //   const response = await fetch(`${SERVER_API}${imageUrl}`, {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "image/png, image/jif",
-  //     },
-  //   });
-  //   const blob = await response.blob();
-  //   const imageObjUrl = URL.createObjectURL(blob);
-  //   setImageList(imageObjUrl);
-  // };
-  // useEffect(() => {
-  //   image();
-  // }, [imageUrl]);
+  const navigate = useNavigate();
   const image = useImage(imageUrl);
+  const handleClose = () => {
+    onClick();
+  };
   return (
-    <>
+    <section className={style.wrapper}>
       <img
-        className={`${style.open_capsule} ${style.open_capsule_opacity}`}
+        className={style.open_capsule}
         src={`/images/${color}OpenCapsule.svg`}
         alt="Open"
       />
@@ -39,7 +31,11 @@ function GachaOpenCapsule({
           <img src={image} alt="item" />
         </div>
       ) : null}
-    </>
+      <div className={style.buttons}>
+        <p onClick={() => navigate("/minihome/itembook")}>아이템 북으로 가기</p>
+        <p onClick={handleClose}>닫기</p>
+      </div>
+    </section>
   );
 }
 
