@@ -10,7 +10,13 @@ interface GachaData {
   itemName: string;
 }
 
-function GachaCapsule({ imageData,onClick }: { imageData: GachaData,onClick:() => void }) {
+function GachaCapsule({
+  imageData,
+  onClick,
+}: {
+  imageData: GachaData;
+  onClick: () => void;
+}) {
   const [color, setColor] = useState<string>("");
   const [randomNum, setRandomNum] = useState<number>(0);
   const colorArr = ["Blue", "Pink", "Yellow", "Green"];
@@ -39,15 +45,18 @@ function GachaCapsule({ imageData,onClick }: { imageData: GachaData,onClick:() =
     openModal();
   }, []);
   const handleClose = () => {
-    onClick()
-  }
+    onClick();
+  };
   return (
     <div className={style.container}>
       <div className={style.background}></div>
-      <button onClick={handleClose} className={style.closeBTN}>X</button>
       <div className={style.wrapper}>
         {showComponent === "Open" && (
-          <GachaOpenCapsule color={color} imageUrl={imageData?.itemImageUrl} />
+          <GachaOpenCapsule
+            color={color}
+            imageUrl={imageData?.itemImageUrl}
+            onClick={handleClose}
+          />
         )}
         {showComponent === "Close" && <GachaCloseCapsule color={color} />}
       </div>
