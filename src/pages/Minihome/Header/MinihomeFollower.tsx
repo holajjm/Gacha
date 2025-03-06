@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import style from "@styles/Minihome/Header/MinihomeFollower.module.css";
-import { useUserStore } from "@store/store";
 import { useParams } from "react-router-dom";
+
+import { useUserStore } from "@store/store";
+
 import MinihomeFollowerItem from "./MinihomeFollowerItem";
+import style from "@styles/Minihome/Header/MinihomeFollower.module.css";
 
 interface Followers {
   userId: number;
@@ -31,7 +33,6 @@ function MinihomeFollower({
       },
     });
     const data = await response.json();
-    console.log(data?.data);
     setFollowers(data?.data?.content);
   };
   useEffect(() => {
