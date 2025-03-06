@@ -16,27 +16,79 @@
 .header_profile > img {
   width: 10rem;
   height: 10rem;
-  border: none;
   border-radius: 100%;
-  background-color: lightgray;
+  background-color: white;
 }
 .header_user {
+  height: 10rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  align-items: start;
+  justify-content: space-between;
   flex-grow: 1;
 }
 .header_user_info {
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
-  justify-content: space-around;
   gap: 1rem;
 }
+.header_user_wrapper {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+.header_user_wrapper > div {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+.header_user_wrapper > div > p {
+  position: absolute;
+  top: -80%;
+  left: 50%;
+  width: 10rem;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  animation-name: attend;
+  animation-duration: 3s;
+  animation-delay: 200ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes attend {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.5rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .header_user_name {
   font-size: 1.7rem;
   font-weight: bold;
+}
+.header_coin {
+  width: 2rem;
+  height: 2rem;
+  background-color: white;
+  padding: 1px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  object-fit: cover;
 }
 .header_info {
   display: flex;
@@ -49,19 +101,4 @@
   display: flex;
   gap: 1rem;
   width: 50%;
-}
-.header_button {
-  width: 100%;
-  padding: 0.5rem;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  background: linear-gradient(to bottom, #ffffff, #fcff4f);
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
 }
