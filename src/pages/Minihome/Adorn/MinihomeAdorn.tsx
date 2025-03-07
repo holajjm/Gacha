@@ -1,11 +1,13 @@
 import React, { useRef, useState } from "react";
-import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css";
-import MinihomeAdornBackground from "./MinihomeAdornBackground";
-import MinihomeAdornItemList from "./MinihomeAdornItemList";
+
 import Button from "@components/Button";
-import { SlArrowLeft } from "react-icons/sl";
 import usePageTitle from "@hooks/usePageTitle";
 import useImage from "@hooks/useImage";
+
+import MinihomeAdornBackground from "./MinihomeAdornBackground";
+import MinihomeAdornItemList from "./MinihomeAdornItemList";
+import { SlArrowLeft } from "react-icons/sl";
+import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css";
 
 import Draggable from "react-draggable";
 // import MinihomeAdornDraggableItem from "./MinihomeAdornDraggableItem";
@@ -31,7 +33,7 @@ function MinihomeAdorn() {
   };
   // ----------------------------------------
   const [item, setItem] = useState<ItemData>();
-  const handleItem = (data:ItemData) => {
+  const handleItem = (data: ItemData) => {
     setItem(data);
   };
   const [background, setBackground] = useState<BackgroundItemData>();
@@ -51,12 +53,10 @@ function MinihomeAdorn() {
               text={<SlArrowLeft />}
               width={"2.5rem"}
               onClick={() => window.history.back()}
-              // className={style.header_button}
             ></Button>
             <h1 className={style.aside_title}>미니홈 꾸미기</h1>
           </div>
-          {/* 저장 버튼 공용 컴포넌트 사용 및 기능 구현하기 */}
-          <button className={style.aside_save}>저장하기</button>
+          <Button text={"저장하기"} width={"20%"} onClick={() => {}}></Button>
         </aside>
         <section className={style.section}>
           <header className={style.header}>
