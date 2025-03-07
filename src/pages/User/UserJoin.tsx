@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { useUserStore } from "@store/store";
+
 import style from "@styles/User/UserJoin.module.css";
 
 interface Data {
@@ -80,7 +81,6 @@ function UserJoin() {
           accessToken: "",
           refreshToken: "",
         });
-        alert("회원가입 완료");
         window.location.href = response.url;
       }
     } catch (error) {
@@ -116,8 +116,7 @@ function UserJoin() {
       setDefaultImage(false);
     }
   };
-  // console.log(imagePreview);
-  
+
   return (
     <div className={style.container}>
       <section className={style.wrapper}>
