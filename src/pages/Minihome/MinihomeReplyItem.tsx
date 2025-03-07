@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
 import { useUserStore } from "@store/store";
-import MinihomeReplyEdit from "./MinihomeReplyEdit";
 import useImage from "@hooks/useImage";
+
+import MinihomeReplyEdit from "./MinihomeReplyEdit";
 import style from "@styles/Minihome/MinihomeReplyItem.module.css";
 
 interface ReplyData {
@@ -29,16 +30,13 @@ function MinihomeReplyItem({
 
   const deleteReply = async () => {
     if (confirm("댓글을 삭제할까요?")) {
-      await fetch(
-        `${SERVER_API}/guestbooks/${replys?.guestbookId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${user?.accessToken}`,
-            "Content-Type": "application/json",
-          },
+      await fetch(`${SERVER_API}/guestbooks/${replys?.guestbookId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user?.accessToken}`,
+          "Content-Type": "application/json",
         },
-      );
+      });
       getPageReply();
     }
     return;
@@ -51,7 +49,7 @@ function MinihomeReplyItem({
       return `${resultTime[1]} ${resultTime[2]}`;
     }
   };
-  
+
   return (
     <div className={style.main_reply}>
       <header className={style.main_reply_header}>
@@ -70,12 +68,14 @@ function MinihomeReplyItem({
               editReplyResult={editReply}
             />
           ) : (
-            <p>{replys?.content}</p>
+            <div className={style.main_bottom}>
+              <p>{replys?.content}</p>
+              <div className={style.main_buttons}>
+                <p onClick={editReply}>수정</p>
+                <p onClick={deleteReply}>삭제</p>
+              </div>
+            </div>
           )}
-          <div className={style.main_buttons}>
-            <button onClick={editReply}>{isEdit ? "취소" : "수정"}</button>
-            {isEdit ? null : <button onClick={deleteReply}>삭제</button>}
-          </div>
         </section>
       </main>
     </div>
