@@ -10,7 +10,6 @@ function MarketEnroll() {
     <div className={style.container}>
       <Coin />
       <section className={style.wrapper}>
-        <div className={style.background}></div>
         <MarketEnrollItemList />
       </section>
     </div>
