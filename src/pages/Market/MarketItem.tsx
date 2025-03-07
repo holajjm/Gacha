@@ -24,6 +24,7 @@ function MarketItem({
   };
   return (
     <div onClick={handleClick} className={style.item}>
+      {!data?.hasStock ? <div className={style.disabled}></div> : null}
       <img src={useImage(data?.imageUrl)} alt="item" />
     </div>
   );
