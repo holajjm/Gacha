@@ -95,7 +95,7 @@ function MinihomeHeader({
   };
 
   // 출석체크 및 코인 획득 로직
-  const triggerRefresh = useCoinState((state) => state.triggerRefresh);
+  const coinRefresh = useCoinState((state) => state.coinRefresh);
   const getAttend = async () => {
     const response = await fetch(`${SERVER_API}/attend`, {
       method: "POST",
@@ -110,7 +110,7 @@ function MinihomeHeader({
       alert(data?.error?.message);
     } else {
       alert("출석 체크 완료!");
-      triggerRefresh();
+      coinRefresh();
     }
   };
   return (
