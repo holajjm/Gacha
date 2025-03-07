@@ -22,23 +22,8 @@
   border-radius: 5px;
   padding: 0 0.5rem;
   background: none;
+  opacity: 0.7;
 }
-/* .main_reply_input > button {
-  padding: 0.5rem;
-  width: 5rem;
-  height: 2.5rem;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-} */
 .main_replyError {
   position: absolute;
   color: red;
@@ -52,7 +37,6 @@
   gap: 0.5rem;
   height: 100%;
 }
-
 .pageList {
   display: flex;
   align-items: center;
