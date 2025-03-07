@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import MinihomeReplyItem from "./MinihomeReplyItem";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { useUserStore } from "@store/store";
 
-import Button from "@components/Button";
-import style from "@styles/Minihome/MinihomeReplyNew.module.css";
+import { useUserStore } from "@store/store";
 import usePageTitle from "@hooks/usePageTitle";
+import Button from "@components/Button";
+
+import MinihomeReplyItem from "./MinihomeReplyItem";
+import style from "@styles/Minihome/MinihomeReplyNew.module.css";
 
 interface ReplySendData {
   content: string;
@@ -25,14 +26,13 @@ function MinihomeReplyNew() {
   const [pageReplys, setPageReplys] = useState<ReplyData[]>([]);
   const [pageNum1, setPageNum1] = useState<number>(0);
   const { nickname } = useParams<{ nickname: string }>();
-  usePageTitle(`미니홈 - ${nickname}`)
+  usePageTitle(`미니홈 - ${nickname}`);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ReplySendData>();
-
-  //useForm의 타입과 handleSubmit에 들어가는 form 제출 함수의 매개변수 타입을 일치 시켜주어야 한다.
+    reset,
+  } = useForm<ReplySendData>(); //useForm의 타입과 handleSubmit에 들어가는 form 제출 함수의 매개변수 타입을 일치 시켜주어야 한다.
 
   const onSubmit = async (formData: ReplySendData) => {
     try {
@@ -47,6 +47,7 @@ function MinihomeReplyNew() {
         }),
       });
       getPageReply();
+      reset(); // 댓글 입력 후 입력창 초기화
     } catch (error) {
       console.error(error);
     }
@@ -66,8 +67,6 @@ function MinihomeReplyNew() {
         },
       );
       const data = await response.json();
-      console.log(data?.data);
-      
       setPageNum1(data?.data?.totalPages);
       setPageReplys(data?.data?.content);
     } catch (error) {
@@ -77,11 +76,8 @@ function MinihomeReplyNew() {
 
   useEffect(() => {
     getPageReply();
-  }, [currentPage]);
+  }, [currentPage, nickname]); // 외부에서 미니홈으로 페이지 접속하였을 때 params 값의 변함에 따른 미니홈 정보 리렌더링 및 재호출
 
-  // const replyList = replys?.map((e) => (
-  //   <MinihomeReplyItem key={e.guestbookId} replys={e} getReply={getReply} />
-  // ));
   const replyList = pageReplys?.map((e) => (
     <MinihomeReplyItem
       key={e.guestbookId}
