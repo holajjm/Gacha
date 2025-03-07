@@ -1,9 +1,10 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useUserStore } from "@store/store";
-import style from "@styles/Layouts/Header.module.css";
 import Button from "@components/Button";
+
+import style from "@styles/Layouts/Header.module.css";
 
 function Header() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
@@ -28,14 +29,14 @@ function Header() {
   };
   // 임시 회원 탈퇴 기능
   const handleWithDraw = async () => {
-    if(confirm("탈퇴할까요?")){
-      await fetch(`${SERVER_API}/withdraw`,{
+    if (confirm("탈퇴할까요?")) {
+      await fetch(`${SERVER_API}/withdraw`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.refreshToken}`
-        }
-      })
+          Authorization: `Bearer ${user?.refreshToken}`,
+        },
+      });
       sessionStorage.removeItem("user");
       localStorage.removeItem("AccessToken");
       localStorage.removeItem("RefreshToken");
@@ -43,7 +44,7 @@ function Header() {
       navigate("/main");
       window.location.reload();
     }
-  }
+  };
 
   return (
     <div className={style.container}>
@@ -54,27 +55,39 @@ function Header() {
         {user && user?.accessToken ? (
           <div className={style.link_wrapper}>
             <button onClick={() => handleWithDraw()}>회원 탈퇴</button>
-            <Link to={`/minihome/${user?.nickname}`} className={style.link}>
-              MINIHOME
-            </Link>
-            <Link to={"/explore"} className={style.link}>
-              EXPLORE
-            </Link>
-            <Link to={"/gacha"} className={style.link}>
-              GACHA
-            </Link>
-            <Link to={"/market"} className={style.link}>
-              MARKET
-            </Link>
-            <Button text={"LOGOUT"} width={"6rem"} onClick={handleLogout}>
-              {/* LOGOUT */}
-            </Button>
+            <Button
+              text={"MINIHOME"}
+              width={"6rem"}
+              onClick={() => navigate(`/minihome/${user?.nickname}`)}
+            ></Button>
+            <Button
+              text={"EXPLORE"}
+              width={"6rem"}
+              onClick={() => navigate("/explore")}
+            ></Button>
+            <Button
+              text={"GACHA"}
+              width={"6rem"}
+              onClick={() => navigate("/gacha")}
+            ></Button>
+            <Button
+              text={"MARKET"}
+              width={"6rem"}
+              onClick={() => navigate("/market")}
+            ></Button>
+            <Button
+              text={"LOGOUT"}
+              width={"6rem"}
+              onClick={handleLogout}
+            ></Button>
           </div>
         ) : (
           <div className={style.link_wrapper}>
-            <Link to={"/login"} className={style.link}>
-              LOGIN
-            </Link>
+            <Button
+              text={"LOGIN"}
+              width={"6rem"}
+              onClick={() => navigate("/login")}
+            ></Button>
           </div>
         )}
       </section>
