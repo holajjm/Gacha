@@ -1,6 +1,6 @@
 .coin {
-  position: absolute;
-  top: 1rem;
+  position: fixed;
+  top: 5rem;
   left: 1rem;
   width: 8rem;
   height: 2rem;
