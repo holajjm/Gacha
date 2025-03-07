@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useUserStore } from "@store/store";
-import MarketMySellingItem from "./MarketMySellingItem";
 
-import MarketSellingItemModal from "./MarketSellingItemModal";
 import Coin from "@components/Coin";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
+import usePageUpper from "@hooks/usePageUpper";
+
+import MarketMySellingItem from "./MarketMySellingItem";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Market/Sell/MarketMySellingList.module.css";
 
@@ -21,30 +22,23 @@ interface MySellingItemData {
 
 function MarketMyList() {
   usePageTitle("마켓 - 내 판매 목록");
+  usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [sellingItem, setSellingItem] = useState<MySellingItemData[]>([]);
-  console.log(sellingItem);
   const [selected, setSelected] = useState<string>("");
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);
   };
   const [navClick, setNavClick] = useState<string>("");
-  console.log(navClick);
-
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setNavClick((e.target as HTMLElement).getAttribute("datatype") as string);
   };
   const text = navClick ? `&grade=${navClick}` : navClick;
-  console.log(text);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const getMySellItems = async () => {
     const response = await fetch(
-      `${SERVER_API}/products/me?sort=createdAt,desc&page=${currentPage}&size=5${text && text}`,
+      `${SERVER_API}/products/me?sort=createdAt,desc&page=${currentPage}&size=5${String(text)}`,
       {
         method: "GET",
         headers: {
@@ -59,9 +53,8 @@ function MarketMyList() {
   };
   useEffect(() => {
     getMySellItems();
-  }, [navClick]);
+  }, [text]);
 
-  const [currentPage, setCurrentPage] = useState<number>(0);
   const handleScroll = () => {
     const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
     if (sellingItem.length > 0 && scrollTop + clientHeight >= scrollHeight)
@@ -89,7 +82,7 @@ function MarketMyList() {
           },
         );
         const data = await response.json();
-        setSellingItem(data?.content);
+        setSellingItem(data?.data?.content);
       };
       sortByLatest();
     } else if (selected === "oldest") {
@@ -105,42 +98,25 @@ function MarketMyList() {
           },
         );
         const data = await response.json();
-        setSellingItem(data?.content);
+        setSellingItem(data?.data?.content);
       };
       sortByOldest();
     }
   }, [selected]);
 
-  const [clicked, setClicked] = useState<boolean>(false);
-  const [clickedItemId, setClickedItemId] = useState<number>(0);
-
-  const handleModalOpen = (productId: number) => {
-    setClicked(true);
-    setClickedItemId(productId);
-  };
-  const handleModalClose = () => {
-    setClicked(false);
-  };
-
   const sellingItemList = sellingItem.map((e) => (
-    <MarketMySellingItem
-      key={e.productId}
-      data={e}
-      modalOpen={handleModalOpen}
-    />
+    <MarketMySellingItem key={e.productId} data={e} />
   ));
   return (
     <div className={style.container}>
       <Coin />
       <section className={style.wrapper}>
-        <div className={style.background}></div>
         <aside className={style.aside}>
           <div className={style.aside_wrapper}>
             <Button
               text={<SlArrowLeft />}
               width={"2.5rem"}
               onClick={() => window.history.back()}
-              // className={style.aside_button}
             ></Button>
             <h1 className={style.aside_title}>내 판매 목록</h1>
           </div>
@@ -201,12 +177,6 @@ function MarketMyList() {
           </section>
         </main>
       </section>
-      {clicked ? (
-        <MarketSellingItemModal
-          clickedItemId={clickedItemId}
-          onClick={handleModalClose}
-        />
-      ) : null}
     </div>
   );
 }
