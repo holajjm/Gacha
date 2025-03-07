@@ -28,7 +28,6 @@
   border-radius: 10px;
   object-fit: contain;
 }
-
 .header_item {
   position: relative;
   width: 100%;
@@ -62,20 +61,6 @@
   flex-grow: 1;
   text-align: center;
 }
-/* .header_button {
-  width: 50%;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-} */
 /* ------------------------------------------- */
 table {
   display: flex;
@@ -105,11 +90,10 @@ tbody > tr {
   flex-direction: column;
   align-items: start;
   justify-content: space-around;
-  color: #2D2D2D;
+  color: #2d2d2d;
   font-weight: bold;
   font-size: 1rem;
 }
-
 .header_Btn {
   width: 100%;
   display: flex;
