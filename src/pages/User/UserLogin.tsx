@@ -1,4 +1,5 @@
 import React from "react";
+
 import style from "@styles/User/UserLogin.module.css";
 
 function UserLogin() {
@@ -12,7 +13,7 @@ function UserLogin() {
 
   const githubURL =
     "https://github.com/login/oauth/authorize?client_id=Iv23lica8LFNbzOrB595";
-    
+
   const githubLogin = async () => {
     window.location.href = githubURL;
   };
@@ -30,7 +31,7 @@ function UserLogin() {
         <main className={style.main}>
           <div className={style.main_wrapper}>
             <button onClick={kakaoLogin} className={style.kakao}>
-              <img src="/images/KakaoLogin.png" alt="KakaoLogin" />
+              <img src="/images/KakaoButton.png" alt="KakaoLogin" />
             </button>
             <button onClick={githubLogin} className={style.github}>
               <img
