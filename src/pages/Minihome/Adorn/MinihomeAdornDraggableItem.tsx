@@ -1,5 +1,6 @@
-import useImage from "@hooks/useImage";
 import React, { useRef } from "react";
+
+import useImage from "@hooks/useImage";
 import Draggable from "react-draggable";
 
 interface ItemData {
@@ -11,10 +12,8 @@ interface ItemData {
   userItemIds: null;
 }
 
-function MinihomeAdornDraggableItem({data}:{data:ItemData}) {
+function MinihomeAdornDraggableItem({ data }: { data: ItemData }) {
   const nodeRef = useRef(null);
-  console.log(data);
-  
   return (
     <Draggable bounds="parent" nodeRef={nodeRef}>
       <div ref={nodeRef}>
