@@ -3,11 +3,12 @@
   height: 100vh;
   padding: 2rem 4rem;
   box-sizing: border-box;
-  background: linear-gradient(to bottom, #FFE9E9, #FF9FB1);
+  background: linear-gradient(to bottom, #ffe9e9, #ff9fb1);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  color: #2d2d2d;
 }
 .wrapper {
   width: 60rem;
@@ -19,23 +20,9 @@
   z-index: 5;
   padding: 2rem;
   box-sizing: border-box;
-  /* box-shadow: inset 0 0 20px red; */
-}
-/* ------------------------------------------------------------ */
-.background {
-  position: absolute;
-  background-color: white;
-  top: 0;
-  left: 0;
-  opacity: 0.4;
-  z-index: -5;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
 }
 /* ------------------------------------------------------------ */
 .aside {
-  /* box-shadow: inset 0 0 20px red; */
   width: 100%;
   display: flex;
   gap: 1rem;
@@ -50,27 +37,15 @@
 .aside_title {
   font-size: 1.5rem;
 }
-/* .aside_button {
-  width: 10rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-} */
 .aside_filter {
-  height: 60%;
+  width: 6rem;
+  height: 2rem;
   font-size: 1rem;
+  text-align: center;
+  border-radius: 5px;
 }
 
 .main {
-  /* box-shadow: inset 0 0 20px blue; */
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -87,14 +62,14 @@
   height: 2.5rem;
   border: none;
   background: none;
-  color: white;
+  color: #545454;
   font-weight: bold;
   font-size: 1.2rem;
   cursor: pointer;
   border-bottom: 3px solid white;
 }
 .button:hover {
-  color: #FF7A92;
+  color: #ff7a92;
 }
 .active_button {
   width: 100%;
@@ -104,30 +79,28 @@
   font-weight: bold;
   font-size: 1.2rem;
   cursor: pointer;
-  color: #FF7A92;
-  border-bottom: 3px solid #FF7A92;
-  /* border-radius: 10px 10px 0 0; */
+  color: #ff7a92;
+  border-bottom: 3px solid #ff7a92;
 }
 .main_items {
-  /* box-shadow: inset 0 0 20px red; */
   flex-grow: 1;
   height: 100%;
-  padding: 1rem;
+  padding: 1rem 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 .main_items_header {
-  /* box-shadow: inset 0 0 20px green; */
   width: 100%;
   height: 2.5rem;
-  background-color: lightgray;
+  background-color: white;
   border-radius: 10px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  opacity: 0.7;
 }
 .main_items_header > div {
   width: 100%;
