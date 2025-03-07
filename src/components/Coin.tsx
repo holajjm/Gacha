@@ -10,7 +10,7 @@ import style from "@styles/Layouts/Coin.module.css";
 function Coin() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
-  const refreshTrigger = useCoinState((state) => state.triggerRefresh);
+  const coinUpDate = useCoinState((state) => state.coinRefresh);
   const getCoin = async () => {
     const response = await axios.get(`${SERVER_API}/coin`, {
       headers: {
@@ -21,7 +21,7 @@ function Coin() {
     return response;
   };
   const { data, isLoading } = useQuery({
-    queryKey: ["coin", refreshTrigger],
+    queryKey: ["coin", coinUpDate],
     queryFn: getCoin,
     select: (data) => data?.data?.data,
   });
