@@ -51,7 +51,7 @@ function MarketItemModal({
   }, []);
 
   // 재고가 없을 경우 구매 불가 예외 처리 로직 구현 요망
-  const triggerRefresh = useCoinState((state) => state.triggerRefresh);
+  const coinRefresh = useCoinState((state) => state.coinRefresh);
   const buyItem = async () => {
     if (confirm("구매하시겠습니까?")) {
       try {
@@ -63,7 +63,7 @@ function MarketItemModal({
           },
         });
         alert("구매 성공");
-        triggerRefresh();
+        coinRefresh();
         window.location.reload();
       } catch (error) {
         console.error(error);
