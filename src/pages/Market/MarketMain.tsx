@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { useUserStore } from "@store/store";
+import Coin from "@components/Coin";
+import Button from "@components/Button";
+import usePageTitle from "@hooks/usePageTitle";
 
 import MarketItem from "./MarketItem";
 import MarketItemModal from "./MarketItemModal";
 import style from "@styles/Market/MarketMain.module.css";
-import Coin from "@components/Coin";
-import Button from "@components/Button";
-import usePageTitle from "@hooks/usePageTitle";
 
 interface MarketItemData {
   hasStock: string;
@@ -16,7 +17,7 @@ interface MarketItemData {
 }
 
 function MarketMain() {
-  usePageTitle("마켓")
+  usePageTitle("마켓");
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const navigate = useNavigate();
   const { user } = useUserStore((state) => state);
@@ -31,16 +32,13 @@ function MarketMain() {
 
   useEffect(() => {
     const getMarketItem = async () => {
-      const response = await fetch(
-        `${SERVER_API}/products${text && text}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
+      const response = await fetch(`${SERVER_API}/products${text && text}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.accessToken}`,
         },
-      );
+      });
       const data = await response.json();
       setItemList(data?.data);
     };
@@ -69,7 +67,6 @@ function MarketMain() {
     <div className={style.container}>
       <Coin />
       <section className={style.wrapper}>
-        <div className={style.background}></div>
         <aside className={style.aside}>
           <h1 className={style.aside_title}>마켓</h1>
           <div className={style.aside_wrapper}>
@@ -77,16 +74,12 @@ function MarketMain() {
               text={"내 판매 목록"}
               width={"10rem"}
               onClick={() => navigate("/market/mysellingitem")}
-              // className={style.aside_button}
-            >
-            </Button>
+            ></Button>
             <Button
               text={"내 상품 등록"}
               width={"10rem"}
               onClick={() => navigate("/market/enroll")}
-              // className={style.aside_button}
-            >
-            </Button>
+            ></Button>
           </div>
         </aside>
         <main className={style.main}>
