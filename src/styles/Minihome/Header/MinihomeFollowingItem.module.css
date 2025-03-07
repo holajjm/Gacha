@@ -6,7 +6,6 @@
   padding: 0.5rem;
   box-sizing: border-box;
   height: 3rem;
-  /* background-color: gray; */
 }
 .list > div {
   display: flex;
@@ -24,18 +23,4 @@
 .list > p {
   flex-grow: 1;
   font-weight: bold;
-}
-.list > button {
-  padding: 0.5rem;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  background: linear-gradient(to bottom, #ffffff, #fcff4f);
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
 }
