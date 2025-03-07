@@ -1,7 +1,7 @@
 .container {
   min-width: 68rem;
   height: 100vh;
-  padding: 2rem 4rem;
+  padding: 4rem;
   box-sizing: border-box;
   background: linear-gradient(to bottom, #FFE9E9, #FF9FB1);
   display: flex;
@@ -9,7 +9,6 @@
   justify-content: center;
   position: relative;
   z-index: 10;
-  /* ----------------- */
   flex-direction: column;
 }
 .wrapper {
