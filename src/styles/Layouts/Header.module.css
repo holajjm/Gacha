@@ -16,24 +16,13 @@
   display: flex;
   align-items: center;
 }
+.title > img {
+  height: 55%;
+}
 .link_wrapper {
   flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: end;
   gap: 0.5rem;
-}
-.link {
-  width: 6rem;
-  height: 60%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #2D2D2D;
-  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
-  border-radius: 5px;
-  text-decoration: none;
-  color: #2D2D2D;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
-  font-size: 1rem;
 }
