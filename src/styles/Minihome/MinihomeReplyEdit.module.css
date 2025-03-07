@@ -5,30 +5,39 @@
   position: relative;
 }
 .edit_main > input {
-  width: 100%;
+  width: 90%;
   background-color: white;
   border-radius: 5px;
   padding: 0.5rem;
   box-sizing: border-box;
   border: none;
 }
-.edit_main > button {
-  padding: 0.5rem;
-  width: 3rem;
-  height: 100%;
+.edit_bottom {
+  width: 10%;
+  display: flex;
+}
+.edit_button {
+  all: unset;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
-  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
-  border-radius: 5px;
   text-decoration: none;
-  color: black;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+  color: #2d2d2d;
   cursor: pointer;
 }
-.edit_main > p {
+.edit_button:hover {
+  color: red;
+  font-weight: bold;
+}
+.edit_button:nth-child(2):hover {
+  color: gray;
+  font-weight: bold;
+}
+.edit_error {
   color: red;
   font-weight: bold;
   position: absolute;
+  top: 0.2rem;
+  left: 7rem;
 }
