@@ -69,4 +69,10 @@
   padding: 0.1rem 1rem;
   border-radius: 20px;
   background-color: lightgray;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  color: #545454;
+  font-weight: bold;
+  font-size: 0.75rem;
 }

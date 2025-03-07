@@ -74,6 +74,9 @@
   border-radius: 10px;
 }
 .count {
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
   position: absolute;
   bottom: 0.5rem;
   right: 0.5rem;
@@ -81,5 +84,7 @@
   padding: 0.1rem 1rem;
   border-radius: 20px;
   background-color: lightgray;
-  color: #2d2d2d;
+  color: #545454;
+  font-weight: bold;
+  font-size: 0.75rem;
 }
