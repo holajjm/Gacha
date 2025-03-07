@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useUserStore } from "@store/store";
 
-import { SlArrowLeft } from "react-icons/sl";
-import MinihomeItems from "./MinihomeItems";
+import { useUserStore } from "@store/store";
 import Button from "@components/Button";
-import style from "@styles/Minihome/Header/MinihomeItemBook.module.css";
 import usePageTitle from "@hooks/usePageTitle";
+
+import MinihomeItems from "./MinihomeItems";
+import { SlArrowLeft } from "react-icons/sl";
+import style from "@styles/Minihome/Header/MinihomeItemBook.module.css";
 
 interface ItemBookData {
   imageUrl: string;
@@ -28,7 +29,7 @@ function MinihomeItemBook() {
   const text = click ? `?grade=${click}` : click;
   const getItemList = async () => {
     const response = await fetch(
-      `${SERVER_API}/items/${user?.nickname}${text && text}`,
+      `${SERVER_API}/itembook/${user?.nickname}${text && text}`,
       {
         method: "GET",
         headers: {
@@ -52,7 +53,6 @@ function MinihomeItemBook() {
             text={<SlArrowLeft />}
             width={"2.5rem"}
             onClick={() => window.history.back()}
-            // className={style.header_button}
           ></Button>
           <h1 className={style.header_title}>아이템 북 관리</h1>
         </header>
