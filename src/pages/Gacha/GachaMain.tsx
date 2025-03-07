@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useUserStore } from "@store/store";
+import { useCoinState, useUserStore } from "@store/store";
 
 import Coin from "@components/Coin";
 import Button from "@components/Button";
@@ -20,6 +20,7 @@ function GachaMain() {
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
+  const coinRefresh = useCoinState((state) => state.coinRefresh);
   const [open, setOpen] = useState<boolean>(false);
   const [gachaData, setGachaData] = useState<GachaData>({
     itemGrade: "",
@@ -36,6 +37,7 @@ function GachaMain() {
     });
     const data = await response.text();
     setGachaData(JSON.parse(data)?.data);
+    coinRefresh();
   };
   const handleGachaClick = () => {
     getGacha();
