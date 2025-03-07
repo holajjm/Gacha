@@ -3,7 +3,7 @@
   height: 100vh;
   padding: 2rem 4rem;
   box-sizing: border-box;
-  background: linear-gradient(to bottom, #D8FAFF, #B6CDFF);
+  background: linear-gradient(to bottom, #d8faff, #b6cdff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,21 +28,6 @@
 }
 .aside_title {
   font-size: 1.5rem;
-}
-.aside_button, .aside_save {
-  width: 20%;
-  padding: 0.5rem;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
 }
 .section {
   display: flex;
@@ -102,16 +87,16 @@
   border-bottom: 3px solid white;
 }
 .button:hover {
-  color: #588DFF;
+  color: #588dff;
 }
 .active {
   width: 100%;
   height: 2.5rem;
-  color: #588DFF;
+  color: #588dff;
   border: none;
   background: none;
   font-weight: bold;
   font-size: 1.125rem;
   cursor: pointer;
-  border-bottom: 3px solid #588DFF;
+  border-bottom: 3px solid #588dff;
 }
