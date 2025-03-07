@@ -2,13 +2,15 @@ import React from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
+import { useCoinState, useUserStore } from "@store/store";
+
 import Loading from "./Loading";
-import { useUserStore } from "@store/store";
 import style from "@styles/Layouts/Coin.module.css";
 
 function Coin() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
+  const refreshTrigger = useCoinState((state) => state.triggerRefresh);
   const getCoin = async () => {
     const response = await axios.get(`${SERVER_API}/coin`, {
       headers: {
@@ -19,16 +21,14 @@ function Coin() {
     return response;
   };
   const { data, isLoading } = useQuery({
-    queryKey: ["coin"],
+    queryKey: ["coin", refreshTrigger],
     queryFn: getCoin,
     select: (data) => data?.data?.data,
   });
-  // console.log(data);
-  if (isLoading) return <Loading />;
   return (
     <div className={style.coin}>
       <img src="/images/coin.svg" alt="coin" />
-      <p>{data?.coin}</p>
+      {isLoading ? <Loading /> : <p>{data?.coin}</p>}
     </div>
   );
 }
