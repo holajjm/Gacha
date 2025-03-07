@@ -38,7 +38,7 @@ function MarketEnrollPreview({
   const enrollItem = async () => {
     if (confirm("상품을 판매하시겠습니까?")) {
       try {
-        const response = await fetch(`${SERVER_API}/products`, {
+        await fetch(`${SERVER_API}/products`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -48,9 +48,6 @@ function MarketEnrollPreview({
             userItemId: selectItem?.userItemIds[0],
           }),
         });
-        const data = await response.json();
-        console.log(data);
-
         alert("상품이 등록되었습니다.");
         window.location.reload();
       } catch (error) {
