@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
@@ -6,11 +6,9 @@ import useImage from "@hooks/useImage";
 
 import MinihomeAdornBackground from "./MinihomeAdornBackground";
 import MinihomeAdornItemList from "./MinihomeAdornItemList";
+import MinihomeAdornDraggableItem from "./MinihomeAdornDraggableItem";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css";
-
-import Draggable from "react-draggable";
-// import MinihomeAdornDraggableItem from "./MinihomeAdornDraggableItem";
 
 interface ItemData {
   imageUrl: string;
@@ -31,19 +29,30 @@ function MinihomeAdorn() {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setActive((e.target as HTMLElement).getAttribute("datatype"));
   };
-  // ----------------------------------------
-  const [item, setItem] = useState<ItemData>();
+  const [items, setItems] = useState<ItemData[]>([]);
+  const [item, setItem] = useState<ItemData>({
+    imageUrl: "",
+    itemCnt: 0,
+    itemGrade: "",
+    itemId: 0,
+    itemName: "",
+    userItemIds: null,
+  });
+
   const handleItem = (data: ItemData) => {
     setItem(data);
   };
+  useEffect(() => {
+    setItems((items) => [...items, item]);
+  }, [item]);
   const [background, setBackground] = useState<BackgroundItemData>();
   const handleBackground = (data: BackgroundItemData) => {
     setBackground(data);
   };
-  const nodeRef = useRef(null);
-  // const draggableItems = item.map((e) => (
-  //   <MinihomeAdornDraggableItem key={e.itemId} data={e} />
-  // ));
+  const draggableItems = items.map((e) => (
+    <MinihomeAdornDraggableItem key={e.itemId} data={e} />
+  ));
+
   return (
     <div className={style.container}>
       <div className={style.wrapper}>
@@ -65,20 +74,7 @@ function MinihomeAdorn() {
               src={useImage(background?.imageUrl as string)}
               alt=""
             />
-            {/* {draggableItems} */}
-            <Draggable bounds="parent" nodeRef={nodeRef}>
-              <div ref={nodeRef}>
-                <img
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                  }}
-                  src={useImage(item?.imageUrl as string)}
-                  alt=""
-                />
-              </div>
-            </Draggable>
+            {draggableItems}
           </header>
           <main className={style.main}>
             <nav onClick={handleClick} className={style.main_nav}>
