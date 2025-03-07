@@ -1,5 +1,5 @@
 .main_list {
-  height: 5rem;
+  height: 4.5rem;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -30,21 +30,6 @@
   height: 3rem;
   border-radius: 100%;
   background-color: white;
-  box-shadow:
-    1px 2px 5px rgba(0, 0, 0, 0.3),
-    inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+  padding: 0.2rem;
+  box-sizing: border-box;
 }
-/* .main_list > div > button {
-  width: 6rem;
-  height: 60%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-} */
