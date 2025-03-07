@@ -1,3 +1,10 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .open_capsule {
   width: 25rem;
   height: 25rem;
@@ -10,6 +17,9 @@
 /* -------------------------- */
 .result_capsule {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 .result_capsule > img {
   width: 15rem;
@@ -20,7 +30,6 @@
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
-
 @keyframes open {
   0% {
     transform: translateY(0);
@@ -31,4 +40,19 @@
   100% {
     transform: translateY(0);
   }
+}
+
+.buttons {
+  position: absolute;
+  bottom: -3rem;
+  right: 0;
+  color: lightgray;
+  font-weight: bold;
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  cursor: pointer;
 }
