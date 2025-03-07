@@ -89,7 +89,7 @@ function MarketEnrollPreview({
                 </td>
                 <td>{item?.price ? item?.price : defaultItem?.price}코인</td>
                 <td>
-                  {item?.itemCnt ? item?.itemCnt : defaultItem?.itemCnt}개
+                  {item?.stock ? item?.stock : defaultItem?.stock}개
                 </td>
               </tr>
             </tbody>
