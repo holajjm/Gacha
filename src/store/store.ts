@@ -21,12 +21,12 @@ export const useUserStore = create<UserStore>((set) => ({
 }));
 
 interface CoinState {
-  refreshTrigger: number;
-  triggerRefresh: () => void;
+  coinUpdate: number;
+  coinRefresh: () => void;
 }
 
 export const useCoinState = create<CoinState>((set) => ({
-  refreshTrigger: 0,
-  triggerRefresh: () =>
-    set((state) => ({ refreshTrigger: state.refreshTrigger + 1 })),
+  coinUpdate: 0,
+  coinRefresh: () =>
+    set((state) => ({ coinUpdate: state.coinUpdate + 1 })),
 }));
