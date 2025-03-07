@@ -1,7 +1,5 @@
 .backBtn {
-  /* width: 2.5rem; */
   font-size: 1rem;
-  /* font-weight: bold; */
   height: 2.5rem;
   display: flex;
   align-items: center;
@@ -11,6 +9,6 @@
   border-radius: 5px;
   text-decoration: none;
   color: #2D2D2D;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
