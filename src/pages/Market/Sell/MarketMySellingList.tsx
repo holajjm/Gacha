@@ -166,6 +166,7 @@ function MarketMyList() {
           </nav>
           <section className={style.main_items}>
             <header className={style.main_items_header}>
+              <div className={style.main_items_header_background}></div>
               <div>아이템</div>
               <div>이름</div>
               <div>등급</div>
