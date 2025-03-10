@@ -133,11 +133,11 @@ function MinihomeHeader({
             <p className={style.header_user_name}>{nickname}</p>
             <div onClick={getAttend}>
               <img
-                src="/images/coin.svg"
+                src="/images/NewCoin.svg"
                 alt="coin"
                 className={style.header_coin}
               />
-              <p>출석체크하고 코인 받기</p>
+              <p>출석체크하고 코인 받기!</p>
             </div>
           </div>
           <div className={style.header_info}>
