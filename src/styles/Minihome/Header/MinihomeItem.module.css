@@ -74,14 +74,14 @@
   border-radius: 10px;
 }
 .count {
-  height: 1.5rem;
+  height: 1.2rem;
   display: flex;
   align-items: center;
   position: absolute;
   bottom: 0.5rem;
   right: 0.5rem;
   border: none;
-  padding: 0.1rem 1rem;
+  padding: 0.1rem 0.8rem;
   border-radius: 20px;
   background-color: lightgray;
   color: #545454;
