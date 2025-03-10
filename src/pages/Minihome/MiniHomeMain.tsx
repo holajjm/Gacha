@@ -5,7 +5,7 @@ import { useUserStore } from "@store/store";
 import usePageUpper from "@hooks/usePageUpper";
 import Coin from "@components/Coin";
 
-import MinihomeReplyNew from "./MinihomeReplyNew";
+import MinihomeReplyNew from "./Reply/MinihomeReplyNew";
 import MinihomeHeader from "./Header/MinihomeHeader";
 import style from "@styles/Minihome/MiniHomeMain.module.css";
 
@@ -66,23 +66,23 @@ function MiniHomeMain() {
   return (
     <div className={style.container}>
       <Coin />
-      <section className={style.wrapper}>
+      <main className={style.wrapper}>
         <MinihomeHeader
           minihomeData={minihomeData}
           getMinihomeInfo={getMinihomeInfo}
         />
-        <main className={style.main}>
-          <aside className={style.main_people}>
+        <section className={style.section}>
+          <aside className={style.section_aside}>
             총 방문자 수{" "}
             {minihomeData?.totalVisitorCnt ? minihomeData?.totalVisitorCnt : 0}
           </aside>
-          <section className={style.main_section_1}></section>
-          <section className={style.main_section_2}>
-            <div className={style.background_section}></div>
+          <article className={style.section_article_1}></article>
+          <article className={style.section_article_2}>
+            <p className={style.section_article_2_background}></p>
             <MinihomeReplyNew />
-          </section>
-        </main>
-      </section>
+          </article>
+        </section>
+      </main>
     </div>
   );
 }
