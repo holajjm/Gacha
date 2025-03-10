@@ -35,6 +35,8 @@
 .header_title{
   text-align: center;
   margin: 0 auto;
+  font-size: 1.2rem;
+  font-family: "Pretendard-Bold",sans-serif;
 }
 .header_close {
   position: absolute;
@@ -44,7 +46,8 @@
   border: none;
   background: none;
 }
-.main {
+/* ------------------------------------- */
+.section {
   height: 100%;
   display: flex;
   flex-direction: column;
