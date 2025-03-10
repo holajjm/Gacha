@@ -8,14 +8,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   background-color: white;
   border-radius: 10px;
   font-weight: bold;
   color: #2D2D2D;
 }
 .coin > img {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2rem;
+  height: 2rem;
 }
 .coin > p {
   font-size: 1.5rem;
