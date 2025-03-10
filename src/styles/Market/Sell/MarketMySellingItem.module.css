@@ -4,22 +4,33 @@
   align-items: center;
   justify-content: space-between;
   border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+  /* background-color: white; */
+  /* box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2); */
+  position: relative;
+  font-weight: 400;
 }
-.main_items_item > div:first-child {
+.main_items_background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  opacity: 0.7;
+  z-index: -10;
+  background-color: white;
+}
+.main_items_img {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.main_items_item > div:first-child > img {
-  height: 80%;
+.main_items_img > img {
+  height: 100%;
   aspect-ratio: 1/1;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
   border-radius: 10px;
-  background-color: lightgray;
+  /* background-color: lightgray; */
   object-fit: fill;
 }
 .main_items_item > p {
