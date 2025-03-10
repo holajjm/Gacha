@@ -119,35 +119,35 @@ function ExploreMain() {
 
   return (
     <div className={style.container}>
-      <section className={style.wrapper}>
+      <main className={style.wrapper}>
         <header className={style.header}>
           <aside className={style.header_aside}>
-            <div className={style.header_wrapper}>
-              <Button
-                text={<SlArrowLeft />}
-                width={"2.5rem"}
-                onClick={() => window.history.back()}
-              />
-              <h1 className={style.header_title}>둘러보기</h1>
-            </div>
-            <select onChange={onSelect} name="select" id="select">
-              <option value="createdAt">가입순</option>
-              <option value="totalVisitorCnt">인기순</option>
-              <option value="score">스코어순</option>
-            </select>
+            <Button
+              text={<SlArrowLeft />}
+              width={"2.5rem"}
+              onClick={() => window.history.back()}
+            />
+            <h1 className={style.header_title}>둘러보기</h1>
           </aside>
-          <main className={style.header_main}>
-            <div className={style.header_background}></div>
+          <select className={style.header_select} onChange={onSelect} name="select" id="select">
+            <option value="createdAt">가입순</option>
+            <option value="totalVisitorCnt">인기순</option>
+            <option value="score">스코어순</option>
+          </select>
+        </header>
+        <section className={style.section}>
+          <nav className={style.section_nav}>
+            <div className={style.section_nav_background}></div>
             <div>프로필</div>
             <div>닉네임</div>
             <div>방문자 수</div>
             <div></div>
-          </main>
-        </header>
-        <main className={style.main}>
-          <ul className={style.main_upperlist}>{userList}</ul>
-        </main>
-      </section>
+          </nav>
+          <article className={style.article}>
+            <ul className={style.article_upperlist}>{userList}</ul>
+          </article>
+        </section>
+      </main>
     </div>
   );
 }

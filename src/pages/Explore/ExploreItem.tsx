@@ -15,20 +15,20 @@ interface ExploreItemData {
 function ExploreItem({ data }: { data: ExploreItemData }) {
   const navigate = useNavigate();
   return (
-    <li className={style.main_list}>
-      <div className={style.main_background}></div>
-      <div>
+    <li className={style.list}>
+      <p className={style.list_background}></p>
+      <p>
         <img src={useImage(data?.profileImageStoreFileName)} alt="profile" />
-      </div>
-      <div>{data?.nickname}</div>
-      <div>{data?.totalVisitorCnt}</div>
-      <div>
+      </p>
+      <p>{data?.nickname}</p>
+      <p>{data?.totalVisitorCnt}</p>
+      <p>
         <Button
           text={"방문"}
           width={"6rem"}
           onClick={() => navigate(`/minihome/${data?.nickname}`)}
         ></Button>
-      </div>
+      </p>
     </li>
   );
 }
