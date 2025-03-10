@@ -26,7 +26,8 @@ function MarketMySellingItem({ data }: { data: MySellingItemData }) {
   };
   return (
     <div className={style.main_items_item}>
-      <div>
+      <div className={style.main_items_background}></div>
+      <div className={style.main_items_img}>
         <img src={useImage(data?.imageUrl)} alt="sample" />
       </div>
       <p>{data?.name}</p>
