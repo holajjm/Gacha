@@ -4,7 +4,7 @@ import { useUserStore } from "@store/store";
 import useImage from "@hooks/useImage";
 
 import MinihomeReplyEdit from "./MinihomeReplyEdit";
-import style from "@styles/Minihome/MinihomeReplyItem.module.css";
+import style from "@styles/Minihome/Reply/MinihomeReplyItem.module.css";
 
 interface ReplyData {
   content: string;

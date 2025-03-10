@@ -7,7 +7,7 @@ import usePageTitle from "@hooks/usePageTitle";
 import Button from "@components/Button";
 
 import MinihomeReplyItem from "./MinihomeReplyItem";
-import style from "@styles/Minihome/MinihomeReplyNew.module.css";
+import style from "@styles/Minihome/Reply/MinihomeReplyNew.module.css";
 
 interface ReplySendData {
   content: string;

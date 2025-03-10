@@ -2,7 +2,7 @@ import React from "react";
 
 import useImage from "@hooks/useImage";
 
-import style from "@styles/Minihome/Header/MinihomeItem.module.css";
+import style from "@styles/Minihome/ItemBook/MinihomeItem.module.css";
 
 interface ItemBookData {
   imageUrl: string;

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { useUserStore } from "@store/store";
 
-import style from "@styles/Minihome/MinihomeReplyEdit.module.css";
+import style from "@styles/Minihome/Reply/MinihomeReplyEdit.module.css";
 
 interface ReplySendData {
   content: string;

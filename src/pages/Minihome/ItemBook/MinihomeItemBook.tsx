@@ -6,7 +6,7 @@ import usePageTitle from "@hooks/usePageTitle";
 
 import MinihomeItems from "./MinihomeItems";
 import { SlArrowLeft } from "react-icons/sl";
-import style from "@styles/Minihome/Header/MinihomeItemBook.module.css";
+import style from "@styles/Minihome/ItemBook/MinihomeItemBook.module.css";
 
 interface ItemBookData {
   imageUrl: string;
