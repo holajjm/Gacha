@@ -86,7 +86,7 @@ function MinihomeAdorn() {
                     : style.button
                 }
               >
-                배경 요소
+                배경
               </button>
               <button
                 datatype="ITEM"
