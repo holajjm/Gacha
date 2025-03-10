@@ -57,7 +57,7 @@ function MinihomeReplyNew() {
   const getPageReply = async () => {
     try {
       const response = await fetch(
-        `${SERVER_API}/guestbooks/${nickname}?sorted=createdAt,desc&page=${currentPage}&size=3`,
+        `${SERVER_API}/guestbooks/${nickname}?sort=createdAt,desc&page=${currentPage}&size=3`,
         {
           method: "GET",
           headers: {
