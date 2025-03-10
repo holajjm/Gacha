@@ -77,12 +77,14 @@
 /* -------------------------------------------------------------- */
 .main {
   width: 100%;
+  overflow: scroll;
+  scrollbar-width: none;
 }
 .main_upperlist {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   list-style: none;
-  scrollbar-width: none;
-  overflow: scroll;
+  /* scrollbar-width: none;
+  overflow: scroll; */
 }
