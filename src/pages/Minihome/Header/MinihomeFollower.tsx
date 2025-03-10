@@ -43,16 +43,16 @@ function MinihomeFollower({
   ));
   return (
     <div className={style.container}>
-      <div className={style.background}></div>
-      <section className={style.wrapper}>
+      <p className={style.background}></p>
+      <main className={style.wrapper}>
         <header className={style.header}>
           <h1 className={style.header_title}>팔로워</h1>
           <button onClick={handleFollowerClose} className={style.header_close}>
             X
           </button>
         </header>
-        <main className={style.main}>{followerList}</main>
-      </section>
+        <section className={style.section}>{followerList}</section>
+      </main>
     </div>
   );
 }

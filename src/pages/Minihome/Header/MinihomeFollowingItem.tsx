@@ -35,13 +35,13 @@ function MinihomeFollowingItem({ followings }: { followings: Followings }) {
     }
   };
   return (
-    <li className={style.list}>
-      <div>
+    <article className={style.article}>
+      <div className={style.article_img}>
         <img src={useImage(followings?.profileImageUrl)} alt="profile" />
       </div>
-      <p>{followings?.nickname}</p>
+      <p className={style.article_nickname}>{followings?.nickname}</p>
       <Button text={"삭제"} width={"3.5rem"} onClick={unFollow}></Button>
-    </li>
+    </article>
   );
 }
 

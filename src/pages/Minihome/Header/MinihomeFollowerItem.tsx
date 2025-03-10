@@ -39,11 +39,11 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
   };
 
   return (
-    <li className={style.list}>
-      <div>
+    <article className={style.article}>
+      <div className={style.article_img}>
         <img src={useImage(followers?.profileImageUrl)} alt="profile" />
       </div>
-      <p>{followers?.nickname}</p>
+      <p className={style.article_nickname}>{followers?.nickname}</p>
       {nickname === user?.nickname ? (
         <Button
           text={"삭제"}
@@ -51,7 +51,7 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
           onClick={deleteFollower}
         ></Button>
       ) : null}
-    </li>
+    </article>
   );
 }
 
