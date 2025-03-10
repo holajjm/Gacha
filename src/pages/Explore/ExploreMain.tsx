@@ -137,11 +137,11 @@ function ExploreMain() {
         </header>
         <section className={style.section}>
           <nav className={style.section_nav}>
-            <div className={style.section_nav_background}></div>
-            <div>프로필</div>
-            <div>닉네임</div>
-            <div>방문자 수</div>
-            <div></div>
+            <p className={style.section_nav_background}></p>
+            <p>프로필</p>
+            <p>닉네임</p>
+            <p>방문자 수</p>
+            <p></p>
           </nav>
           <article className={style.article}>
             <ul className={style.article_upperlist}>{userList}</ul>
