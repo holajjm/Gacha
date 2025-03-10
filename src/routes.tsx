@@ -7,7 +7,7 @@ import MainPage from "@pages/Main/MainPage";
 //Minihome
 import MiniHomeMain from "@pages/Minihome/MiniHomeMain";
 import MinihomeAdorn from "@pages/Minihome/Adorn/MinihomeAdorn";
-import MinihomeItemBook from "@pages/Minihome/Header/MinihomeItemBook";
+import MinihomeItemBook from "@pages/Minihome/ItemBook/MinihomeItemBook";
 //Explore
 import ExploreMain from "@pages/Explore/ExploreMain";
 //Gacha
