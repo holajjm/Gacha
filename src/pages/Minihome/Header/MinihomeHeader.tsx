@@ -121,26 +121,26 @@ function MinihomeHeader({
       {followingClick ? (
         <MinihomeFollowing handleFollowingClose={handleFollowingClose} />
       ) : null}
-      <div className={style.header_profile}>
+      <p className={style.header_profile}>
         <img
           src={useImage(minihomeData?.profileImageStoreFileName)}
           alt="profile"
         />
-      </div>
-      <main className={style.header_user}>
-        <div className={style.header_user_info}>
-          <div className={style.header_user_wrapper}>
-            <p className={style.header_user_name}>{nickname}</p>
+      </p>
+      <section className={style.section}>
+        <header className={style.section_header}>
+          <article className={style.section_article}>
+            <h1 className={style.section_article_title}>{nickname}</h1>
             <div onClick={getAttend}>
               <img
                 src="/images/NewCoin.svg"
                 alt="coin"
-                className={style.header_coin}
+                className={style.section_article_coin}
               />
               <p>출석체크하고 코인 받기!</p>
             </div>
-          </div>
-          <div className={style.header_info}>
+          </article>
+          <nav className={style.section_info}>
             <p>스코어 {minihomeData?.score ? minihomeData?.score : 0}</p>
             <p datatype="Follower" onClick={handleFollowerClick}>
               팔로워{" "}
@@ -150,10 +150,10 @@ function MinihomeHeader({
               팔로잉{" "}
               {minihomeData?.followingCnt ? minihomeData?.followingCnt : 0}
             </p>
-          </div>
-        </div>
+          </nav>
+        </header>
         {nickname === user?.nickname ? (
-          <div className={style.header_bottom}>
+          <article className={style.section_bottom}>
             <Button
               text={"아이템 북 관리"}
               width={"100%"}
@@ -164,9 +164,9 @@ function MinihomeHeader({
               width={"100%"}
               onClick={() => navigate(`/minihome/adorn`)}
             ></Button>
-          </div>
+          </article>
         ) : (
-          <div className={style.header_bottom}>
+          <article className={style.section_bottom}>
             {minihomeData?.isFollowing ? (
               <Button
                 text={"팔로우 끊기"}
@@ -180,9 +180,9 @@ function MinihomeHeader({
                 onClick={() => handleFollowing(minihomeData)}
               ></Button>
             )}
-          </div>
+          </article>
         )}
-      </main>
+      </section>
     </header>
   );
 }
