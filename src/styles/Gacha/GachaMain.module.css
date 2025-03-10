@@ -45,17 +45,3 @@
   align-items: center;
   justify-content: center;
 }
-.main > button {
-  width: 10rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  background: linear-gradient(to bottom, #FFFFFF, #FCFF4F);
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-}
