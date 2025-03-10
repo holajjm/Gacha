@@ -48,32 +48,53 @@
 }
 .header_user_wrapper > div > p {
   position: absolute;
-  top: -80%;
+  top: -90%;
   left: 50%;
-  width: 10rem;
+  width: 9rem;
   height: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: white;
   border-radius: 10px;
-  font-weight: bold;
+  /* font-weight: bold; */
   font-size: 0.8rem;
-  animation-name: attend;
+  /* animation-name: attend;
   animation-duration: 3s;
   animation-delay: 200ms;
   animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  animation-iteration-count: infinite; */
 }
 @keyframes attend {
   0% {
-    transform: translateY(0);
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.1);
+  }
+  30% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.1);
   }
   50% {
-    transform: translateY(0.5rem);
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1);
+  }
+  90% {
+    transform: scale(1);
   }
   100% {
-    transform: translateY(0);
+    transform: scale(1);
   }
 }
 
@@ -85,10 +106,15 @@
   width: 2rem;
   height: 2rem;
   background-color: white;
-  padding: 1px;
+  padding: 0.1rem;
   box-sizing: border-box;
   border-radius: 10px;
   object-fit: cover;
+  animation-name: attend;
+  animation-duration: 1.5s;
+  animation-delay: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 .header_info {
   display: flex;
