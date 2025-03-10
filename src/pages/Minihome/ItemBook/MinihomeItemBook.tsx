@@ -47,7 +47,7 @@ function MinihomeItemBook() {
   const items = itemList.map((e) => <MinihomeItems key={e.itemId} data={e} />);
   return (
     <div className={style.container}>
-      <div className={style.wrapper}>
+      <main className={style.wrapper}>
         <header className={style.header}>
           <Button
             text={<SlArrowLeft />}
@@ -56,8 +56,8 @@ function MinihomeItemBook() {
           ></Button>
           <h1 className={style.header_title}>아이템 북 관리</h1>
         </header>
-        <main className={style.main}>
-          <nav onClick={handleClick} className={style.main_nav}>
+        <section className={style.section}>
+          <nav onClick={handleClick} className={style.section_nav}>
             <button
               className={click === "" ? style.active_button : style.button}
               datatype=""
@@ -95,11 +95,11 @@ function MinihomeItemBook() {
               D등급
             </button>
           </nav>
-          <section className={style.main_contents}>
-            <div className={style.main_contents_wrapper}>{items}</div>
-          </section>
-        </main>
-      </div>
+          <article className={style.section_article}>
+            <section className={style.section_article_section}>{items}</section>
+          </article>
+        </section>
+      </main>
     </div>
   );
 }

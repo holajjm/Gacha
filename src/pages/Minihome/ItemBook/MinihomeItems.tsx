@@ -15,15 +15,15 @@ interface ItemBookData {
 
 function MinihomeItems({ data }: { data: ItemBookData }) {
   return (
-    <div className={style[`wrapper_${data?.itemGrade}`]}>
-      {!data?.itemCnt ? <div className={style.disabled}></div> : null}
-      <div className={style.img}>
+    <article className={style[`article_item_${data?.itemGrade}`]}>
+      {!data?.itemCnt ? <p className={style.article_item_disabled}></p> : null}
+      <div className={style.article_item_img}>
         <img src={useImage(data?.imageUrl)} alt="sample" />
         {data?.itemCnt ? (
-          <p className={style.count}>{data?.itemCnt}개</p>
+          <p className={style.article_item_count}>{data?.itemCnt}개</p>
         ) : null}
       </div>
-    </div>
+    </article>
   );
 }
 
