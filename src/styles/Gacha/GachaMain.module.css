@@ -3,7 +3,7 @@
   height: 100vh;
   padding: 4rem;
   box-sizing: border-box;
-  background: linear-gradient(to bottom, #FFE9E9, #FF9FB1);
+  background: linear-gradient(to bottom, #ffe9e9, #ff9fb1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,26 +18,25 @@
   flex-direction: column;
   gap: 1.5rem;
   align-items: center;
-
 }
-/* ------------------------------------------------------------ */
+/* ------------------------------- */
 .header {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   align-items: center;
-  color: #2D2D2D;
+  color: #2d2d2d;
   font-weight: bold;
 }
-.header > h1 {
+.header_title {
   font-size: 2.5rem;
 }
-.header > p {
+.header_description {
   font-size: 1.125rem;
 }
-
-.main {
+/* ----------------------------- */
+.section {
   width: 100%;
   display: flex;
   flex-direction: column;

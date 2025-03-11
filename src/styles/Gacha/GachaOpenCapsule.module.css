@@ -4,7 +4,7 @@
   flex-direction: column;
   gap: 1rem;
 }
-
+/* ---------------------------------------- */
 .open_capsule {
   width: 25rem;
   height: 25rem;
@@ -14,14 +14,13 @@
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
-/* -------------------------- */
-.result_capsule {
+.result_open_capsule {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
 }
-.result_capsule > img {
+.result_open_capsule > img {
   width: 15rem;
   height: 15rem;
   animation-name: open;
@@ -41,8 +40,8 @@
     transform: translateY(0);
   }
 }
-
-.buttons {
+/* ----------------------------------------- */
+.section {
   position: absolute;
   bottom: -3rem;
   right: 0;
