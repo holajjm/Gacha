@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useUserStore } from "@store/store";
 import useImage from "@hooks/useImage";
@@ -20,6 +20,7 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const { nickname } = useParams();
+  const navigate = useNavigate();
   const deleteFollower = async () => {
     if (confirm("팔로워를 삭제할까요?")) {
       try {
@@ -50,7 +51,13 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
           width={"3.5rem"}
           onClick={deleteFollower}
         ></Button>
-      ) : null}
+      ) : (
+        <Button
+          text={"방문"}
+          width={"3.5rem"}
+          onClick={() => navigate(`/minihome/${followers?.nickname}`)}
+        ></Button>
+      )}
     </article>
   );
 }
