@@ -19,6 +19,7 @@ interface MiniHomeMainData {
   score: number;
   totalVisitorCnt: number;
   isFollowing: boolean;
+  profileId: number;
 }
 
 function MiniHomeMain() {
@@ -36,6 +37,7 @@ function MiniHomeMain() {
     score: 0,
     totalVisitorCnt: 0,
     isFollowing: false,
+    profileId: 0,
   });
   const getMinihomeInfo = async () => {
     if (!user?.accessToken) {
