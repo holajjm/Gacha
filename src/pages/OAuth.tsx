@@ -46,7 +46,7 @@ function OAuth() {
         setUser({
           ...user,
           nickname: decodedToken?.nickname,
-          profileUrl: decodedToken?.profile,
+          profileId: decodedToken?.profile,
           accessToken: queryParams.accessToken,
           refreshToken: queryParams.refreshToken,
         });
@@ -72,9 +72,9 @@ function OAuth() {
 
   return (
     <div className={style.container}>
-      <section className={style.wrapper}>
-        <p>로그인 진행중...</p>
-      </section>
+      <main className={style.wrapper}>
+        <img src="/images/Loading.gif" alt="로그인 중..." />
+      </main>
     </div>
   );
 }
