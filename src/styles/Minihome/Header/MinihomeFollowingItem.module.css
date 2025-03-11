@@ -2,8 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0.5rem;
+  gap: 1rem;
   box-sizing: border-box;
   height: 3rem;
 }
@@ -19,8 +18,13 @@
   object-fit: contain;
   border: 1px solid black;
   border-radius: 100%;
+  box-sizing: border-box;
 }
 .article_nickname {
   flex-grow: 1;
-  font-weight: bold;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-size: 1rem;
 }
