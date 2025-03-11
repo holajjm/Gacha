@@ -48,13 +48,13 @@ function GachaMain() {
   };
   return (
     <div className={style.container}>
-      <section className={style.wrapper}>
+      <main className={style.wrapper}>
         <Coin />
         <header className={style.header}>
-          <h1>GACHA SHOP</h1>
-          <p>랜덤 아이템을 뽑아봐요!</p>
+          <h1 className={style.header_title}>GACHA SHOP</h1>
+          <p className={style.header_description}>랜덤 아이템을 뽑아봐요!</p>
         </header>
-        <main className={style.main}>
+        <section className={style.section}>
           <div>
             <img src="/images/GachaSample.svg" alt="Gacha" />
           </div>
@@ -63,8 +63,8 @@ function GachaMain() {
             width={"10rem"}
             onClick={handleGachaClick}
           ></Button>
-        </main>
-      </section>
+        </section>
+      </main>
       {open ? (
         <GachaCapsule imageData={gachaData} onClick={handleModalClose} />
       ) : null}

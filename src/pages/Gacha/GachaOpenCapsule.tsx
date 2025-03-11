@@ -20,22 +20,22 @@ function GachaOpenCapsule({
     onClick();
   };
   return (
-    <section className={style.wrapper}>
+    <main className={style.wrapper}>
       <img
         className={style.open_capsule}
-        src={`/images/${color}OpenCapsule.svg`}
+        src={`src/assets/images/${color}OpenCapsule.svg`}
         alt="Open"
       />
       {image ? (
-        <div className={style.result_capsule}>
+        <div className={style.result_open_capsule}>
           <img src={image} alt="item" />
         </div>
       ) : null}
-      <div className={style.buttons}>
+      <section className={style.section}>
         <p onClick={() => navigate("/minihome/itembook")}>아이템 북으로 가기</p>
         <p onClick={handleClose}>닫기</p>
-      </div>
-    </section>
+      </section>
+    </main>
   );
 }
 

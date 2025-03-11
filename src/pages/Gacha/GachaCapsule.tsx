@@ -49,8 +49,8 @@ function GachaCapsule({
   };
   return (
     <div className={style.container}>
-      <div className={style.background}></div>
-      <div className={style.wrapper}>
+      <p className={style.background}></p>
+      <main className={style.wrapper}>
         {showComponent === "Open" && (
           <GachaOpenCapsule
             color={color}
@@ -59,7 +59,7 @@ function GachaCapsule({
           />
         )}
         {showComponent === "Close" && <GachaCloseCapsule color={color} />}
-      </div>
+      </main>
     </div>
   );
 }
