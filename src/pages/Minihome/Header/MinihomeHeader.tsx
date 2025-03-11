@@ -3,11 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { useCoinState, useUserStore } from "@store/store";
 import Button from "@components/Button";
-import useImage from "@hooks/useImage";
+import ProfileImg from "@assets/Profile";
 
 import MinihomeFollower from "./MinihomeFollower";
 import MinihomeFollowing from "./MinihomeFollowing";
 import style from "@styles/Minihome/Header/MinihomeHeader.module.css";
+
 interface MiniHomeMainData {
   followersCnt: number;
   followingCnt: number;
@@ -18,6 +19,7 @@ interface MiniHomeMainData {
   score: number;
   totalVisitorCnt: number;
   isFollowing: boolean;
+  profileId: number;
 }
 
 function MinihomeHeader({
@@ -123,7 +125,7 @@ function MinihomeHeader({
       ) : null}
       <p className={style.header_profile}>
         <img
-          src={useImage(minihomeData?.profileImageStoreFileName)}
+          src={ProfileImg[minihomeData?.profileId]?.profileImg}
           alt="profile"
         />
       </p>
