@@ -3,7 +3,7 @@
   height: 100vh;
   padding: 2rem 4rem;
   box-sizing: border-box;
-  background: linear-gradient(to bottom, #D8FAFF, #B6CDFF);
+  background: linear-gradient(to bottom, #d8faff, #b6cdff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,13 +13,16 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-.wrapper > p {
-  font-weight: bold;
-  display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  font-size: x-large;
+  gap: 1.5rem;
+  position: relative;
+}
+.wrapper > img {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15rem;
+  height: 15rem;
 }
