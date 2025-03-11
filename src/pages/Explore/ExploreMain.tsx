@@ -10,7 +10,7 @@ import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Explore/ExploreMain.module.css";
 
 interface ExploreItemData {
-  profileImageStoreFileName: string;
+  profileId: number;
   nickname: string;
   totalVisitorCnt: number;
 }
@@ -129,7 +129,12 @@ function ExploreMain() {
             />
             <h1 className={style.header_title}>둘러보기</h1>
           </aside>
-          <select className={style.header_select} onChange={onSelect} name="select" id="select">
+          <select
+            className={style.header_select}
+            onChange={onSelect}
+            name="select"
+            id="select"
+          >
             <option value="createdAt">가입순</option>
             <option value="totalVisitorCnt">인기순</option>
             <option value="score">스코어순</option>
