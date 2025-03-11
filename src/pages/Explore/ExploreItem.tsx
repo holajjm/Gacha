@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import useImage from "@hooks/useImage";
 import Button from "@components/Button";
 
 import style from "@styles/Explore/ExploreItem.module.css";
+import ProfileImg from "@assets/Profile";
 
 interface ExploreItemData {
-  profileImageStoreFileName: string;
+  profileId: number;
   nickname: string;
   totalVisitorCnt: number;
 }
@@ -18,7 +18,7 @@ function ExploreItem({ data }: { data: ExploreItemData }) {
     <li className={style.list}>
       <p className={style.list_background}></p>
       <div>
-        <img src={useImage(data?.profileImageStoreFileName)} alt="profile" />
+        <img src={ProfileImg[data?.profileId]?.profileImg} alt="profile" />
       </div>
       <p>{data?.nickname}</p>
       <p>{data?.totalVisitorCnt}</p>
