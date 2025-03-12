@@ -22,6 +22,8 @@
   border-radius: 10px;
   position: relative;
   z-index: 10;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 .background {
   position: absolute;
@@ -35,7 +37,7 @@
   border-radius: 10px;
 }
 /* ------------------------------------------------------------ */
-.button {
+.close_button {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -43,24 +45,27 @@
   font-size: 1.5rem;
   background: none;
   border: none;
+  z-index: 10;
 }
-.contents {
+/* ---------------------------- */
+.section {
   display: flex;
   height: 100%;
 }
-.aside {
+.section_aside {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.aside > img {
+.section_aside > img {
   width: 70%;
   height: 70%;
   aspect-ratio: 1/1;
   object-fit: cover;
 }
-.main {
+/* ----------------------------------- */
+.section_article {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -68,22 +73,28 @@
   gap: 1rem;
   font-weight: bold;
   font-size: 1rem;
+  position: relative;
 }
-.main_wrapper {
+.section_article_aside {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
-.main_wrapper > p {
+.section_article_aside > p {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
+  color: #545454;
 }
-.main_wrapper > p > span {
-  flex-grow: 1;
+.section_article_aside > p > span {
+  width: 70%;
   text-align: center;
+  color: #2d2d2d;
 }
-.main_footer {
-  margin-left: auto;
-  margin-right: 1rem;
+.section_article_button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }

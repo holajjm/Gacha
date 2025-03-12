@@ -24,6 +24,8 @@
   border-radius: 10px;
   position: relative;
   z-index: 10;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 .background {
   position: absolute;
@@ -37,8 +39,11 @@
   border-radius: 10px;
 }
 /* ------------------------------------------------------------ */
-.button {
-  margin: 1rem 1rem auto auto;
+.close_button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
   width: 2rem;
   font-size: 1.5rem;
   background: none;
@@ -48,34 +53,53 @@
 .button:hover {
   color: red;
 }
-.contents {
+/* -------------------------------- */
+.section {
   display: flex;
   height: 100%;
 }
-.aside {
+.section_aside {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.aside > img {
+.section_aside > img {
   width: 70%;
   height: 70%;
   aspect-ratio: 1/1;
   object-fit: cover;
 }
-.main {
+.section_article {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
   font-weight: bold;
+  font-size: 1rem;
 }
-.main > div {
+.section_article_aside {
   width: 100%;
-  padding: 0 1rem;
-  box-sizing: border-box;
   display: flex;
-  justify-content: end;
+  flex-direction: column;
+  gap: 2rem;
+}
+.section_article_aside > p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: #545454;
+}
+.section_article_aside > p > span {
+  width: 70%;
+  text-align: center;
+  color: #2d2d2d;
+}
+.section_article_button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
