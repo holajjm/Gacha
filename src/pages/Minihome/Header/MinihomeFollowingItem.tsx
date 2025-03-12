@@ -1,11 +1,11 @@
 import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useUserStore } from "@store/store";
 import useImage from "@hooks/useImage";
 import Button from "@components/Button";
 
 import style from "@styles/Minihome/Header/MinihomeFollowingItem.module.css";
-import { useNavigate, useParams } from "react-router-dom";
 
 interface Followings {
   userId: number;
@@ -48,7 +48,13 @@ function MinihomeFollowingItem({ followings }: { followings: Followings }) {
         <Button
           text={"방문"}
           width={"3.5rem"}
-          onClick={() => navigate(`/minihome/${followings?.nickname}`)}
+          onClick={() => {
+            if (confirm(`${followings?.nickname} 미니홈에 방문할까요?`)) {
+              navigate(`/minihome/${followings?.nickname}`);
+              window.location.reload();
+            }
+            return;
+          }}
         ></Button>
       )}
     </article>

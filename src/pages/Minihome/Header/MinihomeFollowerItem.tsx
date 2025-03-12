@@ -55,7 +55,13 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
         <Button
           text={"방문"}
           width={"3.5rem"}
-          onClick={() => navigate(`/minihome/${followers?.nickname}`)}
+          onClick={() => {
+            if (confirm(`${followers?.nickname} 미니홈에 방문할까요?`)) {
+              navigate(`/minihome/${followers?.nickname}`);
+              window.location.reload();
+            }
+            return;
+          }}
         ></Button>
       )}
     </article>
