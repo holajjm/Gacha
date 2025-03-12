@@ -73,17 +73,17 @@ function MarketItemModal({
 
   return (
     <div className={style.container}>
-      <section className={style.wrapper}>
-        <div className={style.background}></div>
-        <button onClick={onClick} className={style.button}>
+      <main className={style.wrapper}>
+        <p className={style.background}></p>
+        <button onClick={onClick} className={style.close_button}>
           X
         </button>
-        <section className={style.contents}>
-          <aside className={style.aside}>
+        <section className={style.section}>
+          <aside className={style.section_aside}>
             <img src={useImage(modalData?.imageUrl)} alt="sample" />
           </aside>
-          <main className={style.main}>
-            <div className={style.main_wrapper}>
+          <article className={style.section_article}>
+            <aside className={style.section_article_aside}>
               <p>
                 이름 <span>{modalData?.name}</span>
               </p>
@@ -96,14 +96,14 @@ function MarketItemModal({
               <p>
                 수량 <span>{modalData?.stock}</span>
               </p>
-            </div>
+            </aside>
             {/* 구매 기능 구현 및 공용 버튼 컴포넌트로 변경 */}
-            <footer className={style.main_footer}>
+            <div className={style.section_article_button}>
               <Button text={"구매"} width={"5rem"} onClick={buyItem}></Button>
-            </footer>
-          </main>
+            </div>
+          </article>
         </section>
-      </section>
+      </main>
     </div>
   );
 }

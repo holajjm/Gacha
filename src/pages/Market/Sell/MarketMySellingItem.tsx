@@ -25,22 +25,22 @@ function MarketMySellingItem({ data }: { data: MySellingItemData }) {
     setClicked(false);
   };
   return (
-    <div className={style.main_items_item}>
-      <div className={style.main_items_background}></div>
-      <div className={style.main_items_img}>
+    <article className={style.article}>
+      <p className={style.article_background}></p>
+      <div className={style.article_img}>
         <img src={useImage(data?.imageUrl)} alt="sample" />
       </div>
-      <p>{data?.name}</p>
-      <p>{data?.grade}</p>
-      <p>{data?.price}</p>
-      <p>{data?.status}</p>
-      <div>
-        <Button text={"Info"} width={"60%"} onClick={handleModalOpen}></Button>
-      </div>
+      <p className={style.article_item}>{data?.name}</p>
+      <p className={style.article_item}>{data?.grade}</p>
+      <p className={style.article_item}>{data?.price}</p>
+      <p className={style.article_item}>{data?.status}</p>
+      <p className={style.article_item}>
+        <Button text={"상세"} width={"60%"} onClick={handleModalOpen}></Button>
+      </p>
       {clicked ? (
         <MarketSellingItemModal data={data} onClick={handleModalClose} />
       ) : null}
-    </div>
+    </article>
   );
 }
 

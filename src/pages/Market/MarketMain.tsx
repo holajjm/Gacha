@@ -5,9 +5,11 @@ import { useUserStore } from "@store/store";
 import Coin from "@components/Coin";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
+import usePageUpper from "@hooks/usePageUpper";
 
 import MarketItem from "./MarketItem";
 import MarketItemModal from "./MarketItemModal";
+import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Market/MarketMain.module.css";
 
 interface MarketItemData {
@@ -18,6 +20,7 @@ interface MarketItemData {
 
 function MarketMain() {
   usePageTitle("마켓");
+  usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const navigate = useNavigate();
   const { user } = useUserStore((state) => state);
@@ -66,10 +69,17 @@ function MarketMain() {
   return (
     <div className={style.container}>
       <Coin />
-      <section className={style.wrapper}>
-        <aside className={style.aside}>
-          <h1 className={style.aside_title}>마켓</h1>
-          <div className={style.aside_wrapper}>
+      <main className={style.wrapper}>
+        <header className={style.header}>
+          <aside className={style.header_aside}>
+            <Button
+              text={<SlArrowLeft />}
+              width={"2.5rem"}
+              onClick={() => window.history.back()}
+            />
+            <h1 className={style.header_title}>마켓</h1>
+          </aside>
+          <nav className={style.header_nav}>
             <Button
               text={"내 판매 목록"}
               width={"10rem"}
@@ -80,10 +90,10 @@ function MarketMain() {
               width={"10rem"}
               onClick={() => navigate("/market/enroll")}
             ></Button>
-          </div>
-        </aside>
-        <main className={style.main}>
-          <nav onClick={handleClick} className={style.main_nav}>
+          </nav>
+        </header>
+        <section className={style.section}>
+          <nav onClick={handleClick} className={style.section_nav}>
             <button
               datatype=""
               className={navClick === "" ? style.active_button : style.button}
@@ -121,11 +131,13 @@ function MarketMain() {
               D등급
             </button>
           </nav>
-          <section className={style.main_items}>
-            <div className={style.main_items_wrapper}>{renderItemList}</div>
-          </section>
-        </main>
-      </section>
+          <article className={style.article}>
+            <section className={style.article_section}>
+              {renderItemList}
+            </section>
+          </article>
+        </section>
+      </main>
       {itemClicked ? (
         <MarketItemModal
           clickItemId={clickItemId}

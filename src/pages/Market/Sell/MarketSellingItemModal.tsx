@@ -45,32 +45,42 @@ function MarketSellingItemModal({
 
   return (
     <div className={style.container}>
-      <section className={style.wrapper}>
-        <div className={style.background}></div>
-        <button onClick={onClick} className={style.button}>
+      <main className={style.wrapper}>
+        <p className={style.background}></p>
+        <button onClick={onClick} className={style.close_button}>
           X
         </button>
-        <section className={style.contents}>
-          <aside className={style.aside}>
+        <section className={style.section}>
+          <aside className={style.section_aside}>
             <img src={useImage(data?.imageUrl)} alt="sample" />
           </aside>
-          <main className={style.main}>
-            <p>이름 | {data?.name}</p>
-            <p>등급 | {data?.grade}</p>
-            <p>판매상태 | {data?.status}</p>
-            {data?.status !== "판매 중" ? (
-              <p>거래일자 | {data?.transactionDate}</p>
-            ) : null}
-            <div>
+          <article className={style.section_article}>
+            <aside className={style.section_article_aside}>
+              <p>
+                이름 <span>{data?.name}</span>
+              </p>
+              <p>
+                등급 <span>{data?.grade}</span>
+              </p>
+              <p>
+                판매상태 <span>{data?.status}</span>
+              </p>
+              {data?.status !== "판매 중" ? (
+                <p>
+                  거래일자 <span>{data?.transactionDate}</span>
+                </p>
+              ) : null}
+            </aside>
+            <div className={style.section_article_button}>
               <Button
                 text={"판매 취소"}
                 width={"5rem"}
                 onClick={handleCancel}
               ></Button>
             </div>
-          </main>
+          </article>
         </section>
-      </section>
+      </main>
     </div>
   );
 }

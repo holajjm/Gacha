@@ -83,22 +83,24 @@ function MarketEnrollItemList() {
   ));
 
   return (
-    <section className={style.itemList}>
-      <header className={style.header}>
+    <main className={style.main}>
+      <header className={style.main_header}>
         <Button
           text={<SlArrowLeft />}
           width={"2.5rem"}
           onClick={() => window.history.back()}
         ></Button>
-        <h1 className={style.header_title}>내 상품 등록</h1>
+        <h1 className={style.main_header_title}>내 상품 등록</h1>
       </header>
-      <MarketEnrollPreview item={selectedItem} defaultItem={itemList[0]} />
-      <main className={style.main}>
-        <header className={style.main_header}>내 아이템</header>
-        <section className={style.main_body}>{myItemList}</section>
-      </main>
-      <ul className={style.pageList}>{pageNumList()}</ul>
-    </section>
+      <section className={style.section}>
+        <MarketEnrollPreview item={selectedItem} defaultItem={itemList[0]} />
+        <span className={style.section_wrapper}>
+          <h1 className={style.section_title}>내 아이템</h1>
+          <article className={style.section_article}>{myItemList}</article>
+        </span>
+      </section>
+      <section className={style.section_1}>{pageNumList()}</section>
+    </main>
   );
 }
 

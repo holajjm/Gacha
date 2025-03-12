@@ -63,13 +63,13 @@ function MarketEnrollPreview({
   }, [item]);
   const previewImage = item?.imageUrl ? item?.imageUrl : defaultItem?.imageUrl;
   return (
-    <div className={style.header}>
-      <div className={style.header_background}></div>
-      <div className={style.header_image}>
+    <section className={style.section}>
+      <span className={style.header_background}></span>
+      <header className={style.section_header}>
         <img src={useImage(previewImage)} alt="image" />
-      </div>
-      <div className={style.header_item}>
-        <div className={style.header_wrapper}>
+      </header>
+      <article className={style.section_article}>
+        <span className={style.section_article_wrapper}>
           <table>
             <thead>
               <tr>
@@ -94,16 +94,16 @@ function MarketEnrollPreview({
               </tr>
             </tbody>
           </table>
-          <div className={style.header_Btn}>
+          <span className={style.section_article_button}>
             <Button
               text={"판매 등록"}
               width={"6rem"}
               onClick={enrollItem}
             ></Button>
-          </div>
-        </div>
-      </div>
-    </div>
+          </span>
+        </span>
+      </article>
+    </section>
   );
 }
 

@@ -23,10 +23,10 @@ function MarketItem({
     onClick();
   };
   return (
-    <div onClick={handleClick} className={style.item}>
-      {!data?.hasStock ? <div className={style.disabled}></div> : null}
-      <img src={useImage(data?.imageUrl)} alt="item" />
-    </div>
+    <article onClick={handleClick} className={style.article}>
+      {!data?.hasStock ? <div className={style.article_disabled}></div> : null}
+      <img className={style.article_img} src={useImage(data?.imageUrl)} alt="item" />
+    </article>
   );
 }
 

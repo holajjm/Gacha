@@ -27,16 +27,16 @@ function MarketEnrollItem({
   };
 
   return (
-    <div className={style[`item_${item?.itemGrade}`]} onClick={handleClick}>
+    <article className={style[`article_${item?.itemGrade}`]} onClick={handleClick}>
       <img
-        className={style.item_img}
+        className={style.article_img}
         src={useImage(item?.imageUrl)}
         alt="sample"
       />
       {item?.itemCnt > 0 ? (
-        <p className={style.item_cnt}>{item?.itemCnt}</p>
+        <p className={style.article_cnt}>{item?.itemCnt}</p>
       ) : null}
-    </div>
+    </article>
   );
 }
 

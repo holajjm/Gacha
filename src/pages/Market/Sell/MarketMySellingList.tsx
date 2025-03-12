@@ -110,23 +110,23 @@ function MarketMyList() {
   return (
     <div className={style.container}>
       <Coin />
-      <section className={style.wrapper}>
-        <aside className={style.aside}>
-          <div className={style.aside_wrapper}>
+      <main className={style.wrapper}>
+        <header className={style.header}>
+          <aside className={style.header_wrapper}>
             <Button
               text={<SlArrowLeft />}
               width={"2.5rem"}
               onClick={() => window.history.back()}
             ></Button>
-            <h1 className={style.aside_title}>내 판매 목록</h1>
-          </div>
-          <select onChange={handleSort} className={style.aside_filter}>
+            <h1 className={style.header_title}>내 판매 목록</h1>
+          </aside>
+          <select onChange={handleSort} className={style.header_filter}>
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
           </select>
-        </aside>
-        <main className={style.main}>
-          <nav onClick={handleClick} className={style.main_nav}>
+        </header>
+        <section className={style.section}>
+          <nav onClick={handleClick} className={style.section_nav}>
             <button
               datatype=""
               className={navClick === "" ? style.active_button : style.button}
@@ -164,20 +164,20 @@ function MarketMyList() {
               D등급
             </button>
           </nav>
-          <section className={style.main_items}>
-            <header className={style.main_items_header}>
-              <div className={style.main_items_header_background}></div>
-              <div>아이템</div>
-              <div>이름</div>
-              <div>등급</div>
-              <div>가격</div>
-              <div>판매 상태</div>
-              <div></div>
-            </header>
-            <main className={style.main_items_main}>{sellingItemList}</main>
-          </section>
-        </main>
-      </section>
+          <article className={style.article}>
+            <aside className={style.article_aside}>
+              <p className={style.article_aside_background}></p>
+              <p>아이템</p>
+              <p>이름</p>
+              <p>등급</p>
+              <p>가격</p>
+              <p>판매 상태</p>
+              <p></p>
+            </aside>
+            <section className={style.article_section}>{sellingItemList}</section>
+          </article>
+        </section>
+      </main>
     </div>
   );
 }
