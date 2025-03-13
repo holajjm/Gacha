@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useUserStore } from "@store/store";
-import useImage from "@hooks/useImage";
+import ProfileImg from "@assets/Profile";
 import Button from "@components/Button";
 
 import style from "@styles/Minihome/Header/MinihomeFollowerItem.module.css";
@@ -42,7 +42,7 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
   return (
     <article className={style.article}>
       <div className={style.article_img}>
-        <img src={useImage(followers?.profileImageUrl)} alt="profile" />
+        <img src={ProfileImg[followers?.userId-1]?.profileImg} alt="profile" />
       </div>
       <p className={style.article_nickname}>{followers?.nickname}</p>
       {nickname === user?.nickname ? (

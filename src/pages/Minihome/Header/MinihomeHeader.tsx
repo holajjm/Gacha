@@ -125,7 +125,7 @@ function MinihomeHeader({
       ) : null}
       <p className={style.header_profile}>
         <img
-          src={ProfileImg[minihomeData?.profileId]?.profileImg}
+          src={ProfileImg[minihomeData?.profileId-1]?.profileImg}
           alt="profile"
         />
       </p>
