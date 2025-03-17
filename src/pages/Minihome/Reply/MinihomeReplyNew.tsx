@@ -18,6 +18,7 @@ interface ReplyData {
   guestbookId: number;
   isAuthor: boolean;
   nickname: string;
+  profileId: number;
 }
 function MinihomeReplyNew() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
