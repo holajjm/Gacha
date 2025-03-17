@@ -1,28 +1,70 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import useImage from "@hooks/useImage";
-import Draggable from "react-draggable";
+import Draggable, { DraggableData } from "react-draggable";
 
-interface ItemData {
+import style from "@styles/Minihome/Adorn/MinihomeAdornDraggableItem.module.css";
+
+// interface AdornItem {
+//   itemId: number;
+//   subId: number;
+//   x: number;
+//   y: number;
+// }
+interface AdornItemData {
   imageUrl: string;
-  itemCnt: number;
   itemGrade: string;
   itemId: number;
-  itemName: string;
-  userItemIds: null;
+  subId: number;
 }
+interface Position {
+  x: number;
+  y: number;
+}
+function MinihomeAdornDraggableItem({
+  data,
+  handleItemPosition,
+}: {
+  data: AdornItemData;
+  handleItemPosition: (position: Position) => void;
+}) {
+  // console.log(data);
 
-function MinihomeAdornDraggableItem({ data }: { data: ItemData }) {
   const nodeRef = useRef(null);
+  const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
+  const [itemPosition, setItemPosition] = useState<Position>({
+    x: 0,
+    y: 0,
+  });
+  const handleDrag = (draggableData: DraggableData) => {
+    setPosition({ x: draggableData.x, y: draggableData.y });
+    setItemPosition({
+      x: draggableData.x,
+      y: draggableData.y,
+    });
+  };
+  useEffect(() => {
+    handleItemPosition(itemPosition);
+  }, [position]);
+
+  // console.log("data:", data);
+  // console.log(position);
+
   return (
-    <Draggable bounds="parent" nodeRef={nodeRef}>
-      <div ref={nodeRef}>
+    <Draggable
+      bounds="parent"
+      nodeRef={nodeRef}
+      position={{ x: itemPosition.x, y: itemPosition.y }}
+      onDrag={(_, position) => handleDrag(position)}
+    >
+      <div className={style.item} ref={nodeRef}>
         <img
           style={{
             width: "100%",
             height: "100%",
             objectFit: "contain",
           }}
+          className={style.item_img}
           src={useImage(data?.imageUrl as string)}
           alt=""
         />
