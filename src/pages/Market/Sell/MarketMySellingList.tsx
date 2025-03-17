@@ -26,6 +26,8 @@ function MarketMyList() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [sellingItem, setSellingItem] = useState<MySellingItemData[]>([]);
+  console.log(sellingItem.length);
+
   const [selected, setSelected] = useState<string>("");
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);
@@ -34,11 +36,11 @@ function MarketMyList() {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setNavClick((e.target as HTMLElement).getAttribute("datatype") as string);
   };
-  const text = navClick ? `&grade=${navClick}` : navClick;
+  const text = navClick ? `?grade=${navClick}&` : "?";
   const [currentPage, setCurrentPage] = useState<number>(0);
   const getMySellItems = async () => {
     const response = await fetch(
-      `${SERVER_API}/products/me?sort=createdAt,desc&page=${currentPage}&size=5${String(text)}`,
+      `${SERVER_API}/products/me${text}sort=createdAt,desc&page=${currentPage}&size=5`,
       {
         method: "GET",
         headers: {
@@ -48,12 +50,17 @@ function MarketMyList() {
       },
     );
     const data = await response.json();
-    setSellingItem((prevList) => [...prevList, ...(data?.data?.content || [])]);
-    setCurrentPage((prev) => prev + 1);
+    console.log(data?.data?.content);
+
+    // setSellingItem((prevList) => [...prevList, ...(data?.data?.content || [])]);
+    setSellingItem(data?.data?.content);
+    if (sellingItem.length >= 5 && sellingItem.length % 5 === 0) {
+      setCurrentPage((prev) => prev + 1);
+    }
   };
   useEffect(() => {
     getMySellItems();
-  }, [text]);
+  }, [navClick]);
 
   const handleScroll = () => {
     const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
@@ -174,7 +181,9 @@ function MarketMyList() {
               <p>판매 상태</p>
               <p></p>
             </aside>
-            <section className={style.article_section}>{sellingItemList}</section>
+            <section className={style.article_section}>
+              {sellingItemList}
+            </section>
           </article>
         </section>
       </main>
