@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useUserStore } from "@store/store";
-import useImage from "@hooks/useImage";
+import ProfileImg from "@assets/Profile";
 
 import MinihomeReplyEdit from "./MinihomeReplyEdit";
 import style from "@styles/Minihome/Reply/MinihomeReplyItem.module.css";
@@ -12,6 +12,7 @@ interface ReplyData {
   guestbookId: number;
   isAuthor: boolean;
   nickname: string;
+  profileId: number;
 }
 
 function MinihomeReplyItem({
@@ -54,7 +55,14 @@ function MinihomeReplyItem({
     <div className={style.main_reply}>
       <header className={style.main_reply_header}>
         <div className={style.main_reply_user}>
-          <img src={useImage(user?.profileUrl)} alt="profile" />
+          <img
+            src={
+              replys?.profileId === -1
+                ? "/images/LightDefaultImage.png"
+                : ProfileImg[replys?.profileId - 1]?.profileImg
+            }
+            alt="profile"
+          />
           <p>{replys?.nickname}</p>
         </div>
         <p className={style.main_reply_date}>{replyTime()}</p>
