@@ -1,4 +1,5 @@
 import React from "react";
+
 import useImage from "@hooks/useImage";
 
 import style from "@styles/Minihome/Adorn/MinihomeAdornBackgroundItem.module.css";
