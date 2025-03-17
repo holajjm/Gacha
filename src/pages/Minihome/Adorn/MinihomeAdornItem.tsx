@@ -1,16 +1,14 @@
 import useImage from '@hooks/useImage';
 import React from 'react'
 
-interface ItemData {
+interface AdornItemData {
   imageUrl: string;
-  itemCnt: number;
   itemGrade: string;
-  itemId: number,
-  itemName: string,
-  userItemIds: null,
+  itemId: number;
+  subId: number;
 }
 
-function MinihomeAdornItem({data,onClick}:{data:ItemData,onClick:(data:ItemData) => void}) {
+function MinihomeAdornItem({data,onClick}:{data:AdornItemData,onClick:(data:AdornItemData) => void}) {
   const handle = () => {
     onClick(data)
   }
