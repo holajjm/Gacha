@@ -7,7 +7,9 @@ import Coin from "@components/Coin";
 
 import MinihomeReplyNew from "./Reply/MinihomeReplyNew";
 import MinihomeHeader from "./Header/MinihomeHeader";
+import MiniHomeItem from "./MiniHomeItem";
 import style from "@styles/Minihome/MiniHomeMain.module.css";
+import useImage from "@hooks/useImage";
 
 interface MiniHomeMainData {
   followersCnt: number;
@@ -20,6 +22,21 @@ interface MiniHomeMainData {
   totalVisitorCnt: number;
   isFollowing: boolean;
   profileId: number;
+}
+
+interface AdornData {
+  background: {
+    backgroundId: number;
+    imageUrl: string;
+  };
+  items: [
+    {
+      imageUrl: string;
+      subId: number;
+      x: number;
+      y: number;
+    },
+  ];
 }
 
 function MiniHomeMain() {
@@ -65,6 +82,41 @@ function MiniHomeMain() {
     getMinihomeInfo();
   }, [nickname]); // 외부에서 미니홈으로 페이지 접속하였을 때 params 값의 변함에 따른 미니홈 정보 리렌더링 및 재호출
 
+  //꾸미기 영역 호출하기
+  const [adornData, setAdornData] = useState<AdornData>({
+    background: {
+      backgroundId: 0,
+      imageUrl: "",
+    },
+    items: [
+      {
+        imageUrl: "",
+        subId: 0,
+        x: 0,
+        y: 0,
+      },
+    ],
+  });
+  const getAdorn = async () => {
+    const response = await fetch(`${SERVER_API}/decoration/${nickname}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user?.accessToken}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data?.data);
+    
+    setAdornData(data?.data);
+  };
+  useEffect(() => {
+    getAdorn();
+  }, []);
+  console.log(adornData);
+  const itemList = adornData?.items.map((e) => (
+    <MiniHomeItem key={e?.subId} imageUrl={e?.imageUrl} positionX={e?.x} positionY={e?.y} />
+  ));
   return (
     <div className={style.container}>
       <Coin />
@@ -78,7 +130,12 @@ function MiniHomeMain() {
             총 방문자 수{" "}
             {minihomeData?.totalVisitorCnt ? minihomeData?.totalVisitorCnt : 0}
           </aside>
-          <article className={style.section_article_1}></article>
+          <article className={style.section_article_1}>
+            <div>
+              <img src={useImage(adornData?.background?.imageUrl)} alt="" />
+            </div>
+            <div className={style.section_article_1_imgList}>{itemList}</div>
+          </article>
           <article className={style.section_article_2}>
             <p className={style.section_article_2_background}></p>
             <MinihomeReplyNew />
