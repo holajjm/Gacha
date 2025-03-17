@@ -27,15 +27,30 @@
 .section_aside {
   margin-left: 0.5rem;
 }
+/* ---------------------------------------- */
 .section_article_1 {
   width: 100%;
   height: 30rem;
   background-color: white;
   border: none;
   border-radius: 10px;
-  padding: 1rem;
-  box-sizing: border-box;
+  position: relative;
 }
+.section_article_1 > div {
+  width: 100%;
+  height: 100%;
+}
+.section_article_1 > div > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+.section_article_1_imgList {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+/* ---------------------------------------- */
 .section_article_2 {
   flex-grow: 1;
   height: 30rem;
