@@ -1,0 +1,10 @@
+.item {
+  width: 8rem;
+  height: 8rem;
+  position: absolute;
+  border: none;
+}
+.item_img {
+  pointer-events: none;
+  border: none;
+}
