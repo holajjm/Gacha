@@ -5,25 +5,23 @@ import { useUserStore } from "@store/store";
 import MinihomeAdornItem from "./MinihomeAdornItem";
 import style from "@styles/Minihome/Adorn/MinihomeAdornItemList.module.css";
 
-interface ItemData {
+interface AdornItemData {
   imageUrl: string;
-  itemCnt: number;
   itemGrade: string;
   itemId: number;
-  itemName: string;
-  userItemIds: null;
+  subId: number;
 }
 
 function MinihomeAdornItemList({
   getItem,
 }: {
-  getItem: (data: ItemData) => void;
+  getItem: (data: AdornItemData) => void;
 }) {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
-  const [itemList, setItemList] = useState<ItemData[]>([]);
+  const [itemList, setItemList] = useState<AdornItemData[]>([]);
   const getItems = async () => {
-    const response = await fetch(`${SERVER_API}/items/me`, {
+    const response = await fetch(`${SERVER_API}/items/${user?.nickname}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +34,7 @@ function MinihomeAdornItemList({
   useEffect(() => {
     getItems();
   }, []);
-  const handleClickItem = (data: ItemData) => {
+  const handleClickItem = (data: AdornItemData) => {
     getItem(data);
   };
   const items = itemList.map((e) => (
