@@ -2,7 +2,7 @@ import React from "react";
 
 import useImage from "@hooks/useImage";
 
-import style from "@styles/Minihome/MinihomeItem.module.css";
+import style from "@styles/Minihome/MiniHomeItem.module.css";
 
 function MiniHomeItem({
   imageUrl,
