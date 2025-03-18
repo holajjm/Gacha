@@ -26,6 +26,7 @@
   overflow: hidden;
 }
 .section_wrapper {
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -33,6 +34,14 @@
 .section_title {
   font-weight: bold;
   font-size: 1.2rem;
+}
+.section_message {
+  font-size: 1.125rem;
+  font-weight: bold;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .section_article {
   height: 100%;
