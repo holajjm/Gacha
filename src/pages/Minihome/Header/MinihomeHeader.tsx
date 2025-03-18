@@ -108,11 +108,11 @@ function MinihomeHeader({
         },
       });
       const data = await response.json();
-      coinRefresh();
       if (data?.error) {
         alert(data?.error?.message);
       } else {
         alert("출석 체크 완료!");
+        coinRefresh();
       }
     } catch (error) {
       console.error(error);
