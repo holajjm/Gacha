@@ -26,8 +26,6 @@ function MarketMyList() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [sellingItem, setSellingItem] = useState<MySellingItemData[]>([]);
-  console.log(sellingItem.length);
-
   const [selected, setSelected] = useState<string>("");
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);
@@ -50,8 +48,6 @@ function MarketMyList() {
       },
     );
     const data = await response.json();
-    console.log(data?.data?.content);
-
     // setSellingItem((prevList) => [...prevList, ...(data?.data?.content || [])]);
     setSellingItem(data?.data?.content);
     if (sellingItem.length >= 5 && sellingItem.length % 5 === 0) {
