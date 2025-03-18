@@ -96,7 +96,11 @@ function MarketEnrollItemList() {
         <MarketEnrollPreview item={selectedItem} defaultItem={itemList[0]} />
         <span className={style.section_wrapper}>
           <h1 className={style.section_title}>내 아이템</h1>
-          <article className={style.section_article}>{myItemList}</article>
+          {itemList.length === 0 ? (
+            <p className={style.section_message}>보유중인 아이템이 없습니다.</p>
+          ) : (
+            <article className={style.section_article}>{myItemList}</article>
+          )}
         </span>
       </section>
       <section className={style.section_1}>{pageNumList()}</section>
