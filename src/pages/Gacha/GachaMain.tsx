@@ -20,7 +20,7 @@ function GachaMain() {
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
-  const coinRefresh = useCoinState((state) => state.coinRefresh);
+  const { coinRefresh } = useCoinState((state) => state);
   const [open, setOpen] = useState<boolean>(false);
   const [gachaData, setGachaData] = useState<GachaData>({
     itemGrade: "",
@@ -28,16 +28,20 @@ function GachaMain() {
     itemName: "",
   });
   const getGacha = async () => {
-    const response = await fetch(`${SERVER_API}/gacha`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user?.accessToken}`,
-      },
-    });
-    const data = await response.text();
-    setGachaData(JSON.parse(data)?.data);
-    coinRefresh();
+    try {
+      const response = await fetch(`${SERVER_API}/gacha`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.accessToken}`,
+        },
+      });
+      const data = await response.text();
+      setGachaData(JSON.parse(data)?.data);
+      coinRefresh();
+    } catch (error) {
+      console.error(error);
+    }
   };
   const handleGachaClick = () => {
     getGacha();
