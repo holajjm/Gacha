@@ -29,6 +29,12 @@
   border-radius: 10px;
   object-fit: contain;
 }
+.section_header_nonImg {
+  width: 15rem;
+  height: 15rem;
+  border-radius: 10px;
+  background-color: lightgray;
+}
 /* -------------------------------- */
 .section_article {
   position: relative;
