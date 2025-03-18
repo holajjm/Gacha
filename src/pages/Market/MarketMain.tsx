@@ -54,6 +54,12 @@ function MarketMain() {
   const handleModalClicked = () => {
     setItemClicked(false);
   };
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (e.key === "Escape") {
+      setItemClicked(false);
+    }
+  };
   const handleClickItemId = useCallback((itemId: number) => {
     setClickItemId(itemId);
   }, []);
@@ -142,6 +148,7 @@ function MarketMain() {
         <MarketItemModal
           clickItemId={clickItemId}
           onClick={handleModalClicked}
+          onKeyPress={handleKeyPress}
         />
       ) : null}
     </div>
