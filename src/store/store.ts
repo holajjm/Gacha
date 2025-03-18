@@ -27,6 +27,5 @@ interface CoinState {
 
 export const useCoinState = create<CoinState>((set) => ({
   coinUpdate: 0,
-  coinRefresh: () =>
-    set((state) => ({ coinUpdate: state.coinUpdate + 1 })),
+  coinRefresh: () => set((state) => ({ coinUpdate: state.coinUpdate + 1 })),
 }));
