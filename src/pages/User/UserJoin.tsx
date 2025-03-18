@@ -3,9 +3,9 @@ import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { useUserStore } from "@store/store";
+import Button from "@components/Button";
 
 import style from "@styles/User/UserJoin.module.css";
-import Button from "@components/Button";
 
 interface Data {
   nickname: string;
@@ -25,8 +25,8 @@ function UserJoin() {
     register,
     handleSubmit,
     formState: { errors },
-    clearErrors,
-    setValue,
+    // clearErrors,
+    // setValue,
   } = useForm<Data>();
 
   // 파라미터로 전달받은 socialId,loginId 값 디코딩하여 객체로 사용
@@ -48,16 +48,16 @@ function UserJoin() {
   }, []);
 
   // 새로운 회원가입 로직
-  const [char, setChar] = useState<string>("");
-  const selectedChar = (e: React.MouseEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    // console.log((e.target as HTMLDivElement).getAttribute("dataType"));
-    const charNum = (e.target as HTMLDivElement).getAttribute("dataType");
-    if (charNum) {
-      setChar(charNum);
-    }
-    clearErrors("profileId");
-  };
+  // const [char, setChar] = useState<string>("");
+  // const selectedChar = (e: React.MouseEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   // console.log((e.target as HTMLDivElement).getAttribute("dataType"));
+  //   const charNum = (e.target as HTMLDivElement).getAttribute("dataType");
+  //   if (charNum) {
+  //     setChar(charNum);
+  //   }
+  //   clearErrors("profileId");
+  // };
 
   const onSubmit = async (formData: Data) => {
     console.log(formData);
@@ -72,7 +72,7 @@ function UserJoin() {
             socialType: loginParams.socialType,
             loginId: loginParams.loginId,
             nickname: formData.nickname,
-            profileId: char,
+            profileId: formData?.profileId,
           }),
         ],
         { type: "application/json" },
@@ -189,7 +189,75 @@ function UserJoin() {
           </h1>
         </header>
         <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
-          <header className={style.form_header} onClick={selectedChar}>
+          <fieldset className={style.form_fieldset}>
+            <legend className={style.form_legend}>프로필 이미지 선택</legend>
+            <div
+              className={style.form_header_wrapper}
+              role="radiogroup"
+              aria-labelledby="profile-image-options"
+            >
+              {["1", "2", "3"].map((id) => (
+                <figure key={id}>
+                  <input
+                    type="radio"
+                    id={`image${id}`}
+                    value={id}
+                    {...register("profileId", {
+                      required: "프로필 이미지를 선택해주세요.",
+                    })}
+                  />
+                  <label htmlFor={`image${id}`}>
+                    <img
+                      src={`/images/Profile${id}.svg`}
+                      alt={`Profile ${id}`}
+                    />
+                  </label>
+                </figure>
+              ))}
+              {/* <figure>
+                <input
+                  type="radio"
+                  id="image1"
+                  name="profileId"
+                  value="1"
+                  onClick={() => setValue("profileId", "1")}
+                />
+                <label htmlFor="image1">
+                  <img src="/images/Bear.svg" alt="Bear" />
+                </label>
+              </figure>
+
+              <figure>
+                <input
+                  type="radio"
+                  id="image2"
+                  name="profileId"
+                  value="2"
+                  onClick={() => setValue("profileId", "2")}
+                />
+                <label htmlFor="image2">
+                  <img src="/images/Cow.svg" alt="Cow" />
+                </label>
+              </figure>
+
+              <figure>
+                <input
+                  type="radio"
+                  id="image3"
+                  name="profileId"
+                  value="3"
+                  onClick={() => setValue("profileId", "3")}
+                />
+                <label htmlFor="image3">
+                  <img src="/images/Giraffe.svg" alt="Giraffe" />
+                </label>
+              </figure> */}
+            </div>
+            <p className={style.form_header_error}>
+              {errors.profileId?.message}
+            </p>
+          </fieldset>
+          {/* <header className={style.form_header} onClick={selectedChar}>
             <label className={style.form_header_label} htmlFor="profile">
               <p className={style.form_header_title}>프로필을 선택하세요.</p>
               <div className={style.form_header_wrapper}>
@@ -223,8 +291,8 @@ function UserJoin() {
             />
             <p className={style.form_header_error}>
               {errors ? errors?.profileId?.message : ""}
-            </p>
-            {/* <label className={style.main_header_label} htmlFor="profile">
+            </p> */}
+          {/* <label className={style.main_header_label} htmlFor="profile">
               <img
                 className={style.main_img1}
                 src={imagePreview}
@@ -249,7 +317,7 @@ function UserJoin() {
               {errors ? errors.profileUrl?.message : ""}
             </p>
             <div onClick={handleDefaultImage}>기본 이미지로 하기</div> */}
-          </header>
+          {/* </header> */}
           <section className={style.form_section}>
             <article className={style.form_section_article}>
               <h1 className={style.form_section_article_title}>닉네임</h1>
