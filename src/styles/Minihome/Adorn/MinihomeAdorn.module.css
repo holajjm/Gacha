@@ -1,7 +1,7 @@
 .container {
   min-width: 68rem;
   height: 100vh;
-  padding: 2rem 4rem;
+  padding: 4rem;
   box-sizing: border-box;
   background: linear-gradient(to bottom, #d8faff, #b6cdff);
   display: flex;
@@ -13,7 +13,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 /* ------------------------------------- */
 .header {
@@ -55,7 +55,6 @@
   top: 0;
   left: 0;
 }
-
 /* ----------------------------------- */
 .section {
   display: flex;
