@@ -45,7 +45,10 @@ function MarketEnrollPreview({
             Authorization: `Bearer ${user?.accessToken}`,
           },
           body: JSON.stringify({
-            userItemId: selectItem?.userItemIds[0],
+            userItemId:
+              selectItem?.userItemIds.length !== 0
+                ? selectItem?.userItemIds[0]
+                : defaultItem?.userItemIds[0],
           }),
         });
         alert("상품이 등록되었습니다.");
@@ -62,11 +65,16 @@ function MarketEnrollPreview({
     setSelectItem(item);
   }, [item]);
   const previewImage = item?.imageUrl ? item?.imageUrl : defaultItem?.imageUrl;
+  const imageTag = <img src={useImage(previewImage)} alt="previewImage" />;
   return (
     <section className={style.section}>
       <span className={style.header_background}></span>
       <header className={style.section_header}>
-        <img src={useImage(previewImage)} alt="image" />
+        {!previewImage ? (
+          <span className={style.section_header_nonImg}></span>
+        ) : (
+          imageTag
+        )}
       </header>
       <article className={style.section_article}>
         <span className={style.section_article_wrapper}>
@@ -87,10 +95,10 @@ function MarketEnrollPreview({
                 <td>
                   {item?.itemGrade ? item?.itemGrade : defaultItem?.itemGrade}
                 </td>
-                <td>{item?.price ? item?.price : defaultItem?.price}코인</td>
                 <td>
-                  {item?.stock ? item?.stock : defaultItem?.stock}개
+                  {item?.price ? `${item?.price}코인` : defaultItem?.price}
                 </td>
+                <td>{item?.stock ? `${item?.stock}게` : defaultItem?.stock}</td>
               </tr>
             </tbody>
           </table>
