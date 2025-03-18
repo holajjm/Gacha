@@ -55,6 +55,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  aspect-ratio: 1/1;
 }
 .article_item_img > img {
   width: 100%;
@@ -70,6 +71,7 @@
   opacity: 0.75;
   z-index: 50;
   border-radius: 10px;
+  aspect-ratio: 1/1;
 }
 .article_item_count {
   height: 1.2rem;
