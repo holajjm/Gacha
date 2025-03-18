@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useCoinState, useUserStore } from "@store/store";
 import useImage from "@hooks/useImage";
@@ -17,9 +17,11 @@ interface ModalData {
 function MarketItemModal({
   clickItemId,
   onClick,
+  onKeyPress,
 }: {
   clickItemId: number;
   onClick: () => void;
+  onKeyPress: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 }) {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const [modalData, setModalData] = useState<ModalData>({
@@ -30,6 +32,10 @@ function MarketItemModal({
     price: 0,
   });
   const { user } = useUserStore((state) => state);
+  const divRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    divRef.current?.focus()
+  },[])
   const getModalData = async () => {
     const response = await fetch(
       `${SERVER_API}/items/${clickItemId}/products`,
@@ -42,8 +48,6 @@ function MarketItemModal({
       },
     );
     const data = await response.json();
-    console.log(data?.data);
-
     setModalData(data?.data);
   };
   useEffect(() => {
@@ -70,9 +74,8 @@ function MarketItemModal({
       }
     }
   };
-
   return (
-    <div className={style.container}>
+    <div onKeyDown={onKeyPress} tabIndex={0} ref={divRef} className={style.container}>
       <main className={style.wrapper}>
         <p className={style.background}></p>
         <button onClick={onClick} className={style.close_button}>
@@ -99,7 +102,9 @@ function MarketItemModal({
             </aside>
             {/* 구매 기능 구현 및 공용 버튼 컴포넌트로 변경 */}
             <div className={style.section_article_button}>
-              <Button text={"구매"} width={"5rem"} onClick={buyItem}></Button>
+              {modalData?.stock === 0 ? null : (
+                <Button text={"구매"} width={"5rem"} onClick={buyItem}></Button>
+              )}
             </div>
           </article>
         </section>
