@@ -1,15 +1,15 @@
 const ProfileImg = [
   {
     id: 1,
-    profileImg: "/images/Bear.svg",
+    profileImg: "/images/Profile1.svg",
   },
   {
     id: 2,
-    profileImg: "/images/Cow.svg",
+    profileImg: "/images/Profile2.svg",
   },
   {
     id: 3,
-    profileImg: "/images/Giraffe.svg",
+    profileImg: "/images/Profile3.svg",
   },
 ];
 
