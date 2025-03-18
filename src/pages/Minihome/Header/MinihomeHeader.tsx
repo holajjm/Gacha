@@ -97,22 +97,25 @@ function MinihomeHeader({
   };
 
   // 출석체크 및 코인 획득 로직
-  const coinRefresh = useCoinState((state) => state.coinRefresh);
+  const { coinRefresh } = useCoinState((state) => state);
   const getAttend = async () => {
-    const response = await fetch(`${SERVER_API}/attend`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user?.accessToken}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    if (!data?.data) {
-      alert(data?.error?.message);
-    } else {
-      alert("출석 체크 완료!");
+    try {
+      const response = await fetch(`${SERVER_API}/attend`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.accessToken}`,
+        },
+      });
+      const data = await response.json();
       coinRefresh();
+      if (data?.error) {
+        alert(data?.error?.message);
+      } else {
+        alert("출석 체크 완료!");
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
   return (
@@ -125,7 +128,7 @@ function MinihomeHeader({
       ) : null}
       <p className={style.header_profile}>
         <img
-          src={ProfileImg[minihomeData?.profileId-1]?.profileImg}
+          src={ProfileImg[minihomeData?.profileId - 1]?.profileImg}
           alt="profile"
         />
       </p>
