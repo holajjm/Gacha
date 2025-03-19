@@ -56,27 +56,27 @@ function Header() {
           <div className={style.link_wrapper}>
             <button onClick={() => handleWithDraw()}>회원 탈퇴</button>
             <Button
-              text={"MINIHOME"}
+              text={"미니홈"}
               width={"6rem"}
               onClick={() => navigate(`/minihome/${user?.nickname}`)}
             ></Button>
             <Button
-              text={"EXPLORE"}
+              text={"둘러보기"}
               width={"6rem"}
               onClick={() => navigate("/explore")}
             ></Button>
             <Button
-              text={"GACHA"}
+              text={"뽑기"}
               width={"6rem"}
               onClick={() => navigate("/gacha")}
             ></Button>
             <Button
-              text={"MARKET"}
+              text={"마켓"}
               width={"6rem"}
               onClick={() => navigate("/market")}
             ></Button>
             <Button
-              text={"LOGOUT"}
+              text={"로그아웃"}
               width={"6rem"}
               onClick={handleLogout}
             ></Button>
@@ -84,7 +84,7 @@ function Header() {
         ) : (
           <div className={style.link_wrapper}>
             <Button
-              text={"LOGIN"}
+              text={"로그인"}
               width={"6rem"}
               onClick={() => navigate("/login")}
             ></Button>
