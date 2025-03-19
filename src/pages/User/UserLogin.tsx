@@ -1,8 +1,11 @@
 import React from "react";
 
+import usePageUpper from "@hooks/usePageUpper";
+
 import style from "@styles/User/UserLogin.module.css";
 
 function UserLogin() {
+  usePageUpper();
   const CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
   const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code `;

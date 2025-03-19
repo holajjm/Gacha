@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useUserStore } from "@store/store";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
+import usePageUpper from "@hooks/usePageUpper";
 
 import MinihomeItems from "./MinihomeItems";
 import { SlArrowLeft } from "react-icons/sl";
@@ -19,6 +20,7 @@ interface ItemBookData {
 
 function MinihomeItemBook() {
   usePageTitle("아이템 북 관리");
+  usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const [itemList, setItemList] = useState<ItemBookData[]>([]);

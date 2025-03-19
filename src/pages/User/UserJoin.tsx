@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 
 import { useUserStore } from "@store/store";
 import Button from "@components/Button";
+import usePageUpper from "@hooks/usePageUpper";
 
 import style from "@styles/User/UserJoin.module.css";
 
@@ -18,6 +19,7 @@ interface QueryParams {
 }
 
 function UserJoin() {
+  usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { setUser } = useUserStore((state) => state);
   const location = useLocation();
