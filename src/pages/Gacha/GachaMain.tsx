@@ -16,7 +16,7 @@ interface GachaData {
 }
 
 function GachaMain() {
-  usePageTitle("뽑기");
+  usePageTitle("Gacha Shop");
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);

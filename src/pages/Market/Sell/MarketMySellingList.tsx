@@ -21,7 +21,7 @@ interface MySellingItemData {
 }
 
 function MarketMyList() {
-  usePageTitle("마켓 - 내 판매 목록");
+  usePageTitle("Market - MySelling");
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);

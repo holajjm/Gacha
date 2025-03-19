@@ -19,7 +19,7 @@ interface MarketItemData {
 }
 
 function MarketMain() {
-  usePageTitle("마켓");
+  usePageTitle("Market");
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const navigate = useNavigate();

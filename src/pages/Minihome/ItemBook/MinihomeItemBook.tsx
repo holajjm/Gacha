@@ -19,7 +19,7 @@ interface ItemBookData {
 }
 
 function MinihomeItemBook() {
-  usePageTitle("아이템 북 관리");
+  usePageTitle("MiniHome - ItemBook");
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);

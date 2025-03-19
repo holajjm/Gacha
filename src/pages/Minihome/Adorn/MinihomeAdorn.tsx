@@ -57,7 +57,7 @@ interface AdornPageData {
 }
 
 function MinihomeAdorn() {
-  usePageTitle("미니홈 - 꾸미기");
+  usePageTitle("MiniHome - Adorn");
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);

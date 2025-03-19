@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { useUserStore } from "@store/store";
+import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import Coin from "@components/Coin";
 
@@ -40,6 +41,7 @@ interface AdornData {
 }
 
 function MiniHomeMain() {
+  usePageTitle("MiniHome");
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
@@ -107,7 +109,7 @@ function MiniHomeMain() {
     });
     const data = await response.json();
     console.log(data?.data);
-    
+
     setAdornData(data?.data);
   };
   useEffect(() => {
@@ -115,7 +117,12 @@ function MiniHomeMain() {
   }, []);
   console.log(adornData);
   const itemList = adornData?.items.map((e) => (
-    <MiniHomeItem key={e?.subId} imageUrl={e?.imageUrl} positionX={e?.x} positionY={e?.y} />
+    <MiniHomeItem
+      key={e?.subId}
+      imageUrl={e?.imageUrl}
+      positionX={e?.x}
+      positionY={e?.y}
+    />
   ));
   return (
     <div className={style.container}>

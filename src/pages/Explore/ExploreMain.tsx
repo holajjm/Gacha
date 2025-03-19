@@ -16,7 +16,7 @@ interface ExploreItemData {
 }
 
 function ExploreMain() {
-  usePageTitle("둘러보기");
+  usePageTitle("Explore");
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
