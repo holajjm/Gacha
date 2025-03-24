@@ -4,13 +4,13 @@ import { useParams } from "react-router-dom";
 import { useUserStore } from "@store/store";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
+import useImage from "@hooks/useImage";
 import Coin from "@components/Coin";
 
 import MinihomeReplyNew from "./Reply/MinihomeReplyNew";
 import MinihomeHeader from "./Header/MinihomeHeader";
 import MiniHomeItem from "./MiniHomeItem";
 import style from "@styles/Minihome/MiniHomeMain.module.css";
-import useImage from "@hooks/useImage";
 
 interface MiniHomeMainData {
   followersCnt: number;
@@ -108,14 +108,11 @@ function MiniHomeMain() {
       },
     });
     const data = await response.json();
-    console.log(data?.data);
-
     setAdornData(data?.data);
   };
   useEffect(() => {
     getAdorn();
   }, []);
-  console.log(adornData);
   const itemList = adornData?.items.map((e) => (
     <MiniHomeItem
       key={e?.subId}
