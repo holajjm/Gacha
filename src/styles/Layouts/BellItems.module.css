@@ -1,0 +1,23 @@
+.container {
+  position: absolute;
+  top: 150%;
+  left: -450%;
+  width: 14rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: white;
+}
+.article {
+  background-color: rgb(224, 224, 224);
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
