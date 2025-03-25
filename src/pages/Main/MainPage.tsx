@@ -69,35 +69,35 @@ function MainPage() {
           <article className={style.article}>
             <h1>MiniHome</h1>
             <div className={style.img_preview}>
-              <img src="src/assets/images/MiniHomeMain.svg" alt="" />
-              <img src="src/assets/images/MiniHomeMain1.svg" alt="" />
-              <img src="src/assets/images/MiniHomeItemBook.svg" alt="" />
-              <img src="src/assets/images/MiniHomeAdornBackground.svg" alt="" />
-              <img src="src/assets/images/MiniHomeAdornItem.svg" alt="" />
+              <img src="/images/MiniHomeMain.svg" alt="" />
+              <img src="/images/MiniHomeMain1.svg" alt="" />
+              <img src="/images/MiniHomeItemBook.svg" alt="" />
+              <img src="/images/MiniHomeAdornBackground.svg" alt="" />
+              <img src="/images/MiniHomeAdornItem.svg" alt="" />
             </div>
           </article>
           <article className={style.article}>
             <h1>Explore</h1>
             <div className={style.img_preview}>
-              <img src="src/assets/images/Explore.svg" alt="" />
+              <img src="/images/Explore.svg" alt="" />
             </div>
           </article>
           <article className={style.article}>
             <h1>Gacha</h1>
             <div className={style.img_preview}>
-              <img src="src/assets/images/Gacha.svg" alt="" />
-              <img src="src/assets/images/GachaClose.svg" alt="" />
-              <img src="src/assets/images/GachaOpen.svg" alt="" />
+              <img src="/images/Gacha.svg" alt="" />
+              <img src="/images/GachaClose.svg" alt="" />
+              <img src="/images/GachaOpen.svg" alt="" />
             </div>
           </article>
           <article className={style.article}>
             <h1>Market</h1>
             <div className={style.img_preview}>
-              <img src="src/assets/images/Market.svg" alt="" />
-              <img src="src/assets/images/MarketItemModal.svg" alt="" />
-              <img src="src/assets/images/MarketSell.svg" alt="" />
-              <img src="src/assets/images/MarketSellModal.svg" alt="" />
-              <img src="src/assets/images/MarketEnroll.svg" alt="" />
+              <img src="/images/Market.svg" alt="" />
+              <img src="/images/MarketItemModal.svg" alt="" />
+              <img src="/images/MarketSell.svg" alt="" />
+              <img src="/images/MarketSellModal.svg" alt="" />
+              <img src="/images/MarketEnroll.svg" alt="" />
             </div>
           </article>
         </section>
