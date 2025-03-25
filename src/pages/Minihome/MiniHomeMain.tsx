@@ -6,6 +6,7 @@ import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import useImage from "@hooks/useImage";
 import Coin from "@components/Coin";
+import Bell from "@components/Bell";
 
 import MinihomeReplyNew from "./Reply/MinihomeReplyNew";
 import MinihomeHeader from "./Header/MinihomeHeader";
@@ -124,6 +125,7 @@ function MiniHomeMain() {
   return (
     <div className={style.container}>
       <Coin />
+      <Bell />
       <main className={style.wrapper}>
         <MinihomeHeader
           minihomeData={minihomeData}
