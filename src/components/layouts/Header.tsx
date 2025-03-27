@@ -5,6 +5,7 @@ import { useUserStore } from "@store/store";
 import Button from "@components/Button";
 
 import style from "@styles/Layouts/Header.module.css";
+import Bell from "@components/Bell";
 
 function Header() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
@@ -80,6 +81,7 @@ function Header() {
               width={"6rem"}
               onClick={handleLogout}
             ></Button>
+            <Bell />
           </div>
         ) : (
           <div className={style.link_wrapper}>
