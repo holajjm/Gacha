@@ -3,15 +3,18 @@
   top: 150%;
   left: -450%;
   width: 14rem;
-  height: 10rem;
+  height: 15rem;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
   box-sizing: border-box;
   border-radius: 10px;
   background-color: white;
+  overflow: scroll;
+  scrollbar-width: none;
 }
 .article {
   background-color: rgb(224, 224, 224);
@@ -20,4 +23,5 @@
   padding: 0.5rem;
   box-sizing: border-box;
   border-radius: 10px;
+  font-size: 0.9rem;
 }
