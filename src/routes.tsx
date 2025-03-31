@@ -19,6 +19,7 @@ import MarketMySellingList from "@pages/Market/Sell/MarketMySellingList";
 //User
 import UserLogin from "@pages/User/UserLogin";
 import UserJoin from "@pages/User/UserJoin";
+import UserEdit from "@pages/User/UserEdit";
 import OAuth from "@pages/OAuth";
 
 export const router = createBrowserRouter([
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
           {
             path: "join",
             element: <UserJoin />,
+          },
+          {
+            path: "edit",
+            element: <UserEdit />,
           },
           {
             path: "auth",
