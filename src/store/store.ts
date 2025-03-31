@@ -4,7 +4,7 @@ export interface User {
   loginId: string;
   socialType: string;
   nickname: string;
-  profileId: string;
+  profileId: number;
   accessToken: string;
   refreshToken: string;
 }
