@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useUserStore } from "@store/store";
-import Coin from "@components/Coin";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
@@ -74,7 +73,6 @@ function MarketMain() {
 
   return (
     <div className={style.container}>
-      <Coin />
       <main className={style.wrapper}>
         <header className={style.header}>
           <aside className={style.header_aside}>
