@@ -7,6 +7,7 @@ import ProfileImg from "@assets/Profile";
 
 import MinihomeFollower from "./MinihomeFollower";
 import MinihomeFollowing from "./MinihomeFollowing";
+import { FcSettings } from "react-icons/fc";
 import style from "@styles/Minihome/Header/MinihomeHeader.module.css";
 
 interface MiniHomeMainData {
@@ -118,6 +119,7 @@ function MinihomeHeader({
       console.error(error);
     }
   };
+  console.log(minihomeData);
   return (
     <header className={style.header}>
       {followerClick ? (
@@ -128,7 +130,7 @@ function MinihomeHeader({
       ) : null}
       <p className={style.header_profile}>
         <img
-          src={ProfileImg[minihomeData?.profileId - 1]?.profileImg}
+          src={ProfileImg[+(minihomeData?.profileId) - 1]?.profileImg}
           alt="profile"
         />
       </p>
@@ -144,6 +146,10 @@ function MinihomeHeader({
               />
               <p>출석체크하고 코인 받기!</p>
             </div>
+            <FcSettings
+              className={style.section_article_setting}
+              onClick={() => navigate("/edit")}
+            />
           </article>
           <nav className={style.section_info}>
             <p>스코어 {minihomeData?.score ? minihomeData?.score : 0}</p>
