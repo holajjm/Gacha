@@ -5,7 +5,6 @@ import { useUserStore } from "@store/store";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import useImage from "@hooks/useImage";
-import Coin from "@components/Coin";
 
 import MinihomeReplyNew from "./Reply/MinihomeReplyNew";
 import MinihomeHeader from "./Header/MinihomeHeader";
@@ -82,7 +81,7 @@ function MiniHomeMain() {
   };
   useEffect(() => {
     getMinihomeInfo();
-  }, [nickname]); // 외부에서 미니홈으로 페이지 접속하였을 때 params 값의 변함에 따른 미니홈 정보 리렌더링 및 재호출
+  }, [nickname, user?.profileId]); // 외부에서 미니홈으로 페이지 접속하였을 때 params 값의 변함에 따른 미니홈 정보 리렌더링 및 재호출
 
   //꾸미기 영역 호출하기
   const [adornData, setAdornData] = useState<AdornData>({
@@ -121,9 +120,11 @@ function MiniHomeMain() {
       positionY={e?.y}
     />
   ));
+  console.log(minihomeData);
+  console.log(user);
+
   return (
     <div className={style.container}>
-      <Coin />
       <main className={style.wrapper}>
         <MinihomeHeader
           minihomeData={minihomeData}
