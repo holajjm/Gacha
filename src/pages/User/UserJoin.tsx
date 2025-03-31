@@ -11,7 +11,7 @@ import style from "@styles/User/UserJoin.module.css";
 
 interface Data {
   nickname: string;
-  profileId: string;
+  profileId: number;
   socialType: string;
   loginId: string;
 }
@@ -200,7 +200,7 @@ function UserJoin() {
               role="radiogroup"
               aria-labelledby="profile-image-options"
             >
-              {["1", "2", "3"].map((id) => (
+              {[1, 2, 3].map((id) => (
                 <figure key={id}>
                   <input
                     type="radio"
