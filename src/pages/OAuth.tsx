@@ -12,7 +12,7 @@ interface JwtPayload {
   exp: number;
   iat: number;
   nickname: string;
-  profile: string;
+  profile: number;
 }
 function OAuth() {
   const { user, setUser } = useUserStore((state) => state);
