@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useCoinState, useUserStore } from "@store/store";
 
-import Coin from "@components/Coin";
-import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
+import Button from "@components/Button";
 
 import GachaCapsule from "./GachaCapsule";
 import style from "@styles/Gacha/GachaMain.module.css";
@@ -53,7 +52,6 @@ function GachaMain() {
   return (
     <div className={style.container}>
       <main className={style.wrapper}>
-        <Coin />
         <header className={style.header}>
           <h1 className={style.header_title}>GACHA SHOP</h1>
           <p className={style.header_description}>랜덤 아이템을 뽑아봐요!</p>
