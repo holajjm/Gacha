@@ -1,0 +1,121 @@
+.container {
+  min-width: 68rem;
+  min-height: 100vh;
+  padding: 4rem 20rem;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, #d8faff, #b6cdff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #2d2d2d;
+}
+.wrapper {
+  flex-grow: 1;
+  width: 60rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+/* ----------------------------------- */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.header_title {
+  font-size: 1.5rem;
+}
+/* ----------------------------------- */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.form_fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+.form_legend {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.form_header_wrapper {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+.form_header_wrapper > figure > input {
+  display: none;
+}
+.form_header_wrapper > figure > label {
+  width: 5rem;
+  height: 5rem;
+  cursor: pointer;
+}
+.form_header_wrapper > figure > label > img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 100%;
+}
+.form_header_wrapper > figure > label > img:hover {
+  box-sizing: border-box;
+  transform: scale(1.1);
+  transition-duration: 200ms;
+  cursor: pointer;
+}
+.form_header_error,
+.form_section_article_error {
+  font-size: 0.8rem;
+  color: red;
+  font-weight: bold;
+}
+/* ----------------------------------- */
+.form_section {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form_section_article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.form_section_article_title {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.form_section_article_contents {
+  display: flex;
+  gap: 0.5rem;
+}
+.form_section_article_contents > input {
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: none;
+}
+/* ----------------------------------- */
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer_button {
+  all: unset;
+  opacity: 0.8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.footer_button:hover {
+  color: red;
+}
+
