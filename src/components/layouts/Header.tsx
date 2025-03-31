@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useUserStore } from "@store/store";
 import Button from "@components/Button";
 
-import style from "@styles/Layouts/Header.module.css";
+import Coin from "@components/Coin";
 import Bell from "@components/Bell";
+import style from "@styles/Layouts/Header.module.css";
 
 function Header() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
@@ -28,24 +29,6 @@ function Header() {
       window.location.reload();
     }
   };
-  // 임시 회원 탈퇴 기능
-  const handleWithDraw = async () => {
-    if (confirm("탈퇴할까요?")) {
-      await fetch(`${SERVER_API}/withdraw`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.refreshToken}`,
-        },
-      });
-      sessionStorage.removeItem("user");
-      localStorage.removeItem("AccessToken");
-      localStorage.removeItem("RefreshToken");
-      alert("회원 탈퇴 완료");
-      navigate("/main");
-      window.location.reload();
-    }
-  };
 
   return (
     <div className={style.container}>
@@ -55,7 +38,7 @@ function Header() {
         </a>
         {user && user?.accessToken ? (
           <div className={style.link_wrapper}>
-            <button onClick={() => handleWithDraw()}>회원 탈퇴</button>
+            <Coin />
             <Button
               text={"미니홈"}
               width={"6rem"}
