@@ -53,6 +53,7 @@ function MinihomeReplyItem({
 
   return (
     <div className={style.main_reply}>
+      <div className={style.main_reply_background}></div>
       <header className={style.main_reply_header}>
         <div className={style.main_reply_user}>
           <img

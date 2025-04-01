@@ -108,6 +108,7 @@ function MinihomeReplyNew() {
         onSubmit={handleSubmit(onSubmit)}
         className={style.main_reply_input}
       >
+        <div className={style.main_reply_input_background}></div>
         <input
           type="text"
           placeholder="방명록을 남겨보세요!"
