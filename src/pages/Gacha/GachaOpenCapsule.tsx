@@ -23,7 +23,7 @@ function GachaOpenCapsule({
     <main className={style.wrapper}>
       <img
         className={style.open_capsule}
-        src={`src/assets/images/${color}OpenCapsule.svg`}
+        src={`/images/${color}OpenCapsule.svg`}
         alt="Open"
       />
       {image ? (

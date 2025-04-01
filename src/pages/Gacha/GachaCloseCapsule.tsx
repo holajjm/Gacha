@@ -6,7 +6,7 @@ function GachaCloseCapsule({ color }: { color: string }) {
   return (
     <img
       className={style.close_capsule}
-      src={`src/assets/images/${color}CloseCapsule.svg`}
+      src={`/images/${color}CloseCapsule.svg`}
       alt="Close"
     />
   );
