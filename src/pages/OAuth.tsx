@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useUserStore } from "@store/store";
 
@@ -16,11 +16,8 @@ interface JwtPayload {
 }
 function OAuth() {
   const { user, setUser } = useUserStore((state) => state);
-  console.log(user);
-
+  // console.log(user);
   const navigate = useNavigate();
-  const location = useLocation();
-  console.log(location);
   const handleData = () => {
     try {
       // 카카오 로그인 유저 정보 쿼리 스트링으로 가져옴
@@ -37,8 +34,7 @@ function OAuth() {
       };
       // 변환한 유저 정보 객체 변수 초기화
       const queryParams = parseQueryString(data);
-      console.log(queryParams);
-
+      // console.log(queryParams);
       const token = String(queryParams?.accessToken);
       const decodedToken: JwtPayload = jwtDecode(token);
 
