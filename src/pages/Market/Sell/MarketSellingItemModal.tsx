@@ -2,6 +2,7 @@ import React from "react";
 
 import { useUserStore } from "@store/store";
 import useImage from "@hooks/useImage";
+import usePageUpper from "@hooks/usePageUpper";
 import Button from "@components/Button";
 
 import style from "@styles/Market/Sell/MarketSellingItemModal.module.css";
@@ -23,6 +24,7 @@ function MarketSellingItemModal({
   onClick: () => void;
   data: MySellingItemData;
 }) {
+  usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const handleCancel = async () => {
