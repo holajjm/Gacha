@@ -120,8 +120,8 @@ function MiniHomeMain() {
       positionY={e?.y}
     />
   ));
-  console.log(minihomeData);
-  console.log(user);
+  // console.log(minihomeData);
+  // console.log(user);
 
   return (
     <div className={style.container}>
