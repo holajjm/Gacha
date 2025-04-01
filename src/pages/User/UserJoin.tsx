@@ -201,16 +201,20 @@ function UserJoin() {
               aria-labelledby="profile-image-options"
             >
               {[1, 2, 3].map((id) => (
-                <figure key={id}>
+                <figure key={id} className={style.form_fieldset_figure}>
                   <input
                     type="radio"
                     id={`image${id}`}
                     value={id}
+                    className={style.form_fieldset_figure_input}
                     {...register("profileId", {
                       required: "프로필 이미지를 선택해주세요.",
                     })}
                   />
-                  <label htmlFor={`image${id}`}>
+                  <label
+                    htmlFor={`image${id}`}
+                    className={style.form_fieldset_figure_label}
+                  >
                     <img
                       src={`/images/Profile${id}.svg`}
                       alt={`Profile ${id}`}
@@ -218,44 +222,6 @@ function UserJoin() {
                   </label>
                 </figure>
               ))}
-              {/* <figure>
-                <input
-                  type="radio"
-                  id="image1"
-                  name="profileId"
-                  value="1"
-                  onClick={() => setValue("profileId", "1")}
-                />
-                <label htmlFor="image1">
-                  <img src="/images/Bear.svg" alt="Bear" />
-                </label>
-              </figure>
-
-              <figure>
-                <input
-                  type="radio"
-                  id="image2"
-                  name="profileId"
-                  value="2"
-                  onClick={() => setValue("profileId", "2")}
-                />
-                <label htmlFor="image2">
-                  <img src="/images/Cow.svg" alt="Cow" />
-                </label>
-              </figure>
-
-              <figure>
-                <input
-                  type="radio"
-                  id="image3"
-                  name="profileId"
-                  value="3"
-                  onClick={() => setValue("profileId", "3")}
-                />
-                <label htmlFor="image3">
-                  <img src="/images/Giraffe.svg" alt="Giraffe" />
-                </label>
-              </figure> */}
             </div>
             <p className={style.form_header_error}>
               {errors.profileId?.message}
