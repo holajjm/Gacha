@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useUserStore } from "@store/store";
 
-import Coin from "@components/Coin";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
@@ -112,7 +111,6 @@ function MarketMyList() {
   ));
   return (
     <div className={style.container}>
-      <Coin />
       <main className={style.wrapper}>
         <header className={style.header}>
           <aside className={style.header_wrapper}>
