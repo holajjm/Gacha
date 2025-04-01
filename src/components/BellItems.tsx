@@ -47,7 +47,23 @@ function BellItems({ data }: { data: NotiData }) {
 
   return (
     <section className={style.container}>
-      {data?.count ? itemList : <span>알림이 없습니다.</span>}
+      {data?.count ? (
+        itemList
+      ) : (
+        <span className={style.noItem}>알림이 없습니다.</span>
+      )}
+      {/* <p className={style.article}>
+        마켓에 등록한 아이템이 판매되어 100 코인이 지급되었습니다
+      </p>
+      <p className={style.article}>
+        마켓에 등록한 아이템이 판매되어 100 코인이 지급되었습니다
+      </p>
+      <p className={style.article}>1</p>
+      <p className={style.article}>1</p>
+      <p className={style.article}>1</p>
+      <p className={style.article}>1</p>
+      <p className={style.article}>1</p>
+      <p className={style.article}>1</p> */}
     </section>
   );
 }
