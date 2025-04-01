@@ -47,6 +47,8 @@ function MarketEnrollItemList() {
       },
     );
     const data = await response.json();
+    console.log(data?.data?.content);
+    
     setItemList(data?.data?.content);
     setPageNum(Math.floor(data?.totalElements / 10) + 1);
   };
@@ -81,7 +83,8 @@ function MarketEnrollItemList() {
       onSelect={handleItemClick}
     />
   ));
-
+  // console.log(itemList);
+  
   return (
     <main className={style.main}>
       <header className={style.main_header}>
@@ -93,7 +96,7 @@ function MarketEnrollItemList() {
         <h1 className={style.main_header_title}>내 상품 등록</h1>
       </header>
       <section className={style.section}>
-        <MarketEnrollPreview item={selectedItem} defaultItem={itemList[0]} />
+        <MarketEnrollPreview item={selectedItem} />
         <span className={style.section_wrapper}>
           <h1 className={style.section_title}>내 아이템</h1>
           {itemList.length === 0 ? (
