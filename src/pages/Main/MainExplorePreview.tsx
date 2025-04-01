@@ -7,7 +7,7 @@ function MainExplorePreview() {
     <article className={style.article}>
       <h1>Explore</h1>
       <div className={style.img_preview}>
-        <img src="src/assets/images/Explore.svg" alt="" />
+        <img src="/images/Explore.svg" alt="" />
       </div>
     </article>
   );
