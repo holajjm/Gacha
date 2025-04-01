@@ -38,6 +38,7 @@ function Header() {
         </a>
         {user && user?.accessToken ? (
           <div className={style.link_wrapper}>
+            <Bell />
             <Coin />
             <Button
               text={"미니홈"}
@@ -64,7 +65,6 @@ function Header() {
               width={"6rem"}
               onClick={handleLogout}
             ></Button>
-            <Bell />
           </div>
         ) : (
           <div className={style.link_wrapper}>
