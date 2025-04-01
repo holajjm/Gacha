@@ -1,7 +1,5 @@
 .container {
   min-width: 68rem;
-  height: 100vh;
-  padding: 2rem 4rem;
   box-sizing: border-box;
   background: black;
   display: flex;
