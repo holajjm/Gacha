@@ -53,24 +53,28 @@
   gap: 0.5rem;
   padding: 1rem;
 }
-.form_header_wrapper > figure > input {
+.form_fieldset_figure_input {
   display: none;
 }
-.form_header_wrapper > figure > label {
+.form_fieldset_figure_label {
   width: 5rem;
   height: 5rem;
   cursor: pointer;
 }
-.form_header_wrapper > figure > label > img {
+.form_fieldset_figure_label > img {
   width: 5rem;
   height: 5rem;
   border-radius: 100%;
 }
-.form_header_wrapper > figure > label > img:hover {
+.form_fieldset_figure_label > img:hover {
   box-sizing: border-box;
   transform: scale(1.1);
-  transition-duration: 200ms;
+  /* transition-duration: 200ms; */
   cursor: pointer;
+}
+.form_fieldset_figure_input:checked + .form_fieldset_figure_label > img {
+  border: 3px solid #588dff;
+  box-sizing: border-box;
 }
 .form_header_error,
 .form_section_article_error {
@@ -118,4 +122,3 @@
 .footer_button:hover {
   color: red;
 }
-
