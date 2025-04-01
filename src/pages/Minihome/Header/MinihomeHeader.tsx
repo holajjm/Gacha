@@ -119,7 +119,7 @@ function MinihomeHeader({
       console.error(error);
     }
   };
-  console.log(minihomeData);
+  // console.log(minihomeData);
   return (
     <header className={style.header}>
       {followerClick ? (
@@ -130,7 +130,7 @@ function MinihomeHeader({
       ) : null}
       <p className={style.header_profile}>
         <img
-          src={ProfileImg[+(minihomeData?.profileId) - 1]?.profileImg}
+          src={ProfileImg[+minihomeData?.profileId - 1]?.profileImg}
           alt="profile"
         />
       </p>
@@ -138,18 +138,22 @@ function MinihomeHeader({
         <header className={style.section_header}>
           <article className={style.section_article}>
             <h1 className={style.section_article_title}>{nickname}</h1>
-            <div onClick={getAttend}>
-              <img
-                src="/images/NewCoin.svg"
-                alt="coin"
-                className={style.section_article_coin}
-              />
-              <p>출석체크하고 코인 받기!</p>
-            </div>
-            <FcSettings
-              className={style.section_article_setting}
-              onClick={() => navigate("/edit")}
-            />
+            {minihomeData?.isOwner && minihomeData?.isOwner ? (
+              <>
+                <div onClick={getAttend}>
+                  <img
+                    src="/images/NewCoin.svg"
+                    alt="coin"
+                    className={style.section_article_coin}
+                  />
+                  <p>출석체크하고 코인 받기!</p>
+                </div>
+                <FcSettings
+                  className={style.section_article_setting}
+                  onClick={() => navigate("/edit")}
+                />
+              </>
+            ) : null}
           </article>
           <nav className={style.section_info}>
             <p>스코어 {minihomeData?.score ? minihomeData?.score : 0}</p>
