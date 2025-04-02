@@ -76,7 +76,7 @@ function UserJoin() {
             socialType: loginParams.socialType,
             loginId: loginParams.loginId,
             nickname: formData.nickname,
-            profileId: formData?.profileId,
+            profileId: +formData?.profileId,
           }),
         ],
         { type: "application/json" },
@@ -98,7 +98,7 @@ function UserJoin() {
           socialType: loginParams.socialType,
           loginId: loginParams.loginId,
           nickname: formData?.nickname,
-          profileId: formData?.profileId,
+          profileId: +formData?.profileId,
           accessToken: "",
           refreshToken: "",
         });
@@ -200,7 +200,7 @@ function UserJoin() {
               role="radiogroup"
               aria-labelledby="profile-image-options"
             >
-              {[1, 2, 3].map((id) => (
+              {["1", "2", "3"].map((id) => (
                 <figure key={id} className={style.form_fieldset_figure}>
                   <input
                     type="radio"
