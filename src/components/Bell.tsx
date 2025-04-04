@@ -59,12 +59,45 @@ function Bell() {
     setNoti(data);
   }, [data]);
 
+  const readNoti = async () => {
+    try {
+      if (noti?.count) {
+        const response = await fetch(`${SERVER_API}/notifications/mark`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user?.accessToken}`,
+          },
+          body: JSON.stringify({
+            notificationIds: noti?.notifications[0]?.id,
+          }),
+        });
+        const data = await response.json();
+        if (data?.result === "SUCCESS") {
+          console.log(data);
+        } else if (data?.result === "ERROR") {
+          console.log(data?.error.message);
+          alert(data?.error.message);
+        }
+      }
+      return;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const openBell = () => {
+    setClick(!click);
+  };
+  console.log(noti);
+
   return (
-    <aside onClick={() => setClick(!click)} className={style.container}>
-      <img src="/images/Bell.svg" alt="Bell" />
-      {data?.count ? <span className={style.isItem}></span> : null}
+    <>
+      <aside onClick={() => {readNoti(); openBell();}} className={style.container}>
+        <img src="/images/Bell.svg" alt="Bell" />
+        {data?.count ? <span className={style.isItem}></span> : null}
+      </aside>
       {click ? <BellItems data={noti} /> : null}
-    </aside>
+    </>
   );
 }
 
