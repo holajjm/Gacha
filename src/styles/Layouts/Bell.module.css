@@ -9,12 +9,7 @@
   justify-content: center;
   gap: 0.5rem;
   font-weight: bold;
-  color: #2D2D2D;
-  /* padding: 1rem;
-  box-sizing: border-box;
-  background-color: white;
-  border-radius: 10px;
-  background-color: lightgray; */
+  color: #2d2d2d;
 }
 .container > img {
   width: 2.5rem;
@@ -29,7 +24,5 @@
   height: 0.5rem;
   background-color: red;
   border-radius: 100%;
-  /* text-align: center;
-  color: white;
-  font-size: 0.9rem; */
+
 }
