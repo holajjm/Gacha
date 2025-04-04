@@ -51,8 +51,9 @@ function UserEdit() {
           },
           body: JSON.stringify(formData),
         });
-        console.log(await response.json());
-        if (response?.status === 200) {
+        const data = await response.json();
+        console.log(data);
+        if (data?.result === "SUCCESS") {
           alert("수정되었습니다.");
           setUser({
             socialType: user.socialType,
@@ -62,8 +63,12 @@ function UserEdit() {
             accessToken: user.accessToken,
             refreshToken: user.refreshToken,
           });
+          setTimeout(() => {
+            navigate(`/minihome/${formData?.nickname}`);
+          }, 300);
+        } else if (data?.result === "ERROR") {
+          alert(data?.error?.message);
         }
-        navigate(`/minihome/${user?.nickname}`);
       }
     } catch (error) {
       console.error(error);
@@ -120,7 +125,10 @@ function UserEdit() {
                         required: "프로필 이미지를 선택해주세요.",
                       })}
                     />
-                    <label htmlFor={`image${id}`} className={style.form_fieldset_figure_label}>
+                    <label
+                      htmlFor={`image${id}`}
+                      className={style.form_fieldset_figure_label}
+                    >
                       <img
                         src={`/images/Profile${id}.svg`}
                         alt={`Profile ${id}`}
