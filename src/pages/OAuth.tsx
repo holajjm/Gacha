@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import { useUserStore } from "@store/store";
 
 import style from "@styles/OAuth.module.css";
@@ -8,15 +8,15 @@ import style from "@styles/OAuth.module.css";
 interface QueryParams {
   [key: string]: string;
 }
-interface JwtPayload {
-  exp: number;
-  iat: number;
-  nickname: string;
-  profile: number;
-}
+// interface JwtPayload {
+//   exp: number;
+//   iat: number;
+//   nickname: string;
+//   profile: number;
+// }
 function OAuth() {
   const { user, setUser } = useUserStore((state) => state);
-  // console.log(user);
+  console.log(user);
   const navigate = useNavigate();
   const handleData = () => {
     try {
@@ -34,15 +34,15 @@ function OAuth() {
       };
       // 변환한 유저 정보 객체 변수 초기화
       const queryParams = parseQueryString(data);
-      // console.log(queryParams);
-      const token = String(queryParams?.accessToken);
-      const decodedToken: JwtPayload = jwtDecode(token);
+      console.log("queryParams", queryParams);
+      // const token = String(queryParams?.accessToken);
+      // const decodedToken: JwtPayload = jwtDecode(token);
 
       if (queryParams?.accessToken) {
         setUser({
           ...user,
-          nickname: decodedToken?.nickname,
-          profileId: decodedToken?.profile,
+          // nickname: decodedToken?.nickname,
+          // profileId: decodedToken?.profile,
           accessToken: queryParams.accessToken,
           refreshToken: queryParams.refreshToken,
         });
