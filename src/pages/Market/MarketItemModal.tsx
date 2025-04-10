@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { useCoinState, useUserStore } from "@store/store";
+import { useCoinState, useModalState, useUserStore } from "@store/store";
 import useImage from "@hooks/useImage";
 import Button from "@components/Button";
 
@@ -16,11 +16,11 @@ interface ModalData {
 
 function MarketItemModal({
   clickItemId,
-  onClick,
+  // onClick,
   onKeyPress,
 }: {
   clickItemId: number;
-  onClick: () => void;
+  // onClick: () => void;
   onKeyPress: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 }) {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
@@ -32,6 +32,7 @@ function MarketItemModal({
     price: 0,
   });
   const { user } = useUserStore((state) => state);
+  const { modalClose } = useModalState((state) => state);
   const divRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     divRef.current?.focus()
@@ -78,7 +79,7 @@ function MarketItemModal({
     <div onKeyDown={onKeyPress} tabIndex={0} ref={divRef} className={style.container}>
       <main className={style.wrapper}>
         <p className={style.background}></p>
-        <button onClick={onClick} className={style.close_button}>
+        <button onClick={modalClose} className={style.close_button}>
           X
         </button>
         <section className={style.section}>
