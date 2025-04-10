@@ -25,7 +25,16 @@ function MarketItem({
   return (
     <article onClick={handleClick} className={style.article}>
       {!data?.hasStock ? <div className={style.article_disabled}></div> : null}
-      <img className={style.article_img} src={useImage(data?.imageUrl)} alt="item" />
+      <img
+        className={style.article_img}
+        src={useImage(data?.imageUrl)}
+        alt="item"
+        loading="lazy"
+        decoding="async"
+        width={96}
+        height={96}
+        fetchPriority="high"
+      />
     </article>
   );
 }
