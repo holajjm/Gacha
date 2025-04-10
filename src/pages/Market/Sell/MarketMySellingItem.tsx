@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 import useImage from "@hooks/useImage";
 import Button from "@components/Button";
 
 import MarketSellingItemModal from "./MarketSellingItemModal";
 import style from "@styles/Market/Sell/MarketMySellingItem.module.css";
+import { useModalState } from "@store/store";
 
 interface MySellingItemData {
   grade: string;
@@ -17,13 +18,8 @@ interface MySellingItemData {
 }
 
 function MarketMySellingItem({ data }: { data: MySellingItemData }) {
-  const [clicked, setClicked] = useState<boolean>(false);
-  const handleModalOpen = () => {
-    setClicked(true);
-  };
-  const handleModalClose = () => {
-    setClicked(false);
-  };
+  const { modal, modalOpen } = useModalState((state) => state);
+
   return (
     <article className={style.article}>
       <p className={style.article_background}></p>
@@ -35,11 +31,9 @@ function MarketMySellingItem({ data }: { data: MySellingItemData }) {
       <p className={style.article_item}>{data?.price}</p>
       <p className={style.article_item}>{data?.status}</p>
       <p className={style.article_item}>
-        <Button text={"상세"} width={"60%"} onClick={handleModalOpen}></Button>
+        <Button text={"상세"} width={"60%"} onClick={modalOpen}></Button>
       </p>
-      {clicked ? (
-        <MarketSellingItemModal data={data} onClick={handleModalClose} />
-      ) : null}
+      {modal ? <MarketSellingItemModal data={data} /> : null}
     </article>
   );
 }

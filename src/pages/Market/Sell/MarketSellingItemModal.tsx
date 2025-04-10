@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useUserStore } from "@store/store";
+import { useModalState, useUserStore } from "@store/store";
 import useImage from "@hooks/useImage";
 import usePageUpper from "@hooks/usePageUpper";
 import Button from "@components/Button";
@@ -17,16 +17,11 @@ interface MySellingItemData {
   transactionDate: string | null;
 }
 
-function MarketSellingItemModal({
-  onClick,
-  data,
-}: {
-  onClick: () => void;
-  data: MySellingItemData;
-}) {
+function MarketSellingItemModal({ data }: { data: MySellingItemData }) {
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
+  const { modalClose } = useModalState((state) => state);
   const handleCancel = async () => {
     if (confirm("판매 취소 하시겠습니까?")) {
       try {
@@ -49,7 +44,7 @@ function MarketSellingItemModal({
     <div className={style.container}>
       <main className={style.wrapper}>
         <p className={style.background}></p>
-        <button onClick={onClick} className={style.close_button}>
+        <button onClick={modalClose} className={style.close_button}>
           X
         </button>
         <section className={style.section}>
