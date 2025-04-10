@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useUserStore } from "@store/store";
+import { useModalState, useUserStore } from "@store/store";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
@@ -23,8 +23,8 @@ function MarketMain() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const navigate = useNavigate();
   const { user } = useUserStore((state) => state);
+  const { modal, modalOpen, modalClose } = useModalState((state) => state);
   const [itemList, setItemList] = useState<MarketItemData[]>([]);
-  const [itemClicked, setItemClicked] = useState<boolean>(false);
   const [clickItemId, setClickItemId] = useState<number>(0);
   const [navClick, setNavClick] = useState<string>("");
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -48,15 +48,12 @@ function MarketMain() {
   }, [navClick]);
 
   const handleClicked = () => {
-    setItemClicked(true);
-  };
-  const handleModalClicked = () => {
-    setItemClicked(false);
+    modalOpen();
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (e.key === "Escape") {
-      setItemClicked(false);
+      modalClose();
     }
   };
   const handleClickItemId = useCallback((itemId: number) => {
@@ -142,10 +139,9 @@ function MarketMain() {
           </article>
         </section>
       </main>
-      {itemClicked ? (
+      {modal ? (
         <MarketItemModal
           clickItemId={clickItemId}
-          onClick={handleModalClicked}
           onKeyPress={handleKeyPress}
         />
       ) : null}
