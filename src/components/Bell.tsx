@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
 import { useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 
 import BellItems from "./BellItems";
 import style from "@styles/Layouts/Bell.module.css";
@@ -23,9 +23,10 @@ interface NotiData {
   }[];
 }
 function Bell() {
-  const [click, setClick] = useState(false);
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
+  const axios = useCustomAxios();
+  const [click, setClick] = useState(false);
   const [noti, setNoti] = useState<NotiData>({
     count: 0,
     hasNewNotifications: false,
@@ -43,18 +44,16 @@ function Bell() {
     ],
   });
   const getNoti = async () => {
-    const response = await axios.get(`${SERVER_API}/notifications`, {
-      headers: {
-        Authorization: `Bearer ${user?.accessToken}`,
-      },
-    });
+    const response = await axios.get(`${SERVER_API}/notifications`);
     return response;
   };
   const { data } = useQuery({
-    queryKey: ["Noti"],
+    queryKey: ["Noti",user],
     queryFn: getNoti,
-    select: (data) => data?.data?.data,
+    select: (data) => data?.data,
   });
+  console.log(data);
+
   useEffect(() => {
     setNoti(data);
   }, [data]);
@@ -88,11 +87,17 @@ function Bell() {
   const openBell = () => {
     setClick(!click);
   };
-  console.log(noti);
+  // console.log(noti);
 
   return (
     <>
-      <aside onClick={() => {readNoti(); openBell();}} className={style.container}>
+      <aside
+        onClick={() => {
+          readNoti();
+          openBell();
+        }}
+        className={style.container}
+      >
         <img src="/images/Bell.svg" alt="Bell" />
         {data?.count ? <span className={style.isItem}></span> : null}
       </aside>
