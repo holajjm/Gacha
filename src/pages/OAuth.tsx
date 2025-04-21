@@ -18,6 +18,7 @@ function OAuth() {
   const { user, setUser } = useUserStore((state) => state);
   console.log(user);
   const navigate = useNavigate();
+
   const handleData = () => {
     try {
       // 카카오 로그인 유저 정보 쿼리 스트링으로 가져옴
@@ -41,11 +42,16 @@ function OAuth() {
       if (queryParams?.accessToken) {
         setUser({
           ...user,
-          // nickname: decodedToken?.nickname,
-          // profileId: decodedToken?.profile,
           accessToken: queryParams.accessToken,
           refreshToken: queryParams.refreshToken,
         });
+        // setUser((user) => ({
+        //   ...user,
+        //   // nickname: decodedToken?.nickname,
+        //   // profileId: decodedToken?.profile,
+        //   accessToken: queryParams.accessToken,
+        //   refreshToken: queryParams.refreshToken,
+        // }));
         localStorage.setItem(
           "AccessToken",
           JSON.stringify(queryParams.accessToken),
