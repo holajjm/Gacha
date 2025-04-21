@@ -1,8 +1,6 @@
 .container {
   min-width: 68rem;
   width: 100%;
-  position: relative;
-  z-index: 50;
 }
 .wrapper {
   display: flex;
