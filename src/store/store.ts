@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 export interface User {
-  loginId: string;
-  socialType: string;
+  loginId?: string;
+  socialType?: string;
   nickname: string;
   profileId: number;
   accessToken: string;
@@ -19,6 +19,20 @@ export const useUserStore = create<UserStore>((set) => ({
     set({ user });
   },
 }));
+// interface UserStore {
+//   user: User;
+//   setUser: (user: User | ((prevUser: User) => User)) => void;
+// }
+// export const useUserStore = create<UserStore>((set) => ({
+//   user: JSON.parse(sessionStorage.getItem("user") || "null"),
+//   setUser: (update) => {
+//     set((state) => {
+//       const nextUser = typeof update === "function" ? update(state.user) : update;
+//       sessionStorage.setItem("user", JSON.stringify(nextUser));
+//       return { user: nextUser };
+//     });
+//   },
+// }));
 
 interface CoinState {
   coinUpdate: number;
