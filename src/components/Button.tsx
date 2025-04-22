@@ -6,4 +6,4 @@ function Button({text,width,onClick}:{text:ReactNode,width:string,onClick:() => 
   return <button style={{width: `${width}`}} className={style.backBtn} onClick={onClick}>{text}</button>;
 }
 
-export default Button;
+export default React.memo(Button);
