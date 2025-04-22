@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
+import useCustomAxios from "@hooks/useCustomAxios";
 import { useUserStore } from "@store/store";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 
 import MinihomeItems from "./MinihomeItems";
+import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Minihome/ItemBook/MinihomeItemBook.module.css";
 
@@ -23,30 +26,46 @@ function MinihomeItemBook() {
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
-  const [itemList, setItemList] = useState<ItemBookData[]>([]);
+  const axios = useCustomAxios();
   const [click, setClick] = useState<string>("");
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setClick((e.target as HTMLElement).getAttribute("datatype") as string);
   };
   const text = click ? `?grade=${click}` : click;
+
   const getItemList = async () => {
-    const response = await fetch(
+    const response = await axios.get(
       `${SERVER_API}/itembook/${user?.nickname}${text && text}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      },
     );
-    const data = await response.json();
-    setItemList(data?.data);
+    return response;
   };
-  useEffect(() => {
-    getItemList();
-  }, [click]);
-  const items = itemList.map((e) => <MinihomeItems key={e.itemId} data={e} />);
+  const { data } = useQuery({
+    queryKey: ["Items", text, user],
+    queryFn: getItemList,
+    select: (data) => data?.data,
+  });
+  // console.log(data);
+
+  // const getItemList = async () => {
+  //   const response = await fetch(
+  //     `${SERVER_API}/itembook/${user?.nickname}${text && text}`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${user?.accessToken}`,
+  //       },
+  //     },
+  //   );
+  //   const data = await response.json();
+  //   setItemList(data?.data);
+  // };
+  // useEffect(() => {
+  //   getItemList();
+  // }, [click]);
+  const items = data?.map((e: ItemBookData) => (
+    <MinihomeItems key={e.itemId} data={e} />
+  ));
   return (
     <div className={style.container}>
       <main className={style.wrapper}>
@@ -98,7 +117,13 @@ function MinihomeItemBook() {
             </button>
           </nav>
           <article className={style.section_article}>
-            <section className={style.section_article_section}>{items}</section>
+            {data ? (
+              <section className={style.section_article_section}>
+                {items}
+              </section>
+            ) : (
+              <MinihomeItemSkeleton />
+            )}
           </article>
         </section>
       </main>
