@@ -75,7 +75,7 @@ function OAuth() {
   return (
     <div className={style.container}>
       <main className={style.wrapper}>
-        <img src="/images/Loading.gif" alt="로그인 중..." />
+        <img src="/images/Loading.webp" alt="로그인 중..." />
       </main>
     </div>
   );

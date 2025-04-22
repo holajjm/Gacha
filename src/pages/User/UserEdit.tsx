@@ -130,7 +130,7 @@ function UserEdit() {
                       className={style.form_fieldset_figure_label}
                     >
                       <img
-                        src={`/images/Profile${id}.svg`}
+                        src={`/images/Profile${id}.webp`}
                         alt={`Profile ${id}`}
                       />
                     </label>

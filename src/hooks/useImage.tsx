@@ -7,7 +7,7 @@ function useImage(imageUrl: string) {
     const response = await fetch(`${SERVER_API}${imageUrl && imageUrl}`, {
       method: "GET",
       headers: {
-        "Content-Type": "image/png, image/jif",
+        "Content-Type": "image/webp",
       },
     });
     const blob = await response.blob();

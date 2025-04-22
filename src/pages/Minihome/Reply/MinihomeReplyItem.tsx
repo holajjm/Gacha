@@ -59,7 +59,7 @@ function MinihomeReplyItem({
           <img
             src={
               replys?.profileId === -1
-                ? "/images/LightDefaultImage.png"
+                ? "/images/LightDefaultImage.webp"
                 : ProfileImg[replys?.profileId - 1]?.profileImg
             }
             alt="profile"
