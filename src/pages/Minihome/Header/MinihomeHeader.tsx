@@ -141,7 +141,7 @@ function MinihomeHeader({
           src={
             minihomeData?.profileId
               ? ProfileImg[+minihomeData?.profileId]?.profileImg
-              : "/images/TapLogo.svg"
+              : "/images/TapLogo.webp"
           }
           alt="profile"
           ref={imgRef}
@@ -157,7 +157,7 @@ function MinihomeHeader({
               <>
                 <div onClick={getAttend}>
                   <img
-                    src="/images/NewCoin.svg"
+                    src="/images/NewCoin.webp"
                     alt="coin"
                     className={style.section_article_coin}
                   />
