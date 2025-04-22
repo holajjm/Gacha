@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useImage from "@hooks/useImage";
@@ -16,6 +16,12 @@ function GachaOpenCapsule({
 }) {
   const navigate = useNavigate();
   const image = useImage(imageUrl);
+  const imgRef = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    if (imgRef.current) {
+      imgRef.current.setAttribute("fetchpriority", "high");
+    }
+  }, []);
   const handleClose = () => {
     onClick();
   };
@@ -25,10 +31,21 @@ function GachaOpenCapsule({
         className={style.open_capsule}
         src={`/images/${color}OpenCapsule.svg`}
         alt="Open"
+        ref={imgRef}
+        width={400}
+        height={400}
       />
       {image ? (
         <div className={style.result_open_capsule}>
-          <img src={image} alt="item" />
+          <img
+            src={image}
+            alt="item"
+            ref={imgRef}
+            width={240}
+            height={240}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       ) : null}
       <section className={style.section}>
