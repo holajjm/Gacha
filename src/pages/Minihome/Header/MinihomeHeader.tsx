@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useCoinState, useUserStore } from "@store/store";
@@ -34,6 +34,13 @@ function MinihomeHeader({
   const { user } = useUserStore((state) => state);
   const { nickname } = useParams<{ nickname: string }>();
   const navigate = useNavigate();
+  const imgRef = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    if (imgRef.current) {
+      imgRef.current.setAttribute("fetchpriority", "high");
+    }
+  }, []);
+
   const [followerClick, setFollowerClick] = useState<boolean>(false);
   const [followingClick, setFollowingClick] = useState<boolean>(false);
   const handleFollowerClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -109,6 +116,7 @@ function MinihomeHeader({
         },
       });
       const data = await response.json();
+
       if (data?.error) {
         alert(data?.error?.message);
       } else {
@@ -130,8 +138,15 @@ function MinihomeHeader({
       ) : null}
       <p className={style.header_profile}>
         <img
-          src={ProfileImg[+minihomeData?.profileId - 1]?.profileImg}
+          src={
+            minihomeData?.profileId
+              ? ProfileImg[+minihomeData?.profileId]?.profileImg
+              : "/images/TapLogo.svg"
+          }
           alt="profile"
+          ref={imgRef}
+          width={160}
+          height={160}
         />
       </p>
       <section className={style.section}>
