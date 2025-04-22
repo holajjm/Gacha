@@ -98,7 +98,7 @@ function Bell() {
         }}
         className={style.container}
       >
-        <img src="/images/Bell.svg" alt="Bell" />
+        <img src="/images/Bell.webp" alt="Bell" />
         {data?.count ? <span className={style.isItem}></span> : null}
       </aside>
       {click ? <BellItems data={noti} /> : null}

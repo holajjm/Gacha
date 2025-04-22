@@ -8,7 +8,7 @@ function Loading() {
   usePageUpper();
   return (
     <section className={style.wrapper}>
-      <img src="/images/LoadingBar.gif" alt="loading" />
+      <img src="/images/LoadingBar.webp" alt="loading" />
     </section>
   );
 }

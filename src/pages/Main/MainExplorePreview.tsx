@@ -12,7 +12,7 @@ function MainExplorePreview({
       <h3>둘러보기</h3>
       <div className={style.img_preview}>
         <img
-          src="/images/Explore.svg"
+          src="/images/Explore.webp"
           alt="ExplorePreview"
           loading="lazy"
           decoding="async"

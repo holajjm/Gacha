@@ -12,7 +12,7 @@ function GachaCloseCapsule({ color }: { color: string }) {
   return (
     <img
       className={style.close_capsule}
-      src={`/images/${color}CloseCapsule.svg`}
+      src={`/images/${color}CloseCapsule.webp`}
       alt="Close"
       ref={imgRef}
       width={320}

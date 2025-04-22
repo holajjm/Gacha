@@ -27,7 +27,7 @@ function Coin() {
 
   return (
     <div className={style.coin}>
-      <img src="/images/NewCoin.svg" alt="coin" />
+      <img src="/images/NewCoin.webp" alt="coin" />
       {isLoading ? <Loading /> : <p>{data}</p>}
     </div>
   );

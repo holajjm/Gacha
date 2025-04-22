@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useCoinState, useUserStore } from "@store/store";
 
 import usePageTitle from "@hooks/usePageTitle";
@@ -20,6 +20,12 @@ function GachaMain() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const { coinRefresh } = useCoinState((state) => state);
+  const imgRef = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    if (imgRef.current) {
+      imgRef.current.setAttribute("fetchpriority", "high");
+    }
+  }, []);
   const [open, setOpen] = useState<boolean>(false);
   const [gachaData, setGachaData] = useState<GachaData>({
     itemGrade: "",
@@ -58,7 +64,13 @@ function GachaMain() {
         </header>
         <section className={style.section}>
           <div>
-            <img src="/images/GachaSample.svg" alt="Gacha" />
+            <img
+              src="/images/GachaSample.webp"
+              alt="Gacha"
+              ref={imgRef}
+              width={320}
+              height={320}
+            />
           </div>
           <Button
             text={"아이템 뽑기"}

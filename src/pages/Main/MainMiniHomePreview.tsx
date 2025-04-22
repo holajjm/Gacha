@@ -12,31 +12,31 @@ function MainMiniHomePreview({
       <h3>미니홈</h3>
       <div className={style.img_preview}>
         <img
-          src="/images/MiniHomeMain.svg"
+          src="/images/MiniHomeMain.webp"
           alt="MiniHomeMainPreview1"
           loading="lazy"
           decoding="async"
         />
         <img
-          src="/images/MiniHomeMain1.svg"
+          src="/images/MiniHomeMain1.webp"
           alt="MiniHomeMainPreview2"
           loading="lazy"
           decoding="async"
         />
         <img
-          src="/images/MiniHomeItemBook.svg"
+          src="/images/MiniHomeItemBook.webp"
           alt="MiniHomeMainPreview3"
           loading="lazy"
           decoding="async"
         />
         <img
-          src="/images/MiniHomeAdornBackground.svg"
+          src="/images/MiniHomeAdornBackground.webp"
           alt="MiniHomeMainPreview4"
           loading="lazy"
           decoding="async"
         />
         <img
-          src="/images/MiniHomeAdornItem.svg"
+          src="/images/MiniHomeAdornItem.webp"
           alt="MiniHomeMainPreview5"
           loading="lazy"
           decoding="async"
