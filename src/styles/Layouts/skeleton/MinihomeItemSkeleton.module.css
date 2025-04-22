@@ -1,0 +1,16 @@
+.wrapper {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 0.5rem;
+  box-sizing: border-box;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+.item {
+  width: 8rem;
+  height: 8rem;
+  background-color: lightgray;
+  border-radius: 10px;
+}
