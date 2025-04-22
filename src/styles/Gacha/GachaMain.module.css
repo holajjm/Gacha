@@ -44,3 +44,8 @@
   align-items: center;
   justify-content: center;
 }
+.section > div> img {
+  width: 20rem;
+  height: 20rem;
+  object-fit: contain;
+}
