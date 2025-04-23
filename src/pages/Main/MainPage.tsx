@@ -67,7 +67,14 @@ function MainPage() {
         </ul>
       </nav>
       <section className={style.wrapper}>
-        <MainTitle article1Ref={article1Ref} />
+        <MainTitle
+          article1Ref={article1Ref}
+          article2Ref={article2Ref}
+          article3Ref={article3Ref}
+          article4Ref={article4Ref}
+          article5Ref={article5Ref}
+          scrollToSection={scrollToSection}
+        />
         <MainMiniHomePreview article2Ref={article2Ref} />
         <MainExplorePreview article3Ref={article3Ref} />
         <MainGachaPreview article4Ref={article4Ref} />
