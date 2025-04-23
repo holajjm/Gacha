@@ -36,7 +36,12 @@ function UserLogin() {
         <main className={style.main}>
           <div className={style.main_wrapper}>
             <button onClick={kakaoLogin} className={style.kakao}>
-              <img src="/images/TemporaryKakao.webp" alt="KakaoLogin" />
+              <img
+                src="/images/TemporaryKakao.webp"
+                alt="KakaoLogin"
+                width={24}
+                height={24}
+              />
               <p>카카오로 시작하기</p>
             </button>
             <button onClick={githubLogin} className={style.github}>
