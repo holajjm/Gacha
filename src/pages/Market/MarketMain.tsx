@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import useCustomAxios from "@hooks/useCustomAxios";
 import { useModalState, useUserStore } from "@store/store";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
@@ -10,6 +11,7 @@ import MarketItem from "./MarketItem";
 import MarketItemModal from "./MarketItemModal";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Market/MarketMain.module.css";
+import { useQuery } from "@tanstack/react-query";
 
 interface MarketItemData {
   hasStock: string;
@@ -23,8 +25,8 @@ function MarketMain() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const navigate = useNavigate();
   const { user } = useUserStore((state) => state);
+  const axios = useCustomAxios();
   const { modal, modalOpen, modalClose } = useModalState((state) => state);
-  const [itemList, setItemList] = useState<MarketItemData[]>([]);
   const [clickItemId, setClickItemId] = useState<number>(0);
   const [navClick, setNavClick] = useState<string>("");
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -32,20 +34,32 @@ function MarketMain() {
   };
   const text = navClick ? `?grade=${navClick}` : navClick;
 
-  useEffect(() => {
-    const getMarketItem = async () => {
-      const response = await fetch(`${SERVER_API}/products${text && text}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      });
-      const data = await response.json();
-      setItemList(data?.data);
-    };
-    getMarketItem();
-  }, [navClick]);
+  const getMarketItem = async () => {
+    const response = await axios.get(`${SERVER_API}/products${text && text}`);
+    return response;
+  };
+  const { data, isLoading } = useQuery({
+    queryKey: ["MarketItem", user, text],
+    queryFn: getMarketItem,
+    select: (data) => data?.data,
+    throwOnError: true,
+  });
+  // console.log(data);
+
+  // useEffect(() => {
+  //   const getMarketItem = async () => {
+  //     const response = await fetch(`${SERVER_API}/products${text && text}`, {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${user?.accessToken}`,
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     setItemList(data?.data);
+  //   };
+  //   getMarketItem();
+  // }, [navClick]);
 
   const handleClicked = () => {
     modalOpen();
@@ -59,7 +73,7 @@ function MarketMain() {
   const handleClickItemId = useCallback((itemId: number) => {
     setClickItemId(itemId);
   }, []);
-  const renderItemList = itemList.map((e) => (
+  const renderItemList = data?.map((e: MarketItemData) => (
     <MarketItem
       key={e.itemId}
       data={e}
@@ -133,9 +147,20 @@ function MarketMain() {
             </button>
           </nav>
           <article className={style.article}>
-            <section className={style.article_section}>
-              {renderItemList}
-            </section>
+            {isLoading ? (
+              <div className={style.article_loading}>
+                <img
+                  src="/images/Loading.webp"
+                  alt="Loading"
+                  width={256}
+                  height={256}
+                />
+              </div>
+            ) : (
+              <section className={style.article_section}>
+                {renderItemList}
+              </section>
+            )}
           </article>
         </section>
       </main>
