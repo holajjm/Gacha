@@ -66,7 +66,7 @@ function MinihomeAdornDraggableItem({
           }}
           className={style.item_img}
           src={useImage(data?.imageUrl as string)}
-          alt=""
+          alt="img"
         />
       </div>
     </Draggable>
