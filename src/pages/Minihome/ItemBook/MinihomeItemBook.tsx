@@ -39,7 +39,7 @@ function MinihomeItemBook() {
     );
     return response;
   };
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["Items", text, user],
     queryFn: getItemList,
     select: (data) => data?.data,
@@ -117,7 +117,7 @@ function MinihomeItemBook() {
             </button>
           </nav>
           <article className={style.section_article}>
-            {data ? (
+            {!isLoading ? (
               <section className={style.section_article_section}>
                 {items}
               </section>
