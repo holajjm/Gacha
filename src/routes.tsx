@@ -1,7 +1,6 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Index from "@components/layouts/Index";
-import ErrorPage from "@pages/ErrorPage";
 //Main
 import MainPage from "@pages/Main/MainPage";
 //Minihome
@@ -20,6 +19,7 @@ import MarketMySellingList from "@pages/Market/Sell/MarketMySellingList";
 import UserLogin from "@pages/User/UserLogin";
 import UserJoin from "@pages/User/UserJoin";
 import UserEdit from "@pages/User/UserEdit";
+import ErrorPage from "@pages/ErrorPage";
 import OAuth from "@pages/OAuth";
 
 export const router = createBrowserRouter([
