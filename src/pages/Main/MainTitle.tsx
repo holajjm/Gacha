@@ -1,4 +1,4 @@
-import React, { Ref } from "react";
+import React, { Ref, useEffect, useRef } from "react";
 
 import style from "@styles/Main/MainPage.module.css";
 
@@ -23,6 +23,12 @@ function MainTitle({
     { src: "/images/Gacha.webp", label: "가챠", ref: article4Ref },
     { src: "/images/Market.webp", label: "마켓", ref: article5Ref },
   ];
+  const imgRef = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    if (imgRef.current) {
+      imgRef.current.setAttribute("fetchpriority", "high");
+    }
+  }, []);
   return (
     <article ref={article1Ref} className={style.header}>
       <div className={style.title_wrapper}>
@@ -49,7 +55,13 @@ function MainTitle({
             }
           >
             <div className={style.imageWrapper}>
-              <img src={item.src} alt="PreviewBtn" width={224} height={112} />
+              <img
+                src={item.src}
+                alt="PreviewBtn"
+                width={224}
+                height={112}
+                ref={imgRef}
+              />
             </div>
             <p className={style.text}>{item.label} &rarr;</p>
           </div>
