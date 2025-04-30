@@ -16,9 +16,6 @@
   display: flex;
   align-items: center;
 }
-.title > img {
-  height: 55%;
-}
 .link_wrapper {
   flex-grow: 1;
   display: flex;
