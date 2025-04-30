@@ -14,16 +14,15 @@ function Coin() {
   const axios = useCustomAxios();
   const getCoin = async () => {
     const response = await axios.get(`${SERVER_API}/coin`);
-    // console.log(response?.data);
     return response?.data;
   };
   const { data, isLoading } = useQuery({
     queryKey: ["coin", coinUpdate, user],
     queryFn: getCoin,
-    select: data => data?.coin,
-    refetchInterval: 1000 * 60
+    select: (data) => data?.coin,
+    refetchInterval: 1000 * 60,
   });
-// console.log(data);
+  // console.log(data);
 
   return (
     <div className={style.coin}>
