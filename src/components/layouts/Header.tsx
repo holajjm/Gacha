@@ -34,7 +34,7 @@ function Header() {
     <div className={style.container}>
       <section className={style.wrapper}>
         <a className={style.title} href="/main">
-          <img src="/images/MainLogo.webp" alt="MainLogo" />
+          <img src="/images/MainLogo.webp" alt="MainLogo" width={280} height={36} loading="eager"/>
         </a>
         {user && user?.accessToken ? (
           <div className={style.link_wrapper}>
