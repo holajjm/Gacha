@@ -140,8 +140,8 @@ function MinihomeHeader({
         <img
           src={
             minihomeData?.profileId
-              ? ProfileImg[+minihomeData?.profileId]?.profileImg
-              : "/images/TapLogo.webp"
+              ? ProfileImg[Number(minihomeData?.profileId - 1)]?.profileImg
+              : "/images/ReadyForImage.webp"
           }
           alt="profile"
           ref={imgRef}

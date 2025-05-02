@@ -18,7 +18,10 @@ function ExploreItem({ data }: { data: ExploreItemData }) {
     <li className={style.list}>
       <p className={style.list_background}></p>
       <div>
-        <img src={ProfileImg[data?.profileId-1]?.profileImg} alt="profile" />
+        <img
+          src={ProfileImg[Number(data?.profileId - 1)]?.profileImg}
+          alt="profile"
+        />
       </div>
       <p>{data?.nickname}</p>
       <p>{data?.totalVisitorCnt}</p>
