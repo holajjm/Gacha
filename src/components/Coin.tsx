@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useCoinState, useUserStore } from "@store/store";
 
-import Loading from "./Loading";
 import style from "@styles/Layouts/Coin.module.css";
 import useCustomAxios from "@hooks/useCustomAxios";
 
@@ -27,7 +26,7 @@ function Coin() {
   return (
     <div className={style.coin}>
       <img src="/images/NewCoin.webp" alt="coin" />
-      {isLoading ? <Loading /> : <p>{data}</p>}
+      {isLoading ? "---" : <p>{data}</p>}
     </div>
   );
 }
