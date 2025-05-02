@@ -137,7 +137,7 @@ function MiniHomeMain() {
           </aside>
           <article className={style.section_article_1}>
             <div>
-              <img src={useImage(adornData?.background?.imageUrl)} alt="" />
+              <img src={useImage(adornData?.background?.imageUrl)} alt="Background" />
             </div>
             <div className={style.section_article_1_imgList}>{itemList}</div>
           </article>
