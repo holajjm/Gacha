@@ -10,10 +10,11 @@ import usePageUpper from "@hooks/usePageUpper";
 import MinihomeAdornBackground from "./MinihomeAdornBackground";
 import MinihomeAdornItemList from "./MinihomeAdornItemList";
 import MinihomeAdornDraggableItem from "./MinihomeAdornDraggableItem";
-import MinihomeAdornEditDraggableItem from "./MinihomeAdornEditDraggableItem";
+// import MinihomeAdornEditDraggableItem from "./MinihomeAdornEditDraggableItem";
 // import MiniHomeItem from "../MiniHomeItem";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css";
+import MinihomeAdornEdit from "./MinihomeAdornEdit";
 
 interface BackgroundItemData {
   backgroundId: number;
@@ -71,6 +72,7 @@ function MinihomeAdorn() {
     backgroundId: 0,
     imageUrl: "",
   });
+
   const handleBackground = (data: BackgroundItemData) => {
     setBackground(data);
   };
@@ -90,8 +92,6 @@ function MinihomeAdorn() {
   useEffect(() => {
     setItems((items) => [...items, item]);
   }, [item]);
-  // console.log("items:", items);
-  // console.log("item:", item);
 
   // ---------------------------------------------각 아이템 좌표값 가져오기
   const [itemPosition, setItemPosition] = useState<Position>({ x: 0, y: 0 });
@@ -101,7 +101,6 @@ function MinihomeAdorn() {
       y: position?.y,
     });
   };
-  // console.log(itemPosition);
 
   // ---------------------------------------------아이템 렌더링
   const draggableItems = items
@@ -113,7 +112,6 @@ function MinihomeAdorn() {
         handleItemPosition={handleItemPosition}
       />
     ));
-  // console.log("draggableItems:",draggableItems);
 
   // ---------------------------------------------개별 아이템
   const [adornItemArr, setAdornItemArr] = useState<AdornItem[]>([]);
@@ -139,12 +137,6 @@ function MinihomeAdorn() {
     setAdornItemArr((prev) => [...prev, adornItem]);
   }, [adornItem]);
 
-  // console.log(
-  //   "adornItemArr:",
-  //   adornItemArr.filter((e) => e.itemId !== 0),
-  // );
-  // console.log("adornItem:", adornItem);
-
   const [filterAdornArr, setFilterAdornArr] = useState<AdornItem[]>([]);
   useEffect(() => {
     const arr = adornItemArr.filter(
@@ -154,7 +146,6 @@ function MinihomeAdorn() {
     );
     setFilterAdornArr(arr);
   }, [adornItemArr]);
-  // console.log("filterAdornArr:",filterAdornArr);
 
   // --------------------------------------------body에 담을 데이터
   const [adornFetchData, setAdornFetchData] = useState<AdornFetchData>({
@@ -168,7 +159,6 @@ function MinihomeAdorn() {
       },
     ],
   });
-  // console.log("adornFetchData:", adornFetchData);
 
   // 배경 요소와 아이템 배열을 하나의 상태값으로 합쳐 서버에 전송할 데이터 상태값 생성
   useEffect(() => {
@@ -233,7 +223,21 @@ function MinihomeAdorn() {
   useEffect(() => {
     getAdorn();
   }, []);
+  // console.log("background:", background);
+  // console.log("items:", items);
+  // console.log("item:", item);
+  // console.log(itemPosition);
+  // console.log("draggableItems:", draggableItems);
+  // console.log(
+  //   "adornItemArr:",
+  //   adornItemArr.filter((e) => e.itemId !== 0),
+  // );
+  // console.log("adornItemArr:", adornItemArr);
+  // console.log("adornItem:", adornItem);
+  // console.log("filterAdornArr:", filterAdornArr);
+  // console.log("adornFetchData:", adornFetchData);
   // console.log("adornPage:", adornPage);
+  // console.log("background:", background);
 
   // 아이템 조회만 가능
   // const getAdornItemList = adornPage?.items.map((e) => (
@@ -247,91 +251,114 @@ function MinihomeAdorn() {
 
   // --------------------------------------꾸민 영역 가져오되 아이템 요소들 draggable한 요소로 설정하는 로직
   // 위치 조작 가능하지만 값 저장이 안됌
-  const [editPosition, setEditPosition] = useState<Position>({ x: 0, y: 0 });
-  const handleEditPosition = (position: Position) => {
-    setEditPosition({
-      x: position?.x,
-      y: position?.y,
-    });
-  };
-  const draggableEditItems = adornPage?.items.map((e) => (
-    <MinihomeAdornEditDraggableItem
-      key={e?.subId}
-      data={e}
-      handleEditPosition={handleEditPosition}
-    />
-  ));
-  useEffect(() => {
-    adornPage?.items.forEach((e) =>
-      setAdornItem({
-        itemId: e?.itemId,
-        subId: e?.subId,
-        x: editPosition?.x,
-        y: editPosition?.y,
-      }),
-    );
-  }, [adornPage,editPosition]);
-  // console.log(adornItem);
-  
+  // const [editPosition, setEditPosition] = useState<Position>({ x: 0, y: 0 });
+  // const handleEditPosition = (position: Position) => {
+  //   setEditPosition({
+  //     x: position?.x,
+  //     y: position?.y,
+  //   });
+  // };
+  // const draggableEditItems = adornPage?.items.map((e) => (
+  //   <MinihomeAdornEditDraggableItem
+  //     key={e?.subId}
+  //     data={e}
+  //     handleEditPosition={handleEditPosition}
+  //   />
+  // ));
+  // // console.log("draggableEditItems:", draggableEditItems);
 
+  // useEffect(() => {
+  //   adornPage?.items.forEach((e) =>
+  //     setAdornItem({
+  //       itemId: e?.itemId,
+  //       subId: e?.subId,
+  //       x: editPosition?.x,
+  //       y: editPosition?.y,
+  //     }),
+  //   );
+  // }, [adornPage, editPosition]);
+  // useEffect(() => {
+  //   setAdornItemArr((prev) => [...prev, adornItem]);
+  // }, [adornItem]);
+  // useEffect(() => {
+  //   setFilterAdornArr(adornItemArr.filter(
+  //     (e, i) =>
+  //       e.itemId !== 0 &&
+  //       i === adornItemArr.findLastIndex((e1) => e1.itemId === e.itemId),
+  //   ));
+  // }, [adornItemArr]);
+  // console.log(adornItem);
+  // console.log(adornItemArr);
+  // console.log(filterAdornArr);
+
+  const adornImage = useImage(
+    !adornPage?.background?.backgroundId
+      ? adornPage?.background?.imageUrl
+      : (background?.imageUrl as string),
+  );
   return (
-    <div className={style.container}>
-      <main className={style.wrapper}>
-        <header className={style.header}>
-          <aside className={style.header_aside}>
-            <Button
-              text={<SlArrowLeft />}
-              width={"2.5rem"}
-              onClick={() => window.history.back()}
-            ></Button>
-            <h1 className={style.header_aside_title}>미니홈 꾸미기</h1>
-          </aside>
-          <Button text={"저장하기"} width={"20%"} onClick={saveAdorn}></Button>
-        </header>
-        <article className={style.article}>
-          <header className={style.article_header}>
-            <img
-              className={style.article_header_background}
-              src={useImage(
-                !background?.backgroundId
-                  ? adornPage?.background?.imageUrl
-                  : (background?.imageUrl as string),
-              )}
-              alt=""
-            />
-            {/* {!adornPage?.items.length ? draggableItems : draggableEditItems} */}
-            {/* {draggableItems} */}
-            {/* {getAdornItemList} */}
-            {adornPage?.items.length ? draggableEditItems : draggableItems}
-          </header>
-          <section className={style.section}>
-            <nav onClick={handleClick} className={style.section_nav}>
-              <button
-                datatype="BACKGROUND"
-                className={
-                  active === "BACKGROUND" || !active
-                    ? style.active
-                    : style.button
-                }
-              >
-                배경
-              </button>
-              <button
-                datatype="ITEM"
-                className={active === "ITEM" ? style.active : style.button}
-              >
-                아이템
-              </button>
-            </nav>
-            {active === "BACKGROUND" || !active ? (
-              <MinihomeAdornBackground getBack={handleBackground} />
-            ) : (
-              <MinihomeAdornItemList getItem={handleItem} />
-            )}
-          </section>
-        </article>
-      </main>
-    </div>
+    <>
+      {adornPage?.background?.backgroundId == 1 && !adornPage?.items.length ? (
+        <div className={style.container}>
+          <main className={style.wrapper}>
+            <header className={style.header}>
+              <aside className={style.header_aside}>
+                <Button
+                  text={<SlArrowLeft />}
+                  width={"2.5rem"}
+                  onClick={() => window.history.back()}
+                ></Button>
+                <h1 className={style.header_aside_title}>미니홈 꾸미기</h1>
+              </aside>
+              <Button
+                text={"저장하기"}
+                width={"20%"}
+                onClick={saveAdorn}
+              ></Button>
+            </header>
+            <article className={style.article}>
+              <header className={style.article_header}>
+                <img
+                  className={style.article_header_background}
+                  src={adornImage}
+                  alt=""
+                />
+                {draggableItems}
+                {/* {getAdornItemList} */}
+                {/* {adornPage?.items.length ? draggableEditItems : draggableItems} */}
+              </header>
+              <section className={style.section}>
+                <nav onClick={handleClick} className={style.section_nav}>
+                  <button
+                    datatype="BACKGROUND"
+                    className={
+                      active === "BACKGROUND" || !active
+                        ? style.active
+                        : style.button
+                    }
+                  >
+                    배경
+                  </button>
+                  <button
+                    datatype="ITEM"
+                    className={active === "ITEM" ? style.active : style.button}
+                  >
+                    아이템
+                  </button>
+                </nav>
+                {active === "BACKGROUND" || !active ? (
+                  <MinihomeAdornBackground getBack={handleBackground} />
+                ) : (
+                  <MinihomeAdornItemList getItem={handleItem} />
+                )}
+              </section>
+            </article>
+          </main>
+        </div>
+      ) : (
+        <MinihomeAdornEdit adornPage={adornPage}/>
+      )}
+    </>
   );
 }
 
