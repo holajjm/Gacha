@@ -32,8 +32,8 @@ function GachaOpenCapsule({
         src={`/images/${color}OpenCapsule.webp`}
         alt="Open"
         ref={imgRef}
-        width={400}
-        height={400}
+        width={320}
+        height={320}
       />
       {image ? (
         <div className={style.result_open_capsule}>
@@ -43,8 +43,6 @@ function GachaOpenCapsule({
             ref={imgRef}
             width={240}
             height={240}
-            loading="lazy"
-            decoding="async"
           />
         </div>
       ) : null}
