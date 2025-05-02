@@ -1,21 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React, { lazy, Suspense, useEffect, useRef } from "react";
 
+import { useUserStore } from "@store/store";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 
+import Loading from "@components/Loading";
 import MainTitle from "./MainTitle";
-import MainMiniHomePreview from "./MainMiniHomePreview";
-import MainExplorePreview from "./MainExplorePreview";
-import MainGachaPreview from "./MainGachaPreview";
-import MainMarketPreview from "./MainMarketPreview";
 import style from "@styles/Main/MainPage.module.css";
 
-import { useUserStore } from "@store/store";
+const MainMiniHomePreview = lazy(() => import("./MainMiniHomePreview"));
+const MainExplorePreview = lazy(() => import("./MainExplorePreview"));
+const MainGachaPreview = lazy(() => import("./MainGachaPreview"));
+const MainMarketPreview = lazy(() => import("./MainMarketPreview"));
 
 function MainPage() {
   usePageTitle("GachaGacha");
   usePageUpper();
-
   const article1Ref = useRef<HTMLDivElement>(null);
   const article2Ref = useRef<HTMLDivElement>(null);
   const article3Ref = useRef<HTMLDivElement>(null);
@@ -28,25 +28,27 @@ function MainPage() {
 
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user, setUser } = useUserStore((state) => state);
-  console.log("user", user);
+  // console.log("user", user);
   const getUserInfo = async () => {
-    const response = await fetch(`${SERVER_API}/user_info`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user?.accessToken}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data?.data);
-    if (data?.data) {
-      setUser({
-        ...user,
-        nickname: data?.data?.nickname,
-        profileId: data?.data?.profileId,
+    if (user?.accessToken) {
+      const response = await fetch(`${SERVER_API}/user_info`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.accessToken}`,
+        },
       });
-    } else if (data?.error) {
-      console.log(data?.error);
+      const data = await response.json();
+      // console.log(data?.data);
+      if (data?.data) {
+        setUser({
+          ...user,
+          nickname: data?.data?.nickname,
+          profileId: data?.data?.profileId,
+        });
+      } else if (data?.error) {
+        console.log(data?.error);
+      }
     }
   };
   useEffect(() => {
@@ -55,6 +57,7 @@ function MainPage() {
   useEffect(() => {
     sessionStorage.setItem("user", JSON.stringify(user));
   }, [user]);
+
   return (
     <div className={style.container}>
       <nav className={style.nav}>
@@ -75,10 +78,18 @@ function MainPage() {
           article5Ref={article5Ref}
           scrollToSection={scrollToSection}
         />
-        <MainMiniHomePreview article2Ref={article2Ref} />
-        <MainExplorePreview article3Ref={article3Ref} />
-        <MainGachaPreview article4Ref={article4Ref} />
-        <MainMarketPreview article5Ref={article5Ref} />
+        <Suspense
+          fallback={
+            <>
+              <Loading />
+            </>
+          }
+        >
+          <MainMiniHomePreview article2Ref={article2Ref} />
+          <MainExplorePreview article3Ref={article3Ref} />
+          <MainGachaPreview article4Ref={article4Ref} />
+          <MainMarketPreview article5Ref={article5Ref} />
+        </Suspense>
       </section>
     </div>
   );
