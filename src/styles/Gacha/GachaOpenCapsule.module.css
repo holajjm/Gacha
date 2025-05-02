@@ -6,8 +6,8 @@
 }
 /* ---------------------------------------- */
 .open_capsule {
-  width: 25rem;
-  height: 25rem;
+  width: 20rem;
+  height: 28rem;
   animation-name: open;
   animation-duration: 3s;
   animation-delay: 200ms;
