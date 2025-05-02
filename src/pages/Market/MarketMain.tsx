@@ -12,6 +12,7 @@ import MarketItemModal from "./MarketItemModal";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Market/MarketMain.module.css";
 import { useQuery } from "@tanstack/react-query";
+import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
 
 interface MarketItemData {
   hasStock: string;
@@ -149,12 +150,13 @@ function MarketMain() {
           <article className={style.article}>
             {isLoading ? (
               <div className={style.article_loading}>
-                <img
+                {/* <img
                   src="/images/Loading.webp"
                   alt="Loading"
                   width={256}
                   height={256}
-                />
+                /> */}
+                <MinihomeItemSkeleton />
               </div>
             ) : (
               <section className={style.article_section}>
