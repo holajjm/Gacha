@@ -5,11 +5,13 @@ import Draggable, { DraggableData } from "react-draggable";
 
 import style from "@styles/Minihome/Adorn/MinihomeAdornDraggableItem.module.css";
 
-interface PreviewItemData {
-  imageUrl: string;
-  subId: number;
-  x: number;
-  y: number;
+interface newData {
+  imageUrl?: string;
+  itemGrade?: string;
+  itemId?: number;
+  subId?: number;
+  x?: number;
+  y?: number;
 }
 interface Position {
   x: number;
@@ -19,28 +21,28 @@ function MinihomeAdornEditDraggableItem({
   data,
   handleEditPosition,
 }: {
-  data: PreviewItemData;
+  data: newData;
   handleEditPosition: (position: Position) => void;
 }) {
   const nodeRef = useRef(null);
-  // const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
+  const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
   const [itemPosition, setItemPosition] = useState<Position>({
-    x: data?.x,
-    y: data?.y,
+    x: data?.x ?? 0,
+    y: data?.y ?? 0,
   });
   const handleDrag = (draggableData: DraggableData) => {
-    // setPosition({ x: draggableData.x, y: draggableData.y });
+    setPosition({ x: draggableData.x, y: draggableData.y });
     setItemPosition({
       x: draggableData.x,
       y: draggableData.y,
     });
   };
   useEffect(() => {
-    handleEditPosition({ x: data?.x, y: data?.y });
+    handleEditPosition({ x: data?.x ?? 0, y: data?.y ?? 0 });
   }, []);
   useEffect(() => {
     handleEditPosition(itemPosition);
-  }, [itemPosition]);
+  }, [itemPosition, position]);
 
   return (
     <Draggable
@@ -58,7 +60,7 @@ function MinihomeAdornEditDraggableItem({
           }}
           className={style.item_img}
           src={useImage(data?.imageUrl as string)}
-          alt=""
+          alt="image"
         />
       </div>
     </Draggable>
