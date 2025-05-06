@@ -37,7 +37,7 @@ function MarketEnrollItemList() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const getMyItemList = async () => {
     const response = await fetch(
-      `${SERVER_API}/items/me?sort=createdAt,desc&page=${currentPage}&size=10`,
+      `${SERVER_API}/items/me?sort=createdAt,desc&page=${currentPage}&size=7`,
       {
         method: "GET",
         headers: {
@@ -47,10 +47,10 @@ function MarketEnrollItemList() {
       },
     );
     const data = await response.json();
-    console.log(data?.data?.content);
-    
+    // console.log(data?.data);
+    // console.log(data?.data?.content);
     setItemList(data?.data?.content);
-    setPageNum(Math.floor(data?.totalElements / 10) + 1);
+    setPageNum(data?.data?.totalPages);
   };
   useEffect(() => {
     getMyItemList();
@@ -71,6 +71,7 @@ function MarketEnrollItemList() {
     }
     return numList;
   };
+  // console.log(pageNumList());
 
   const handleItemClick = useCallback((item: Item) => {
     setSelectedItem(item);
@@ -84,7 +85,7 @@ function MarketEnrollItemList() {
     />
   ));
   // console.log(itemList);
-  
+
   return (
     <main className={style.main}>
       <header className={style.main_header}>
@@ -104,9 +105,9 @@ function MarketEnrollItemList() {
           ) : (
             <article className={style.section_article}>{myItemList}</article>
           )}
+          <ul className={style.numberList}>{pageNumList()}</ul>
         </span>
       </section>
-      <section className={style.section_1}>{pageNumList()}</section>
     </main>
   );
 }
