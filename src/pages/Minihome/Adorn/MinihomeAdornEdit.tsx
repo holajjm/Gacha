@@ -155,7 +155,7 @@ function MinihomeAdornEdit({ adornPage }: { adornPage: AdornPageData }) {
     );
     setFilterAdornArr(arr);
   }, [adornItemArr]);
-  console.log("filterAdornArr:", filterAdornArr);
+  // console.log("filterAdornArr:", filterAdornArr);
 
   // --------------------------------------------body에 담을 데이터
   const [adornFetchData, setAdornFetchData] = useState<AdornFetchData>({
@@ -186,9 +186,9 @@ function MinihomeAdornEdit({ adornPage }: { adornPage: AdornPageData }) {
   // console.log("newData:", newData);
   
   // ---------------------------------------------기존 꾸미기 영역 데이터 불러와서 상태값으로 저장
-  console.log("adornPage:", adornPage);
+  // console.log("adornPage:", adornPage);
   const [editData, setEditData] = useState<NewData[]>([]);
-  console.log("editData:", editData);
+  // console.log("editData:", editData);
   useEffect(() => {
     setEditData(adornPage?.items);
   }, [adornPage]);
@@ -198,7 +198,7 @@ function MinihomeAdornEdit({ adornPage }: { adornPage: AdornPageData }) {
     x: editData[0]?.x,
     y: editData[0]?.y,
   });
-  console.log("editItemPosition:", editItemPosition);
+  // console.log("editItemPosition:", editItemPosition);
 
   const handleEditItemPosition = (position: Position) => {
     setEditItemPosition({
@@ -228,7 +228,7 @@ function MinihomeAdornEdit({ adornPage }: { adornPage: AdornPageData }) {
   //   setAdornEditItemArr((prev) => [...prev, adornEditItem]);
   // }, [adornEditItem]);
   // console.log("adornEditItem:", adornEditItem);
-  console.log("adornEditItemArr:", adornEditItemArr);
+  // console.log("adornEditItemArr:", adornEditItemArr);
 
   const draggableEditItems = editData.map((e, i) => (
     <MinihomeAdornEditDraggableItem
