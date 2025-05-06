@@ -6,9 +6,6 @@
   overflow: scroll;
   scrollbar-width: none;
 }
-.main > p {
-  display: block;
-}
 .main > div {
   background-color: white;
   aspect-ratio: 1/1;
