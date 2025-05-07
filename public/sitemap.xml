@@ -3,9 +3,66 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://gacha-ruddy.vercel.app</loc>
-    <lastmod>2025-05-07</lastmod>
+    <loc>https://gacha-ruddy.vercel.app/</loc>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/main</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Minihome (정적 경로만 포함) -->
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/minihome/adorn</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/minihome/itembook</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Explore -->
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/explore</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Gacha -->
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/gacha</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Market -->
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/market</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/market/enroll</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/market/mysellingitem</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- User -->
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/login</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/join</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/edit</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://gacha-ruddy.vercel.app/auth</loc>
+    <priority>0.4</priority>
   </url>
 
 </urlset>
