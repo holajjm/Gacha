@@ -9,8 +9,6 @@ interface ItemBookData {
   itemCnt: number;
   itemGrade: string;
   itemId: number;
-  itemName: string;
-  userItemIds: null;
 }
 
 function MinihomeItems({ data }: { data: ItemBookData }) {
