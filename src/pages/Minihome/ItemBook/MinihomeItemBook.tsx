@@ -17,8 +17,6 @@ interface ItemBookData {
   itemCnt: number;
   itemGrade: string;
   itemId: number;
-  itemName: string;
-  userItemIds: null;
 }
 
 function MinihomeItemBook() {
@@ -33,37 +31,21 @@ function MinihomeItemBook() {
   };
   const text = click ? `?grade=${click}` : click;
 
-  const getItemList = async () => {
+  const getItemList = async ():Promise<ItemBookData[]> => {
     const response = await axios.get(
       `${SERVER_API}/itembook/${user?.nickname}${text && text}`,
     );
-    return response;
+    return response?.data;
   };
-  const { data, isLoading } = useQuery({
+  const { data:itemList, isLoading }= useQuery<ItemBookData[]>({
     queryKey: ["Items", text, user],
     queryFn: getItemList,
-    select: (data) => data?.data,
+    staleTime: 1000 * 60 * 10,
+    enabled: !!user,
   });
-  // console.log(data);
+  // console.log(itemList);
 
-  // const getItemList = async () => {
-  //   const response = await fetch(
-  //     `${SERVER_API}/itembook/${user?.nickname}${text && text}`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${user?.accessToken}`,
-  //       },
-  //     },
-  //   );
-  //   const data = await response.json();
-  //   setItemList(data?.data);
-  // };
-  // useEffect(() => {
-  //   getItemList();
-  // }, [click]);
-  const items = data?.map((e: ItemBookData) => (
+  const items = itemList?.map((e: ItemBookData) => (
     <MinihomeItems key={e.itemId} data={e} />
   ));
   return (
