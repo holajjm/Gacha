@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { useUserStore } from "@store/store";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
+import useCustomAxios from "@hooks/useCustomAxios";
 
 import ExploreItem from "./ExploreItem";
 import { SlArrowLeft } from "react-icons/sl";
@@ -13,109 +15,65 @@ interface ExploreItemData {
   profileId: number;
   nickname: string;
   totalVisitorCnt: number;
+  likeCount: number;
 }
 
 function ExploreMain() {
-  usePageTitle("Explore");
+  usePageTitle("둘러보기");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
+  // const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
-  const [exploreList, setExploreList] = useState<ExploreItemData[]>([]);
-  const [select, setSelect] = useState<string>("");
-
-  // Mount 시 사용자 리스트 최초 호출
-  const getUserList = async () => {
-    const response = await fetch(
-      `${SERVER_API}/explore/minihome?sort=createdAt,desc&page=${currentPage}&size=6`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      },
-    );
-    const data = await response.json();
-    setExploreList((prevList) => [...prevList, ...(data?.data?.content || [])]);
-    setCurrentPage((prev) => prev + 1);
-  };
-  useEffect(() => {
-    getUserList();
-  }, []);
-
-  // 무한 스크롤 구현
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const handleScroll = () => {
-    const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
-    if (exploreList.length > 0 && scrollTop + clientHeight >= scrollHeight)
-      getUserList();
-  };
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [exploreList]);
+  const axios = useCustomAxios();
+  const [select, setSelect] = useState<string>("createdAt");
 
   // 정렬 방식 선택 로직
   const onSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelect(e.target.value);
   };
 
-  // 정렬 방식에 따른 정렬된 데이터 재호출
-  useEffect(() => {
-    if (select === "createdAt") {
-      const sortByCreatedAr = async () => {
-        const response = await fetch(
-          `${SERVER_API}/explore/minihome?sort=createdAt,desc`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${user?.accessToken}`,
-            },
-          },
-        );
-        const data = await response.json();
-        setExploreList(data?.data?.content);
-      };
-      sortByCreatedAr();
-    } else if (select === "totalVisitorCnt") {
-      const sortByTotalVisitorCnt = async () => {
-        const response = await fetch(
-          `${SERVER_API}/explore/minihome?sort=totalVisitorCnt,desc`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${user?.accessToken}`,
-            },
-          },
-        );
-        const data = await response.json();
-        setExploreList(data?.data?.content);
-      };
-      sortByTotalVisitorCnt();
-    } else if (select === "score") {
-      const sortByScore = async () => {
-        const response = await fetch(
-          `${SERVER_API}/explore/minihome/score?sort=score,desc`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${user?.accessToken}`,
-            },
-          },
-        );
-        const data = await response.json();
-        setExploreList(data?.data?.content);
-      };
-      sortByScore();
+  // Mount 시 사용자 리스트 최초 호출
+  const getUser = async ({
+    page,
+    select,
+  }: {
+    page: number;
+    select: string;
+  }) => {
+    const baseURL = {
+      createdAt: "/explore/minihome",
+      totalVisitorCnt: "/explore/minihome",
+      score: "/explore/minihome/score",
+      like: "/explore/minihome/like_count",
+    }[select];
+    if (select) {
+      const response = await axios.get(
+        `${baseURL}?select=${select},desc&page=${page}&size=6`,
+      );
+      return response?.data;
     }
-  }, [select]);
+  };
 
-  const userList = exploreList.map((e, i) => <ExploreItem key={i} data={e} />);
+  // 무한 스크롤 + 정렬 방식에 따른 정렬된 데이터 재호출
+  const { data: exploreList } = useInfiniteQuery({
+    queryKey: ["UserList", user, select],
+    queryFn: ({ pageParam = 1 }) => getUser({ page: pageParam, select }),
+    getNextPageParam: (lastPage) => {
+      // console.log(lastPage);
+      return lastPage?.number + 1;
+    },
+    initialPageParam: 1,
+    staleTime: 1000 * 60 * 10,
+    enabled: !!user,
+  });
+  // console.log(exploreList);
+  const [page, setPage] = useState<number>();
+  useEffect(() => {
+    setPage(exploreList?.pages[0]?.pageable?.pageNumber);
+  }, [exploreList]);
+
+  const userList = exploreList?.pages[0]?.content.map(
+    (e: ExploreItemData, i: number) => <ExploreItem key={i} data={e} />,
+  );
 
   return (
     <div className={style.container}>
@@ -129,27 +87,47 @@ function ExploreMain() {
             />
             <h1 className={style.header_title}>둘러보기</h1>
           </aside>
-          <select
-            className={style.header_select}
-            onChange={onSelect}
-            name="select"
-            id="select"
-          >
-            <option value="createdAt">가입순</option>
-            <option value="totalVisitorCnt">인기순</option>
-            <option value="score">스코어순</option>
-          </select>
+          <form className={style.header_select_wrapper} aria-label="정렬 선택">
+            <label htmlFor="select">정렬 기준 선택</label>
+            <select
+              className={style.header_select}
+              onChange={onSelect}
+              name="select"
+              id="select"
+            >
+              <option value="createdAt">가입순</option>
+              <option value="totalVisitorCnt">인기순</option>
+              <option value="score">스코어순</option>
+              <option value="like">좋아요순</option>
+            </select>
+          </form>
         </header>
+
         <section className={style.section}>
-          <nav className={style.section_nav}>
-            <p className={style.section_nav_background}></p>
-            <p>프로필</p>
-            <p>닉네임</p>
-            <p>방문자 수</p>
-            <p></p>
-          </nav>
+          <header className={style.section_header} aria-label="리스트 헤더">
+            <p
+              className={style.section_header_background}
+              aria-hidden="true"
+            ></p>
+            <span>프로필</span>
+            <span>닉네임</span>
+            <span>방문자 수</span>
+            <span aria-hidden="true"></span>
+          </header>
           <article className={style.article}>
-            <ul className={style.article_upperlist}>{userList}</ul>
+            <ul className={style.article_upperlist} aria-label="사용자 리스트">
+              {userList}
+            </ul>
+            {exploreList?.pages[0]?.last ? (
+              <nav
+                className={style.article_pagelist}
+                aria-label="페이지 네비게이션"
+              >
+                <ul>
+                  <li>{page}</li>
+                </ul>
+              </nav>
+            ) : null}
           </article>
         </section>
       </main>
