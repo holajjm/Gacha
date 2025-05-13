@@ -10,6 +10,7 @@ interface ExploreItemData {
   profileId: number;
   nickname: string;
   totalVisitorCnt: number;
+  likeCount: number;
 }
 
 function ExploreItem({ data }: { data: ExploreItemData }) {
