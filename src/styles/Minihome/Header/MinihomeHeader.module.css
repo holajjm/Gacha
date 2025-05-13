@@ -125,6 +125,10 @@
   gap: 1rem;
   font-weight: bold;
 }
+.section_info > p:nth-child(2),
+.section_info > p:nth-child(3) {
+  cursor: pointer;
+}
 .section_bottom {
   display: flex;
   gap: 1rem;
