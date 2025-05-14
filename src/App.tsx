@@ -30,7 +30,7 @@ function App() {
         position="top-right"
         limit={2}
         closeButton={true}
-        autoClose={5000}
+        autoClose={4000}
       />
       <RouterProvider router={router} />
     </Suspense>
