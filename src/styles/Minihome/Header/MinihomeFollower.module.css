@@ -57,5 +57,5 @@
   border-radius: 0 0 20px 20px;
   overflow: scroll;
   scrollbar-width: none;
-  background-color: rgb(230, 230, 230);
+  background: linear-gradient(to bottom, #d8faff, #b6cdff);
 }
