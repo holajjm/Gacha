@@ -53,4 +53,9 @@
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
+  box-sizing: border-box;
+  border-radius: 0 0 20px 20px;
+  overflow: scroll;
+  scrollbar-width: none;
+  background-color: rgb(230, 230, 230);
 }

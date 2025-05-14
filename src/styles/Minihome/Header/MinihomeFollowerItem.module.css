@@ -6,6 +6,14 @@
   box-sizing: border-box;
   height: 3rem;
 }
+.article_link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-sizing: border-box;
+  height: 3rem;
+  text-decoration: none;
+}
 .article_img {
   display: flex;
   align-items: center;
@@ -16,7 +24,6 @@
   width: 3rem;
   height: 3rem;
   object-fit: contain;
-  border: 1px solid black;
   border-radius: 100%;
   box-sizing: border-box;
 }
@@ -27,4 +34,5 @@
   align-items: center;
   justify-content: start;
   font-size: 1rem;
+  color: #2d2d2d;
 }
