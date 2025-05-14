@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 
 import { useCoinState, useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
 import ProfileImg from "@assets/Profile";
+import { toast } from "react-toastify";
 
 import MinihomeFollower from "./MinihomeFollower";
 import MinihomeFollowing from "./MinihomeFollowing";
@@ -13,26 +16,19 @@ import style from "@styles/Minihome/Header/MinihomeHeader.module.css";
 interface MiniHomeMainData {
   followersCnt: number;
   followingCnt: number;
+  isFollowing: boolean;
   isOwner: boolean;
   layout: null;
   nickname: string;
-  profileImageStoreFileName: string;
+  profileId: number;
   score: number;
   totalVisitorCnt: number;
-  isFollowing: boolean;
-  profileId: number;
 }
 
-function MinihomeHeader({
-  minihomeData,
-  getMinihomeInfo,
-}: {
-  minihomeData: MiniHomeMainData;
-  getMinihomeInfo: () => void;
-}) {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
+function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
   const { user } = useUserStore((state) => state);
   const { nickname } = useParams<{ nickname: string }>();
+  const axios = useCustomAxios();
   const navigate = useNavigate();
   const imgRef = useRef<HTMLImageElement>(null);
   useEffect(() => {
@@ -59,74 +55,73 @@ function MinihomeHeader({
   };
 
   // 유저 팔로잉하기 기능
-  const handleFollowing = async (minihomeData: MiniHomeMainData) => {
-    if (!minihomeData?.nickname) {
-      console.error("사용자 닉네임이 존재하지 않아 요청을 보낼 수 없습니다.");
-      return;
-    }
-    if (confirm(`${minihomeData?.nickname}님을 팔로잉 하시겠습니까?`)) {
-      try {
-        await fetch(`${SERVER_API}/users/follow`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
-          body: JSON.stringify({
-            followeeUserNickname: minihomeData?.nickname,
-          }),
-        });
-        getMinihomeInfo();
-      } catch (error) {
-        console.log(error);
+  const { mutate: getFollowing } = useMutation({
+    mutationFn: async () => {
+      if (!minihomeData?.nickname) {
+        console.error("사용자 닉네임이 존재하지 않아 요청을 보낼 수 없습니다.");
+        return;
       }
-    }
-  };
+      if (confirm(`${minihomeData?.nickname}님을 팔로우 할까요?`)) {
+        const response = await axios.post("/users/follow", {
+          followeeUserNickname: minihomeData?.nickname,
+        });
+        // console.log(response?.data);
+        toast("팔로잉 되었습니다.");
+        return response?.data;
+      }
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   // 유저 언팔로우 기능
-  const handleUnFollowing = async (minihomeData: MiniHomeMainData) => {
-    if (confirm(`${minihomeData?.nickname}님을 언팔로우 하시겠습니까?`)) {
-      try {
-        await fetch(`${SERVER_API}/users/unfollow`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
-          body: JSON.stringify({
-            followeeUserNickname: minihomeData?.nickname,
-          }),
-        });
-        alert("언팔로우 되었습니다.");
-        getMinihomeInfo();
-      } catch (error) {
-        console.log(error);
+  const { mutate: getUnFollowing } = useMutation({
+    mutationFn: async () => {
+      if (!minihomeData?.nickname) {
+        console.error("사용자 닉네임이 존재하지 않아 요청을 보낼 수 없습니다.");
+        return;
       }
-    }
-  };
+      if (confirm(`${minihomeData?.nickname}님을 언팔로우 할까요?`)) {
+        const response = await axios.post("/users/unfollow", {
+          followeeUserNickname: minihomeData?.nickname,
+        });
+        // console.log(response?.data);
+        toast("언팔로우 되었습니다.");
+        return response?.data;
+      }
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   // 출석체크 및 코인 획득 로직
   const { coinRefresh } = useCoinState((state) => state);
-  const getAttend = async () => {
-    try {
-      const response = await fetch(`${SERVER_API}/attend`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      });
-      const data = await response.json();
-
+  const { mutate: createPost } = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post("/attend", null);
+      // console.log(response?.data);
+      return response?.data;
+    },
+    onSuccess: (data) => {
       if (data?.error) {
         alert(data?.error?.message);
       } else {
-        alert("출석 체크 완료!");
+        toast("출석 체크 완료!");
         coinRefresh();
       }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
   // console.log(minihomeData);
   return (
     <header className={style.header}>
@@ -155,7 +150,7 @@ function MinihomeHeader({
             <h1 className={style.section_article_title}>{nickname}</h1>
             {minihomeData?.isOwner && minihomeData?.isOwner ? (
               <>
-                <div onClick={getAttend}>
+                <div onClick={() => createPost()}>
                   <img
                     src="/images/NewCoin.webp"
                     alt="coin"
@@ -201,13 +196,13 @@ function MinihomeHeader({
               <Button
                 text={"팔로우 끊기"}
                 width={"100%"}
-                onClick={() => handleUnFollowing(minihomeData)}
+                onClick={() => getUnFollowing()}
               ></Button>
             ) : (
               <Button
                 text={"팔로잉하기"}
                 width={"100%"}
-                onClick={() => handleFollowing(minihomeData)}
+                onClick={() => getFollowing()}
               ></Button>
             )}
           </article>
