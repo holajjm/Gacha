@@ -1,16 +1,17 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useUserStore } from "@store/store";
 import ProfileImg from "@assets/Profile";
 import Button from "@components/Button";
+import { toast } from "react-toastify";
 
 import style from "@styles/Minihome/Header/MinihomeFollowerItem.module.css";
 
 interface Followers {
   userId: number;
   nickname: string;
-  profileImageUrl: string;
+  profileId: number;
   isFollowing: boolean;
   isRemovable: boolean;
   isCurrentUser: boolean;
@@ -31,7 +32,7 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
             Authorization: `Bearer ${user?.accessToken}`,
           },
         });
-        alert("삭제되었습니다.");
+        toast("삭제되었습니다.");
         window.location.reload();
       } catch (error) {
         console.error(error);
@@ -41,10 +42,19 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
 
   return (
     <article className={style.article}>
-      <div className={style.article_img}>
-        <img src={ProfileImg[followers?.userId-1]?.profileImg} alt="profile" />
-      </div>
-      <p className={style.article_nickname}>{followers?.nickname}</p>
+      <Link
+        to={`/minihome/${followers?.nickname}`}
+        className={style.article_link}
+      >
+        <div className={style.article_img}>
+          <img
+            src={ProfileImg[followers?.profileId]?.profileImg}
+            alt="profile"
+          />
+        </div>
+        <p className={style.article_nickname}>{followers?.nickname}</p>
+      </Link>
+
       {nickname === user?.nickname ? (
         <Button
           text={"삭제"}

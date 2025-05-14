@@ -1,18 +1,19 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useUserStore } from "@store/store";
 import ProfileImg from "@assets/Profile";
 import Button from "@components/Button";
+import { toast } from "react-toastify";
 
 import style from "@styles/Minihome/Header/MinihomeFollowingItem.module.css";
 
 interface Followings {
-  userId: number;
-  nickname: string;
-  profileImageUrl: string;
-  isFollowing: boolean;
   isCurrentUser: boolean;
+  isFollowing: boolean;
+  nickname: string;
+  profileId: number;
+  userId: number;
 }
 
 function MinihomeFollowingItem({ followings }: { followings: Followings }) {
@@ -32,18 +33,28 @@ function MinihomeFollowingItem({ followings }: { followings: Followings }) {
           followeeUserNickname: followings?.nickname,
         }),
       });
-      alert("언팔로우 되었습니다.");
+      toast("언팔로우 되었습니다.");
       window.location.reload();
     }
   };
+  console.log(followings);
+
   return (
     <article className={style.article}>
-      <div className={style.article_img}>
-        <img src={ProfileImg[followings?.userId-1]?.profileImg} alt="profile" />
-      </div>
-      <p className={style.article_nickname}>{followings?.nickname}</p>
+      <Link
+        to={`/minihome/${followings?.nickname}`}
+        className={style.article_link}
+      >
+        <div className={style.article_img}>
+          <img
+            src={ProfileImg[followings?.profileId]?.profileImg}
+            alt="profile"
+          />
+        </div>
+        <p className={style.article_nickname}>{followings?.nickname}</p>
+      </Link>
       {nickname === user?.nickname ? (
-        <Button text={"팔로잉"} width={"3.5rem"} onClick={unFollow}></Button>
+        <Button text={"언팔로우"} width={"4rem"} onClick={unFollow}></Button>
       ) : (
         <Button
           text={"방문"}

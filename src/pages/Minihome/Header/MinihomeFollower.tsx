@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 import { useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 
 import MinihomeFollowerItem from "./MinihomeFollowerItem";
 import style from "@styles/Minihome/Header/MinihomeFollower.module.css";
@@ -9,7 +11,7 @@ import style from "@styles/Minihome/Header/MinihomeFollower.module.css";
 interface Followers {
   userId: number;
   nickname: string;
-  profileImageUrl: string;
+  profileId: number;
   isFollowing: boolean;
   isRemovable: boolean;
   isCurrentUser: boolean;
@@ -23,24 +25,25 @@ function MinihomeFollower({
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const { nickname } = useParams<{ nickname: string }>();
-  const [followers, setFollowers] = useState<Followers[]>([]);
-  const getFollower = async () => {
-    const response = await fetch(`${SERVER_API}/users/${nickname}/followers`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user?.accessToken}`,
-      },
-    });
-    const data = await response.json();
-    setFollowers(data?.data?.content);
+  const axios = useCustomAxios();
+  const follower = async () => {
+    const response = await axios.get(
+      `${SERVER_API}/users/${nickname}/followers`,
+    );
+    return response?.data;
   };
-  useEffect(() => {
-    getFollower();
-  }, []);
-  const followerList = followers.map((e) => (
+  const { data } = useQuery({
+    queryKey: ["FollowerList", nickname, user],
+    queryFn: follower,
+    select: (data) => data?.content,
+    enabled: !!user,
+  });
+  // console.log(data);
+
+  const followerList = data?.map((e: Followers) => (
     <MinihomeFollowerItem key={e?.userId} followers={e} />
   ));
+
   return (
     <div className={style.container}>
       <p className={style.background}></p>
