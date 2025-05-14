@@ -2,9 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "@components/Button";
+import ProfileImg from "@assets/Profile";
 
 import style from "@styles/Explore/ExploreItem.module.css";
-import ProfileImg from "@assets/Profile";
 
 interface ExploreItemData {
   profileId: number;
@@ -15,6 +15,8 @@ interface ExploreItemData {
 
 function ExploreItem({ data }: { data: ExploreItemData }) {
   const navigate = useNavigate();
+  // console.log(data);
+  
   return (
     <li className={style.list}>
       <p className={style.list_background}></p>
