@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 import { useUserStore } from "@store/store";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
+import useCustomAxios from "@hooks/useCustomAxios";
 import useImage from "@hooks/useImage";
 
 import MinihomeReplyNew from "./Reply/MinihomeReplyNew";
@@ -11,32 +13,11 @@ import MinihomeHeader from "./Header/MinihomeHeader";
 import MiniHomeItem from "./MiniHomeItem";
 import style from "@styles/Minihome/MiniHomeMain.module.css";
 
-interface MiniHomeMainData {
-  followersCnt: number;
-  followingCnt: number;
-  isOwner: boolean;
-  layout: null;
-  nickname: string;
-  profileImageStoreFileName: string;
-  score: number;
-  totalVisitorCnt: number;
-  isFollowing: boolean;
-  profileId: number;
-}
-
-interface AdornData {
-  background: {
-    backgroundId: number;
-    imageUrl: string;
-  };
-  items: [
-    {
-      imageUrl: string;
-      subId: number;
-      x: number;
-      y: number;
-    },
-  ];
+interface AdornDataItem {
+  imageUrl: string;
+  subId: number;
+  x: number;
+  y: number;
 }
 
 function MiniHomeMain() {
@@ -45,74 +26,37 @@ function MiniHomeMain() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const { nickname } = useParams<{ nickname: string }>();
-  const [minihomeData, setMinihomeData] = useState<MiniHomeMainData>({
-    followersCnt: 0,
-    followingCnt: 0,
-    isOwner: true,
-    layout: null,
-    nickname: "",
-    profileImageStoreFileName: "",
-    score: 0,
-    totalVisitorCnt: 0,
-    isFollowing: false,
-    profileId: 0,
-  });
-  const getMinihomeInfo = async () => {
-    if (!user?.accessToken) {
-      console.warn("User information is missing");
-      return;
-    }
-    try {
-      const response = await fetch(
-        `${SERVER_API}/minihomes/${nickname && nickname}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user && user?.accessToken}`,
-          },
-        },
-      );
-      const data = await response.json();
-      setMinihomeData(data?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    getMinihomeInfo();
-  }, [nickname, user?.profileId]); // 외부에서 미니홈으로 페이지 접속하였을 때 params 값의 변함에 따른 미니홈 정보 리렌더링 및 재호출
+  const axios = useCustomAxios();
 
-  //꾸미기 영역 호출하기
-  const [adornData, setAdornData] = useState<AdornData>({
-    background: {
-      backgroundId: 0,
-      imageUrl: "",
-    },
-    items: [
-      {
-        imageUrl: "",
-        subId: 0,
-        x: 0,
-        y: 0,
-      },
-    ],
-  });
-  const getAdorn = async () => {
-    const response = await fetch(`${SERVER_API}/decoration/${nickname}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user?.accessToken}`,
-      },
-    });
-    const data = await response.json();
-    setAdornData(data?.data);
+  // 미니홈 유저 정보 호출
+  const getMinihome = async () => {
+    const response = await axios.get(
+      `${SERVER_API}/minihomes/${nickname && nickname}`,
+    );
+    return response?.data;
   };
-  useEffect(() => {
-    getAdorn();
-  }, []);
-  const itemList = adornData?.items.map((e) => (
+  const { data: minihomeData } = useQuery({
+    queryKey: ["Minihome", user, nickname],
+    queryFn: getMinihome,
+    staleTime: 1000 * 60 * 10,
+    enabled: !!user,
+  });
+  // console.log(data);
+
+  //꾸미기 데이터 호출
+  const adorn = async () => {
+    const response = await axios.get(`${SERVER_API}/decoration/${nickname}`);
+    return response?.data;
+  };
+  const { data: adornData } = useQuery({
+    queryKey: ["AdornData", user, nickname],
+    queryFn: adorn,
+    staleTime: 1000 * 60 * 10,
+    enabled: !!user,
+  });
+  // console.log(adornData);
+
+  const itemList = adornData?.items?.map((e: AdornDataItem) => (
     <MiniHomeItem
       key={e?.subId}
       imageUrl={e?.imageUrl}
@@ -120,16 +64,11 @@ function MiniHomeMain() {
       positionY={e?.y}
     />
   ));
-  // console.log(minihomeData);
-  // console.log(user);
 
   return (
     <div className={style.container}>
       <main className={style.wrapper}>
-        <MinihomeHeader
-          minihomeData={minihomeData}
-          getMinihomeInfo={getMinihomeInfo}
-        />
+        <MinihomeHeader minihomeData={minihomeData} />
         <section className={style.section}>
           <aside className={style.section_aside}>
             총 방문자 수{" "}
@@ -137,7 +76,10 @@ function MiniHomeMain() {
           </aside>
           <article className={style.section_article_1}>
             <div>
-              <img src={useImage(adornData?.background?.imageUrl)} alt="Background" />
+              <img
+                src={useImage(adornData?.background?.imageUrl)}
+                alt="Background"
+              />
             </div>
             <div className={style.section_article_1_imgList}>{itemList}</div>
           </article>
