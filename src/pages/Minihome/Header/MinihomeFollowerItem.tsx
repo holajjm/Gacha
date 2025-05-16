@@ -1,10 +1,10 @@
 import React from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useUserStore } from "@store/store";
-import ProfileImg from "@assets/Profile";
 import Button from "@components/Button";
 import { toast } from "react-toastify";
+import ProfileImg from "@assets/Profile";
 
 import style from "@styles/Minihome/Header/MinihomeFollowerItem.module.css";
 
@@ -42,8 +42,13 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
 
   return (
     <article className={style.article}>
-      <Link
-        to={`/minihome/${followers?.nickname}`}
+      <div
+        onClick={() => {
+          if (confirm(`${followers?.nickname} 미니홈에 방문할까요?`)) {
+            navigate(`/minihome/${followers?.nickname}`);
+            window.location.reload();
+          }
+        }}
         className={style.article_link}
       >
         <div className={style.article_img}>
@@ -53,7 +58,7 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
           />
         </div>
         <p className={style.article_nickname}>{followers?.nickname}</p>
-      </Link>
+      </div>
 
       {nickname === user?.nickname ? (
         <Button
