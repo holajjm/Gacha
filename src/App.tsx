@@ -27,10 +27,10 @@ function App() {
   return (
     <Suspense fallback={<Loading />}>
       <ToastContainer
-        position="top-right"
+        position="top-center"
         limit={2}
         closeButton={true}
-        autoClose={4000}
+        autoClose={3000}
       />
       <RouterProvider router={router} />
     </Suspense>
