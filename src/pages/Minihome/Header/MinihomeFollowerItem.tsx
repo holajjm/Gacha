@@ -6,7 +6,7 @@ import Button from "@components/Button";
 import { toast } from "react-toastify";
 import ProfileImg from "@assets/Profile";
 
-import style from "@styles/Minihome/Header/MinihomeFollowerItem.module.css";
+import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
 
 interface Followers {
   userId: number;
