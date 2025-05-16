@@ -8,8 +8,8 @@ import Button from "@components/Button";
 import ProfileImg from "@assets/Profile";
 import { toast } from "react-toastify";
 
-import MinihomeFollower from "./MinihomeFollower";
-import MinihomeFollowing from "./MinihomeFollowing";
+import MinihomeFollowerModal from "@components/portals/MinihomeFollowerModal";
+import MinihomeFollowingModal from "@components/portals/MinihomeFollowingModal";
 import { FcSettings } from "react-icons/fc";
 import style from "@styles/Minihome/Header/MinihomeHeader.module.css";
 
@@ -67,6 +67,9 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
         });
         // console.log(response?.data);
         toast("팔로잉 되었습니다.");
+        setTimeout(() => {
+          window.location.reload();
+        }, 4000);
         return response?.data;
       }
     },
@@ -86,11 +89,16 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
         return;
       }
       if (confirm(`${minihomeData?.nickname}님을 언팔로우 할까요?`)) {
-        const response = await axios.post("/users/unfollow", {
-          followeeUserNickname: minihomeData?.nickname,
+        const response = await axios.delete("/users/unfollow", {
+          data: {
+            followeeUserNickname: minihomeData?.nickname,
+          },
         });
-        // console.log(response?.data);
+        console.log(response?.data);
         toast("언팔로우 되었습니다.");
+        setTimeout(() => {
+          window.location.reload();
+        }, 4000);
         return response?.data;
       }
     },
@@ -122,93 +130,96 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
       console.log(error);
     },
   });
+
   // console.log(minihomeData);
   return (
-    <header className={style.header}>
-      {followerClick ? (
-        <MinihomeFollower handleFollowerClose={handleFollowerClose} />
-      ) : null}
-      {followingClick ? (
-        <MinihomeFollowing handleFollowingClose={handleFollowingClose} />
-      ) : null}
-      <p className={style.header_profile}>
-        <img
-          src={
-            minihomeData?.profileId
-              ? ProfileImg[Number(minihomeData?.profileId - 1)]?.profileImg
-              : "/images/ReadyForImage.webp"
-          }
-          alt="profile"
-          ref={imgRef}
-          width={160}
-          height={160}
-        />
-      </p>
-      <section className={style.section}>
-        <header className={style.section_header}>
-          <article className={style.section_article}>
-            <h1 className={style.section_article_title}>{nickname}</h1>
-            {minihomeData?.isOwner && minihomeData?.isOwner ? (
-              <>
-                <div onClick={() => createPost()}>
-                  <img
-                    src="/images/NewCoin.webp"
-                    alt="coin"
-                    className={style.section_article_coin}
+    <>
+      {followerClick && (
+        <MinihomeFollowerModal handleFollowerClose={handleFollowerClose} />
+      )}
+      {followingClick && (
+        <MinihomeFollowingModal handleFollowingClose={handleFollowingClose} />
+      )}
+      <header className={style.header}>
+        <p className={style.header_profile}>
+          <img
+            src={
+              minihomeData?.profileId
+                ? ProfileImg[Number(minihomeData?.profileId - 1)]?.profileImg
+                : "/images/ReadyForImage.webp"
+            }
+            alt="profile"
+            ref={imgRef}
+            width={160}
+            height={160}
+          />
+        </p>
+        <section className={style.section}>
+          <header className={style.section_header}>
+            <article className={style.section_article}>
+              <h1 className={style.section_article_title}>{nickname}</h1>
+              {minihomeData?.isOwner && minihomeData?.isOwner ? (
+                <>
+                  <div onClick={() => createPost()}>
+                    <img
+                      src="/images/NewCoin.webp"
+                      alt="coin"
+                      className={style.section_article_coin}
+                    />
+                    <p>출석체크하고 코인 받기!</p>
+                  </div>
+                  <FcSettings
+                    className={style.section_article_setting}
+                    onClick={() => navigate("/edit")}
                   />
-                  <p>출석체크하고 코인 받기!</p>
-                </div>
-                <FcSettings
-                  className={style.section_article_setting}
-                  onClick={() => navigate("/edit")}
-                />
-              </>
-            ) : null}
-          </article>
-          <nav className={style.section_info}>
-            <p>스코어 {minihomeData?.score ? minihomeData?.score : 0}</p>
-            <p datatype="Follower" onClick={handleFollowerClick}>
-              팔로워{" "}
-              {minihomeData?.followersCnt ? minihomeData?.followersCnt : 0}
-            </p>
-            <p datatype="Following" onClick={handleFollowingClick}>
-              팔로잉{" "}
-              {minihomeData?.followingCnt ? minihomeData?.followingCnt : 0}
-            </p>
-          </nav>
-        </header>
-        {nickname === user?.nickname ? (
-          <article className={style.section_bottom}>
-            <Button
-              text={"아이템 북 관리"}
-              width={"100%"}
-              onClick={() => navigate(`/minihome/itembook`)}
-            ></Button>
-            <Button
-              text={"미니홈 꾸미기"}
-              width={"100%"}
-              onClick={() => navigate(`/minihome/adorn`)}
-            ></Button>
-          </article>
-        ) : (
-          <article className={style.section_bottom}>
-            {minihomeData?.isFollowing ? (
+                </>
+              ) : null}
+            </article>
+            <nav className={style.section_info}>
+              <p>스코어 {minihomeData?.score ? minihomeData?.score : 0}</p>
+              <p datatype="Follower" onClick={handleFollowerClick}>
+                팔로워{" "}
+                {minihomeData?.followersCnt ? minihomeData?.followersCnt : 0}
+              </p>
+              <p datatype="Following" onClick={handleFollowingClick}>
+                팔로잉{" "}
+                {minihomeData?.followingCnt ? minihomeData?.followingCnt : 0}
+              </p>
+            </nav>
+          </header>
+          {nickname === user?.nickname ? (
+            <article className={style.section_bottom}>
               <Button
-                text={"팔로우 끊기"}
+                text={"아이템 북 관리"}
                 width={"100%"}
-                onClick={() => getUnFollowing()}
+                onClick={() => navigate(`/minihome/itembook`)}
               ></Button>
-            ) : (
               <Button
-                text={"팔로잉하기"}
+                text={"미니홈 꾸미기"}
                 width={"100%"}
-                onClick={() => getFollowing()}
+                onClick={() => navigate(`/minihome/adorn`)}
               ></Button>
-            )}
-          </article>
-        )}
-      </section>
-    </header>
+            </article>
+          ) : (
+            <article className={style.section_bottom}>
+              {minihomeData?.isFollowing ? (
+                <Button
+                  text={"팔로우 끊기"}
+                  width={"100%"}
+                  onClick={() => getUnFollowing()}
+                ></Button>
+              ) : (
+                <Button
+                  text={"팔로잉하기"}
+                  width={"100%"}
+                  onClick={() => getFollowing()}
+                ></Button>
+              )}
+            </article>
+          )}
+        </section>
+      </header>
+    </>
   );
 }
 
