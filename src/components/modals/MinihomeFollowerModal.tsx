@@ -6,7 +6,7 @@ import { useUserStore } from "@store/store";
 import useCustomAxios from "@hooks/useCustomAxios";
 
 import MinihomeFollowerItem from "@pages/Minihome/Header/MinihomeFollowerItem";
-import style from "@styles/Layouts/portals/MinihomeFollowModal.module.css";
+import style from "@styles/Layouts/modals/MinihomeFollowModal.module.css";
 
 interface Followers {
   userId: number;
