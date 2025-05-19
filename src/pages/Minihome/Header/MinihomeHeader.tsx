@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useCoinState, useUserStore } from "@store/store";
+import { useUserStore } from "@store/store";
 import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
 import ProfileImg from "@assets/Profile";
 import { toast } from "react-toastify";
 
-import MinihomeFollowerModal from "@components/portals/MinihomeFollowerModal";
-import MinihomeFollowingModal from "@components/portals/MinihomeFollowingModal";
+import MinihomeFollowerModal from "@components/modals/MinihomeFollowerModal";
+import MinihomeFollowingModal from "@components/modals/MinihomeFollowingModal";
 import { FcSettings } from "react-icons/fc";
 import style from "@styles/Minihome/Header/MinihomeHeader.module.css";
 
@@ -111,7 +111,7 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
   });
 
   // 출석체크 및 코인 획득 로직
-  const { coinRefresh } = useCoinState((state) => state);
+  const queryClient = useQueryClient();
   const { mutate: createPost } = useMutation({
     mutationFn: async () => {
       const response = await axios.post("/attend", null);
@@ -123,7 +123,8 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
         alert(data?.error?.message);
       } else {
         toast("출석 체크 완료!");
-        coinRefresh();
+        // coinRefresh();
+        queryClient.invalidateQueries({ queryKey: ["coin"] });
       }
     },
     onError: (error) => {
