@@ -2,9 +2,9 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { useCoinState, useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 
 import style from "@styles/Layouts/Coin.module.css";
-import useCustomAxios from "@hooks/useCustomAxios";
 
 function Coin() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
