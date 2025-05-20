@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 import useCustomAxios from "@hooks/useCustomAxios";
-import { useMarketModalState, useUserStore } from "@store/store.ts";
+import { useModalState, useUserStore } from "@store/store.ts";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
@@ -21,15 +21,13 @@ interface MarketItemData {
 }
 
 function MarketMain() {
-  usePageTitle("Market");
+  usePageTitle("마켓");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const navigate = useNavigate();
-  const { user } = useUserStore((state) => state);
   const axios = useCustomAxios();
-  const { modal, modalOpen, modalClose } = useMarketModalState(
-    (state) => state,
-  );
+  const { user } = useUserStore((state) => state);
+  const { modal, modalOpen, modalClose } = useModalState((state) => state);
+
   const [clickItemId, setClickItemId] = useState<number>(0);
   const [navClick, setNavClick] = useState<string>("");
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -38,7 +36,7 @@ function MarketMain() {
   const text = navClick ? `?grade=${navClick}` : navClick;
 
   const getMarketItem = async () => {
-    const response = await axios.get(`${SERVER_API}/products${text && text}`);
+    const response = await axios.get(`/products${text && text}`);
     return response;
   };
   const { data, isLoading } = useQuery({
@@ -48,21 +46,6 @@ function MarketMain() {
     throwOnError: true,
   });
   // console.log(data);
-
-  // useEffect(() => {
-  //   const getMarketItem = async () => {
-  //     const response = await fetch(`${SERVER_API}/products${text && text}`, {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${user?.accessToken}`,
-  //       },
-  //     });
-  //     const data = await response.json();
-  //     setItemList(data?.data);
-  //   };
-  //   getMarketItem();
-  // }, [navClick]);
 
   const handleClicked = () => {
     modalOpen();
