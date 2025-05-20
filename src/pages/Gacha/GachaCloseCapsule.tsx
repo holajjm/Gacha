@@ -16,7 +16,7 @@ function GachaCloseCapsule({ color }: { color: string }) {
       alt="Close"
       ref={imgRef}
       width={320}
-      height={320}
+      height={352}
     />
   );
 }
