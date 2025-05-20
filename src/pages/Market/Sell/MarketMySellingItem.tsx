@@ -1,11 +1,11 @@
 import React from "react";
 
+import { useMarketModalState } from "@store/store.ts";
 import useImage from "@hooks/useImage";
 import Button from "@components/Button";
 
 import MarketSellingItemModal from "./MarketSellingItemModal";
 import style from "@styles/Market/Sell/MarketMySellingItem.module.css";
-import { useModalState } from "@store/store";
 
 interface MySellingItemData {
   grade: string;
@@ -18,7 +18,7 @@ interface MySellingItemData {
 }
 
 function MarketMySellingItem({ data }: { data: MySellingItemData }) {
-  const { modal, modalOpen } = useModalState((state) => state);
+  const { modal, modalOpen } = useMarketModalState((state) => state);
 
   return (
     <article className={style.article}>

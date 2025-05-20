@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import { useCoinState, useModalState, useUserStore } from "@store/store";
+import { useCoinState, useMarketModalState, useUserStore } from "@store/store.ts";
 import useCustomAxios from "@hooks/useCustomAxios";
 import useImage from "@hooks/useImage";
 import Button from "@components/Button";
@@ -35,7 +35,7 @@ function MarketItemModal({
   //   price: 0,
   // });
   const { user } = useUserStore((state) => state);
-  const { modalClose } = useModalState((state) => state);
+  const { modalClose } = useMarketModalState((state) => state);
   const divRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     divRef.current?.focus();

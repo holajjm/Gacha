@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useModalState, useUserStore } from "@store/store";
+import { useMarketModalState, useUserStore } from "@store/store.ts";
 import useImage from "@hooks/useImage";
 import usePageUpper from "@hooks/usePageUpper";
 import Button from "@components/Button";
@@ -21,7 +21,7 @@ function MarketSellingItemModal({ data }: { data: MySellingItemData }) {
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
-  const { modalClose } = useModalState((state) => state);
+  const { modalClose } = useMarketModalState((state) => state);
   const handleCancel = async () => {
     if (confirm("판매 취소 하시겠습니까?")) {
       try {

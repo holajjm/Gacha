@@ -1,18 +1,18 @@
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 import useCustomAxios from "@hooks/useCustomAxios";
-import { useModalState, useUserStore } from "@store/store";
+import { useMarketModalState, useUserStore } from "@store/store.ts";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 
 import MarketItem from "./MarketItem";
 import MarketItemModal from "./MarketItemModal";
+import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Market/MarketMain.module.css";
-import { useQuery } from "@tanstack/react-query";
-import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
 
 interface MarketItemData {
   hasStock: string;
@@ -27,7 +27,9 @@ function MarketMain() {
   const navigate = useNavigate();
   const { user } = useUserStore((state) => state);
   const axios = useCustomAxios();
-  const { modal, modalOpen, modalClose } = useModalState((state) => state);
+  const { modal, modalOpen, modalClose } = useMarketModalState(
+    (state) => state,
+  );
   const [clickItemId, setClickItemId] = useState<number>(0);
   const [navClick, setNavClick] = useState<string>("");
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
