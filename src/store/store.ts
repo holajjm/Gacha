@@ -1,4 +1,5 @@
 import { create } from "zustand";
+// import { persist } from "zustand/middleware";
 
 export interface User {
   loginId?: string;
@@ -36,8 +37,27 @@ interface ModalState {
   modalOpen: () => void;
 }
 
-export const useModalState = create<ModalState>((set) => ({
-  modal: false,
-  modalClose: () => set({ modal: false }),
-  modalOpen: () => set({ modal: true }),
-}));
+// 팩토리 함수
+function createModalStore() {
+  return create<ModalState>((set) => ({
+    modal: false,
+    modalClose: () => set({ modal: false }),
+    modalOpen: () => set({ modal: true }),
+  }));
+}
+
+// 각각 별도 인스턴스로 생성
+export const useFollowerModalState = createModalStore();
+export const useFollowingModalState = createModalStore();
+export const useMarketModalState = createModalStore();
+
+// export const useFollowerModalState = create<ModalState>((set) => ({
+//   modal: false,
+//   modalClose: () => set({ modal: false }),
+//   modalOpen: () => set({ modal: true }),
+// }));
+// export const useFollowingModalState = create<ModalState>((set) => ({
+//   modal: false,
+//   modalClose: () => set({ modal: false }),
+//   modalOpen: () => set({ modal: true }),
+// }));
