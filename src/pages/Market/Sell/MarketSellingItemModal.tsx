@@ -1,11 +1,14 @@
 import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useMarketModalState, useUserStore } from "@store/store.ts";
+import { useModalState } from "@store/store.ts";
+import useCustomAxios from "@hooks/useCustomAxios";
 import useImage from "@hooks/useImage";
 import usePageUpper from "@hooks/usePageUpper";
 import Button from "@components/Button";
 
 import style from "@styles/Market/Sell/MarketSellingItemModal.module.css";
+import { toast } from "react-toastify";
 
 interface MySellingItemData {
   grade: string;
@@ -19,26 +22,38 @@ interface MySellingItemData {
 
 function MarketSellingItemModal({ data }: { data: MySellingItemData }) {
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
-  const { modalClose } = useMarketModalState((state) => state);
-  const handleCancel = async () => {
-    if (confirm("판매 취소 하시겠습니까?")) {
-      try {
-        await fetch(`${SERVER_API}/products/${data?.productId}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
-        });
-        alert("취소 되었습니다.");
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
+  const axios = useCustomAxios();
+  const queryClient = useQueryClient();
+  const { modalClose } = useModalState((state) => state);
+
+  const { mutate: sellCancel } = useMutation({
+    mutationFn: async () => {
+      if (confirm("판매를 취소하시겠습니까?")) {
+        try {
+          const response = await axios.delete(
+            `/products/${data?.productId}`,
+            {},
+          );
+          toast("취소 되었습니다.");
+          modalClose();
+          return response?.data;
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
-  };
+    },
+    onSuccess: (data) => {
+      if (data?.error) {
+        console.log(data?.error);
+        return;
+      }
+      queryClient.invalidateQueries({ queryKey: ["SellingItems"] });
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   return (
     <div className={style.container}>
@@ -72,7 +87,7 @@ function MarketSellingItemModal({ data }: { data: MySellingItemData }) {
               <Button
                 text={"판매 취소"}
                 width={"5rem"}
-                onClick={handleCancel}
+                onClick={sellCancel}
               ></Button>
             </div>
           </article>
