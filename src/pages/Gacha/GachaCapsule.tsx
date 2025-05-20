@@ -4,29 +4,13 @@ import GachaOpenCapsule from "./GachaOpenCapsule";
 import GachaCloseCapsule from "./GachaCloseCapsule";
 import style from "@styles/Gacha/GachaCapsule.module.css";
 
-interface GachaData {
-  itemGrade: string;
-  itemImageUrl: string;
-  itemName: string;
-}
-
-function GachaCapsule({
-  imageData,
-  onClick,
-}: {
-  imageData: GachaData;
-  onClick: () => void;
-}) {
+function GachaCapsule({ itemImageUrl }: { itemImageUrl: string }) {
   const [color, setColor] = useState<string>("");
   const [randomNum, setRandomNum] = useState<number>(0);
   const colorArr = ["Blue", "Pink", "Yellow", "Green"];
-  const getRandomColor = () => {
-    const num = Math.floor(Math.random() * 4);
-    setRandomNum(num);
-  };
 
   useEffect(() => {
-    getRandomColor();
+    setRandomNum(Math.floor(Math.random() * 4));
   }, []);
 
   useEffect(() => {
@@ -44,19 +28,13 @@ function GachaCapsule({
   useEffect(() => {
     openModal();
   }, []);
-  const handleClose = () => {
-    onClick();
-  };
+
   return (
     <div className={style.container}>
       <p className={style.background}></p>
       <main className={style.wrapper}>
         {showComponent === "Open" && (
-          <GachaOpenCapsule
-            color={color}
-            imageUrl={imageData?.itemImageUrl}
-            onClick={handleClose}
-          />
+          <GachaOpenCapsule color={color} itemImageUrl={itemImageUrl} />
         )}
         {showComponent === "Close" && <GachaCloseCapsule color={color} />}
       </main>
