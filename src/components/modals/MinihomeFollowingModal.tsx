@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import { useFollowingModalState, useUserStore } from "@store/store.ts";
 import useCustomAxios from "@hooks/useCustomAxios";
 
 import MinihomeFollowingItem from "@pages/Minihome/Header/MinihomeFollowingItem";
@@ -16,13 +16,15 @@ interface Followings {
   userId: number;
 }
 
-function MinihomeFollowingModal({
-  handleFollowingClose,
-}: {
-  handleFollowingClose: () => void;
-}) {
+function MinihomeFollowingModal() {
+  // {
+  //   handleFollowingClose,
+  // }: {
+  //   handleFollowingClose: () => void;
+  // },
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
+  const { modalClose } = useFollowingModalState((state) => state);
   const { nickname } = useParams<{ nickname: string }>();
   const axios = useCustomAxios();
   const following = async () => {
@@ -32,7 +34,7 @@ function MinihomeFollowingModal({
     return response?.data;
   };
   const { data } = useQuery({
-    queryKey: ["FollowingList", nickname, user],
+    queryKey: ["Followings", nickname, user],
     queryFn: following,
     select: (data) => data?.content,
     enabled: !!user,
@@ -48,7 +50,7 @@ function MinihomeFollowingModal({
       <main className={style.wrapper}>
         <header className={style.header}>
           <h1 className={style.header_title}>팔로잉</h1>
-          <button onClick={handleFollowingClose} className={style.header_close}>
+          <button onClick={modalClose} className={style.header_close}>
             X
           </button>
         </header>

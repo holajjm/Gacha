@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import { useFollowerModalState, useUserStore } from "@store/store.ts";
 import useCustomAxios from "@hooks/useCustomAxios";
 
 import MinihomeFollowerItem from "@pages/Minihome/Header/MinihomeFollowerItem";
@@ -17,13 +17,15 @@ interface Followers {
   isCurrentUser: boolean;
 }
 
-function MinihomeFollowerModal({
-  handleFollowerClose,
-}: {
-  handleFollowerClose: () => void;
-}) {
+function MinihomeFollowerModal() {
+// {
+//   handleFollowerClose,
+// }: {
+//   handleFollowerClose: () => void;
+// },
   const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
+  const { modalClose } = useFollowerModalState((state) => state);
   const { nickname } = useParams<{ nickname: string }>();
   const axios = useCustomAxios();
   const follower = async () => {
@@ -33,7 +35,7 @@ function MinihomeFollowerModal({
     return response?.data;
   };
   const { data } = useQuery({
-    queryKey: ["FollowerList", nickname, user],
+    queryKey: ["Followers", nickname, user],
     queryFn: follower,
     select: (data) => data?.content,
     enabled: !!user,
@@ -49,7 +51,7 @@ function MinihomeFollowerModal({
       <main className={style.wrapper}>
         <header className={style.header}>
           <h1 className={style.header_title}>팔로워</h1>
-          <button onClick={handleFollowerClose} className={style.header_close}>
+          <button onClick={modalClose} className={style.header_close}>
             X
           </button>
         </header>
