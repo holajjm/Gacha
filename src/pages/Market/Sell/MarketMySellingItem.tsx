@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useMarketModalState } from "@store/store.ts";
+import { useModalState } from "@store/store.ts";
 import useImage from "@hooks/useImage";
 import Button from "@components/Button";
 
@@ -18,7 +18,7 @@ interface MySellingItemData {
 }
 
 function MarketMySellingItem({ data }: { data: MySellingItemData }) {
-  const { modal, modalOpen } = useMarketModalState((state) => state);
+  const { modal, modalOpen } = useModalState((state) => state);
 
   return (
     <article className={style.article}>
