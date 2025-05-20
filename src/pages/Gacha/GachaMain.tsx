@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useCoinState, useUserStore } from "@store/store";
+import React, { useEffect, useRef } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { useModalState } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import Button from "@components/Button";
@@ -8,52 +10,39 @@ import Button from "@components/Button";
 import GachaCapsule from "./GachaCapsule";
 import style from "@styles/Gacha/GachaMain.module.css";
 
-interface GachaData {
-  itemGrade: string;
-  itemImageUrl: string;
-  itemName: string;
-}
-
 function GachaMain() {
-  usePageTitle("Gacha Shop");
+  usePageTitle("가챠 뽑기");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
-  const { coinRefresh } = useCoinState((state) => state);
+  const axios = useCustomAxios();
+  const queryClient = useQueryClient();
+  const { modal, modalOpen } = useModalState((state) => state);
   const imgRef = useRef<HTMLImageElement>(null);
   useEffect(() => {
     if (imgRef.current) {
       imgRef.current.setAttribute("fetchpriority", "high");
     }
   }, []);
-  const [open, setOpen] = useState<boolean>(false);
-  const [gachaData, setGachaData] = useState<GachaData>({
-    itemGrade: "",
-    itemImageUrl: "",
-    itemName: "",
+
+  const { data: gachaData, mutate: getGacha } = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post("/gacha", {});
+      return response?.data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["coin"] });
+      if (data?.error) {
+        alert(data?.error?.message);
+      }
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
   });
-  const getGacha = async () => {
-    try {
-      const response = await fetch(`${SERVER_API}/gacha`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      });
-      const data = await response.text();
-      setGachaData(JSON.parse(data)?.data);
-      coinRefresh();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
   const handleGachaClick = () => {
     getGacha();
-    setOpen(true);
-  };
-  const handleModalClose = () => {
-    setOpen(false);
+    modalOpen();
   };
   return (
     <div className={style.container}>
@@ -79,9 +68,7 @@ function GachaMain() {
           ></Button>
         </section>
       </main>
-      {open ? (
-        <GachaCapsule imageData={gachaData} onClick={handleModalClose} />
-      ) : null}
+      {modal ? <GachaCapsule itemImageUrl={gachaData?.itemImageUrl} /> : null}
     </div>
   );
 }
