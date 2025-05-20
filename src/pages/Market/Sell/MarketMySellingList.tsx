@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useUserStore } from "@store/store";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
 
+import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
@@ -22,93 +25,52 @@ interface MySellingItemData {
 function MarketMyList() {
   usePageTitle("Market - MySelling");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
+  const axios = useCustomAxios();
   const { user } = useUserStore((state) => state);
-  const [sellingItem, setSellingItem] = useState<MySellingItemData[]>([]);
-  const [selected, setSelected] = useState<string>("");
+  const { ref, inView } = useInView();
+  const [selected, setSelected] = useState<string>("latest");
+  const [navClick, setNavClick] = useState<string>("");
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);
   };
-  const [navClick, setNavClick] = useState<string>("");
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setNavClick((e.target as HTMLElement).getAttribute("datatype") as string);
   };
-  const text = navClick ? `?grade=${navClick}&` : "?";
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const getMySellItems = async () => {
-    const response = await fetch(
-      `${SERVER_API}/products/me${text}sort=createdAt,desc&page=${currentPage}&size=5`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      },
+  const sort = selected === "latest" ? "desc" : "asc";
+  const grade = navClick ? `?grade=${navClick}&` : "?";
+
+  const getSellingItems = async ({ page = 0 }: { page: number }) => {
+    const response = await axios.get(
+      `/products/me${grade}sort=createdAt,${sort}&page=${page}&size=10`,
     );
-    const data = await response.json();
-    // setSellingItem((prevList) => [...prevList, ...(data?.data?.content || [])]);
-    setSellingItem(data?.data?.content);
-    if (sellingItem.length >= 5 && sellingItem.length % 5 === 0) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
-  useEffect(() => {
-    getMySellItems();
-  }, [navClick]);
-
-  const handleScroll = () => {
-    const { clientHeight, scrollTop, scrollHeight } = document.documentElement;
-    if (sellingItem.length > 0 && scrollTop + clientHeight >= scrollHeight)
-      getMySellItems();
+    return response?.data;
   };
 
+  const { data: sellingItems, fetchNextPage } = useInfiniteQuery({
+    queryKey: ["SellingItems", grade, sort, user],
+    queryFn: ({ pageParam = 0 }) => getSellingItems({ page: pageParam }),
+    getNextPageParam: (lastPage) => {
+      // console.log("lastPage", lastPage);
+      const currentPage = lastPage?.pageable?.pageNumber;
+      return inView ? currentPage + 1 : currentPage;
+    },
+    initialPageParam: 0,
+    staleTime: 1000 * 60 * 10,
+    enabled: !!user,
+  });
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [sellingItem]);
-
-  useEffect(() => {
-    if (selected === "latest") {
-      const sortByLatest = async () => {
-        const response = await fetch(
-          `${SERVER_API}/products/me?sort=createdAt,desc`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${user?.accessToken}`,
-            },
-          },
-        );
-        const data = await response.json();
-        setSellingItem(data?.data?.content);
-      };
-      sortByLatest();
-    } else if (selected === "oldest") {
-      const sortByOldest = async () => {
-        const response = await fetch(
-          `${SERVER_API}/products/me?sort=createdAt,asc`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${user?.accessToken}`,
-            },
-          },
-        );
-        const data = await response.json();
-        setSellingItem(data?.data?.content);
-      };
-      sortByOldest();
+    if (inView) {
+      fetchNextPage();
     }
-  }, [selected]);
-
-  const sellingItemList = sellingItem.map((e) => (
+  }, [inView]);
+  
+  const filterArray = sellingItems?.pages.map((e) => e.content).flat();
+  const sellingItemList = filterArray?.map((e: MySellingItemData) => (
     <MarketMySellingItem key={e.productId} data={e} />
   ));
+  // console.log(sellingItems);
+  // console.log(filterArray);
+
   return (
     <div className={style.container}>
       <main className={style.wrapper}>
@@ -177,6 +139,11 @@ function MarketMyList() {
             </aside>
             <section className={style.article_section}>
               {sellingItemList}
+              {filterArray && !sellingItems?.pages[sellingItems?.pages.length-1]?.last ? (
+                <p ref={ref} className={style.article_section_text}>
+                  더보기
+                </p>
+              ) : null}
             </section>
           </article>
         </section>
