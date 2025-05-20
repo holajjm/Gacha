@@ -1,12 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import {
+  useFollowerModalState,
+  useFollowingModalState,
+  useUserStore,
+} from "@store/store.ts";
 import useCustomAxios from "@hooks/useCustomAxios";
+import { ModalPortal } from "@hooks/ModalPortal";
 import Button from "@components/Button";
-import ProfileImg from "@assets/Profile";
 import { toast } from "react-toastify";
+import ProfileImg from "@assets/Profile";
 
 import MinihomeFollowerModal from "@components/modals/MinihomeFollowerModal";
 import MinihomeFollowingModal from "@components/modals/MinihomeFollowingModal";
@@ -26,10 +31,16 @@ interface MiniHomeMainData {
 }
 
 function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
-  const { user } = useUserStore((state) => state);
-  const { nickname } = useParams<{ nickname: string }>();
   const axios = useCustomAxios();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { nickname } = useParams<{ nickname: string }>();
+  const { user } = useUserStore((state) => state);
+  const { modal: followerModal, modalOpen: followerModalOpen } =
+    useFollowerModalState((state) => state);
+  const { modal: followingModal, modalOpen: followingModalOpen } =
+    useFollowingModalState((state) => state);
+
   const imgRef = useRef<HTMLImageElement>(null);
   useEffect(() => {
     if (imgRef.current) {
@@ -37,21 +48,13 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
     }
   }, []);
 
-  const [followerClick, setFollowerClick] = useState<boolean>(false);
-  const [followingClick, setFollowingClick] = useState<boolean>(false);
   const handleFollowerClick = (e: React.MouseEvent<HTMLElement>) => {
     console.log((e.target as HTMLElement).getAttribute("datatype"));
-    setFollowerClick(!followerClick);
+    followerModalOpen();
   };
   const handleFollowingClick = (e: React.MouseEvent<HTMLElement>) => {
     console.log((e.target as HTMLElement).getAttribute("datatype"));
-    setFollowingClick(!followingClick);
-  };
-  const handleFollowerClose = () => {
-    setFollowerClick(false);
-  };
-  const handleFollowingClose = () => {
-    setFollowingClick(false);
+    followingModalOpen();
   };
 
   // 유저 팔로잉하기 기능
@@ -67,14 +70,15 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
         });
         // console.log(response?.data);
         toast("팔로잉 되었습니다.");
-        setTimeout(() => {
-          window.location.reload();
-        }, 4000);
         return response?.data;
       }
     },
     onSuccess: (data) => {
-      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ["Minihome"] });
+      if (data?.error) {
+        alert(data?.error?.message);
+      }
+      // console.log(data);
     },
     onError: (error) => {
       console.log(error);
@@ -94,15 +98,16 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
             followeeUserNickname: minihomeData?.nickname,
           },
         });
-        console.log(response?.data);
+        // console.log(response?.data);
         toast("언팔로우 되었습니다.");
-        setTimeout(() => {
-          window.location.reload();
-        }, 4000);
         return response?.data;
       }
     },
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["Minihome"] });
+      if (data?.error) {
+        alert(data?.error?.message);
+      }
       console.log(data);
     },
     onError: (error) => {
@@ -111,7 +116,6 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
   });
 
   // 출석체크 및 코인 획득 로직
-  const queryClient = useQueryClient();
   const { mutate: createPost } = useMutation({
     mutationFn: async () => {
       const response = await axios.post("/attend", null);
@@ -123,7 +127,6 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
         alert(data?.error?.message);
       } else {
         toast("출석 체크 완료!");
-        // coinRefresh();
         queryClient.invalidateQueries({ queryKey: ["coin"] });
       }
     },
@@ -131,15 +134,19 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
       console.log(error);
     },
   });
-
   // console.log(minihomeData);
+
   return (
     <>
-      {followerClick && (
-        <MinihomeFollowerModal handleFollowerClose={handleFollowerClose} />
+      {followerModal && (
+        <ModalPortal>
+          <MinihomeFollowerModal />
+        </ModalPortal>
       )}
-      {followingClick && (
-        <MinihomeFollowingModal handleFollowingClose={handleFollowingClose} />
+      {followingModal && (
+        <ModalPortal>
+          <MinihomeFollowingModal />
+        </ModalPortal>
       )}
       <header className={style.header}>
         <p className={style.header_profile}>
