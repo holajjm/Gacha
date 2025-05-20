@@ -1,7 +1,9 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import { useFollowerModalState, useUserStore } from "@store/store.ts";
+import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
 import { toast } from "react-toastify";
 import ProfileImg from "@assets/Profile";
@@ -18,27 +20,35 @@ interface Followers {
 }
 
 function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
+  const { modalClose } = useFollowerModalState((state) => state);
   const { nickname } = useParams();
+  const axios = useCustomAxios();
   const navigate = useNavigate();
-  const deleteFollower = async () => {
-    if (confirm("팔로워를 삭제할까요?")) {
-      try {
-        await fetch(`${SERVER_API}/users/follower/${followers?.nickname}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
-        });
+  const queryClient = useQueryClient();
+
+  // 팔로워 삭제 로직
+  const { mutate: deleteFollower } = useMutation({
+    mutationFn: async () => {
+      if (confirm("팔로워를 삭제할까요?")) {
+        const response = await axios.delete(
+          `/users/follower/${followers?.nickname}`,
+        );
+        console.log(response?.data);
         toast("삭제되었습니다.");
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
+        modalClose();
+        return response?.data;
       }
-    }
-  };
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["Followers"] });
+      queryClient.invalidateQueries({ queryKey: ["Minihome"] });
+      if (data?.error) {
+        alert(data?.error?.message);
+      }
+      console.log(data);
+    },
+  });
 
   return (
     <article className={style.article}>

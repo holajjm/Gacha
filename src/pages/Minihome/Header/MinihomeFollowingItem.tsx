@@ -1,11 +1,13 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import { useFollowingModalState, useUserStore } from "@store/store.ts";
+import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
 import { toast } from "react-toastify";
-import ProfileImg from "@assets/Profile";
 
+import ProfileImg from "@assets/Profile";
 import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
 
 interface Followings {
@@ -17,27 +19,34 @@ interface Followings {
 }
 
 function MinihomeFollowingItem({ followings }: { followings: Followings }) {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
+  const { modalClose } = useFollowingModalState((state) => state);
+  console.log(modalClose);
   const { nickname } = useParams();
+  const axios = useCustomAxios();
   const navigate = useNavigate();
-  const unFollow = async () => {
-    if (confirm(`${followings?.nickname}님을 언팔로우 할까요?`)) {
-      await fetch(`${SERVER_API}/users/unfollow`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-        body: JSON.stringify({
-          followeeUserNickname: followings?.nickname,
-        }),
-      });
-      toast("언팔로우 되었습니다.");
-      window.location.reload();
-    }
-  };
-  // console.log(followings);
+  const queryClient = useQueryClient();
+  const { mutate: unFollow } = useMutation({
+    mutationFn: async () => {
+      if (confirm(`${followings?.nickname}님을 언팔로우 할까요?`)) {
+        const response = await axios.delete("/users/unfollow", {
+          data: { followeeUserNickname: followings?.nickname },
+        });
+        console.log(response?.data);
+        toast("언팔로우 되었습니다.");
+        modalClose();
+        return response?.data;
+      }
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["Followings"] });
+      queryClient.invalidateQueries({ queryKey: ["Minihome"] });
+      if (data?.error) {
+        alert(data?.error?.message);
+      }
+      console.log(data);
+    },
+  });
 
   return (
     <article className={style.article}>
