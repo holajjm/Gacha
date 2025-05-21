@@ -7,7 +7,7 @@ import MarketEnrollItemList from "./MarketEnrollItemList";
 import style from "@styles/Market/Enroll/MarketEnroll.module.css";
 
 function MarketEnroll() {
-  usePageTitle("Market - Enroll");
+  usePageTitle("마켓 - 판매 등록");
   usePageUpper();
   return (
     <div className={style.container}>
