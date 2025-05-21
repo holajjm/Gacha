@@ -41,7 +41,7 @@ function MiniHomeMain() {
     staleTime: 1000 * 60 * 10,
     enabled: !!user,
   });
-  // console.log(data);
+  // console.log(minihomeData);
 
   //꾸미기 데이터 호출
   const adorn = async () => {
