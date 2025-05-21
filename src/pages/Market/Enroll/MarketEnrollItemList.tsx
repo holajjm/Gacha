@@ -1,6 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
 
 import MarketEnrollPreview from "./MarketEnrollPreview";
@@ -20,9 +22,8 @@ interface Item {
 }
 
 function MarketEnrollItemList() {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
-  const [itemList, setItemList] = useState<Item[]>([]);
+  const axios = useCustomAxios();
   const [selectedItem, setSelectedItem] = useState<Item>({
     imageUrl: "",
     itemCnt: 0,
@@ -33,37 +34,41 @@ function MarketEnrollItemList() {
     stock: 0,
     userItemIds: [],
   });
+
   const [pageNum, setPageNum] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const getMyItemList = async () => {
-    const response = await fetch(
-      `${SERVER_API}/items/me?sort=createdAt,desc&page=${currentPage}&size=7`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      },
+  const getMyItemList = async ({ pageNum }: { pageNum: number }) => {
+    const response = await axios.get(
+      `/items/me?sort=createdAt,desc&page=${pageNum}&size=7`,
     );
-    const data = await response.json();
-    // console.log(data?.data);
-    // console.log(data?.data?.content);
-    setItemList(data?.data?.content);
-    setPageNum(data?.data?.totalPages);
+    return response?.data;
   };
-  useEffect(() => {
-    getMyItemList();
-  }, [currentPage]);
+
+  const { data: enrollItemList } = useInfiniteQuery({
+    queryKey: ["EnrollItemList", user, pageNum],
+    queryFn: () => getMyItemList({ pageNum }),
+    getNextPageParam: (lastPage) => {
+      // console.log(lastPage);
+      return lastPage;
+    },
+    initialPageParam: 0,
+    staleTime: 1000 * 60 * 10,
+    enabled: !!user,
+  });
+  // console.log(enrollItemList);
 
   const pageNumList = () => {
     const numList = [];
-    for (let i = 0; i < pageNum; i++) {
+    for (let i = 0; i < enrollItemList?.pages[0]?.totalPages; i++) {
       numList.push(
         <li
-          className={currentPage == i ? style.active_pageNum : style.pageNum}
+          className={
+            enrollItemList?.pages[enrollItemList?.pages.length - 1]?.pageable
+              ?.pageNumber == i
+              ? style.active_pageNum
+              : style.pageNum
+          }
           key={i}
-          onClick={() => setCurrentPage(i)}
+          onClick={() => setPageNum(i)}
         >
           {i + 1}
         </li>,
@@ -71,20 +76,15 @@ function MarketEnrollItemList() {
     }
     return numList;
   };
-  // console.log(pageNumList());
 
   const handleItemClick = useCallback((item: Item) => {
     setSelectedItem(item);
   }, []);
 
-  const myItemList = itemList.map((data) => (
-    <MarketEnrollItem
-      key={data.itemId}
-      item={data}
-      onSelect={handleItemClick}
-    />
+  const myItemList = enrollItemList?.pages[0]?.content.map((e: Item) => (
+    <MarketEnrollItem key={e.itemId} item={e} onSelect={handleItemClick} />
   ));
-  // console.log(itemList);
+  // console.log(myItemList);
 
   return (
     <main className={style.main}>
@@ -100,7 +100,7 @@ function MarketEnrollItemList() {
         <MarketEnrollPreview item={selectedItem} />
         <span className={style.section_wrapper}>
           <h1 className={style.section_title}>내 아이템</h1>
-          {itemList.length === 0 ? (
+          {myItemList?.length === 0 ? (
             <p className={style.section_message}>보유중인 아이템이 없습니다.</p>
           ) : (
             <article className={style.section_article}>{myItemList}</article>
