@@ -31,7 +31,7 @@ function MainPage() {
   // console.log("user", user);
   const getUserInfo = async () => {
     if (user?.accessToken) {
-      const response = await fetch(`${SERVER_API}/user_info`, {
+      const response = await fetch(`${SERVER_API}/userInfo`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
