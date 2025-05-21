@@ -21,7 +21,6 @@ interface Followings {
 function MinihomeFollowingItem({ followings }: { followings: Followings }) {
   const { user } = useUserStore((state) => state);
   const { modalClose } = useFollowingModalState((state) => state);
-  console.log(modalClose);
   const { nickname } = useParams();
   const axios = useCustomAxios();
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ function MinihomeFollowingItem({ followings }: { followings: Followings }) {
         const response = await axios.delete("/users/unfollow", {
           data: { followeeUserNickname: followings?.nickname },
         });
-        console.log(response?.data);
+        // console.log(response?.data);
         toast("언팔로우 되었습니다.");
         modalClose();
         return response?.data;
@@ -54,7 +53,7 @@ function MinihomeFollowingItem({ followings }: { followings: Followings }) {
         onClick={() => {
           if (confirm(`${followings?.nickname} 미니홈에 방문할까요?`)) {
             navigate(`/minihome/${followings?.nickname}`);
-            window.location.reload();
+            modalClose();
           }
         }}
         className={style.article_link}
@@ -76,7 +75,7 @@ function MinihomeFollowingItem({ followings }: { followings: Followings }) {
           onClick={() => {
             if (confirm(`${followings?.nickname} 미니홈에 방문할까요?`)) {
               navigate(`/minihome/${followings?.nickname}`);
-              window.location.reload();
+              modalClose();
             }
             return;
           }}
