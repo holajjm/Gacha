@@ -43,7 +43,7 @@ function UserEdit() {
     );
     try {
       if (confirm("수정하시겠습니까?")) {
-        const response = await fetch(`${SERVER_API}/user_info`, {
+        const response = await fetch(`${SERVER_API}/userInfo`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
