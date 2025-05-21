@@ -23,7 +23,7 @@ function Bell() {
     return response;
   };
   const getNewNoti = async () => {
-    const response = await axios.get(`${SERVER_API}/notifications/has_new`);
+    const response = await axios.get(`${SERVER_API}/notifications/hasNew`);
     return response;
   };
 
