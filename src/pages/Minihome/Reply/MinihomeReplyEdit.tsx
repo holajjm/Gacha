@@ -1,7 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
+import { toast } from "react-toastify";
 
 import style from "@styles/Minihome/Reply/MinihomeReplyEdit.module.css";
 
@@ -17,41 +19,49 @@ interface ReplyData {
 }
 function MinihomeReplyEdit({
   replys,
-  getPageReply,
   editReplyResult,
 }: {
   replys: ReplyData;
-  getPageReply: () => void;
   editReplyResult: () => void;
 }) {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
+  const axios = useCustomAxios();
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ReplySendData>();
-  const editReply = async (formData: ReplySendData) => {
-    if (confirm("수정하시겠습니까?")) {
-      await fetch(`${SERVER_API}/guestbooks/${replys?.guestbookId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${user?.accessToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+
+  const { mutate: editReply } = useMutation({
+    mutationFn: async (formData: ReplySendData) => {
+      if (confirm("수정하시겠습니까?")) {
+        const response = await axios.put(`/guestbooks/${replys?.guestbookId}`, {
           content: formData.content,
-        }),
-      });
-      getPageReply();
+        });
+        return response?.data;
+      }
+    },
+    onSuccess: (data) => {
+      if (data?.error) {
+        alert(data?.error?.message);
+        return;
+      }
+      queryClient.invalidateQueries({ queryKey: ["Replys"] });
+      toast("수정되었습니다.");
       editReplyResult();
-    }
-    return;
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const editReplyForm = (formData: ReplySendData) => {
+    editReply(formData);
   };
-  console.log(errors);
 
   return (
-    <form className={style.edit_main} onSubmit={handleSubmit(editReply)}>
+    <form className={style.edit_main} onSubmit={handleSubmit(editReplyForm)}>
       <input
         type="text"
         placeholder="댓글 수정하기"

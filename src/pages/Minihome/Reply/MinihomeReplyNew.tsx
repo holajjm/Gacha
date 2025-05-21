@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import { useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 import usePageTitle from "@hooks/usePageTitle";
 import Button from "@components/Button";
 
@@ -21,11 +27,9 @@ interface ReplyData {
   profileId: number;
 }
 function MinihomeReplyNew() {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
+  const axios = useCustomAxios();
+  const queryClient = useQueryClient();
   const { user } = useUserStore((state) => state);
-  // const [replys, setReplys] = useState<ReplyData[]>([]);
-  const [pageReplys, setPageReplys] = useState<ReplyData[]>([]);
-  const [pageNum1, setPageNum1] = useState<number>(0);
   const { nickname } = useParams<{ nickname: string }>();
   usePageTitle(`미니홈 - ${nickname}`);
   const {
@@ -35,66 +39,68 @@ function MinihomeReplyNew() {
     reset,
   } = useForm<ReplySendData>(); //useForm의 타입과 handleSubmit에 들어가는 form 제출 함수의 매개변수 타입을 일치 시켜주어야 한다.
 
-  const onSubmit = async (formData: ReplySendData) => {
-    try {
-      await fetch(`${SERVER_API}/guestbooks/${nickname}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-        body: JSON.stringify({
+  const { mutate: enrollReply } = useMutation({
+    mutationFn: async (formData: ReplySendData) => {
+      try {
+        const response = await axios.post(`/guestbooks/${nickname}`, {
           content: formData.content,
-        }),
-      });
-      getPageReply();
-      reset(); // 댓글 입력 후 입력창 초기화
-    } catch (error) {
-      console.error(error);
-    }
+        });
+        return response?.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    onSuccess: (data) => {
+      if (data?.error) {
+        alert(data?.error?.message);
+        return;
+      }
+      queryClient.invalidateQueries({ queryKey: ["Replys"] });
+      reset();
+      console.log(data);
+    },
+    onError: (error) => console.log(error),
+  });
+  const onSubmit = (formData: ReplySendData) => {
+    enrollReply(formData);
   };
 
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const getPageReply = async () => {
-    try {
-      const response = await fetch(
-        `${SERVER_API}/guestbooks/${nickname}?sort=createdAt,desc&page=${currentPage}&size=3`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
-        },
-      );
-      const data = await response.json();
-      setPageNum1(data?.data?.totalPages);
-      setPageReplys(data?.data?.content);
-    } catch (error) {
-      console.error(error);
-    }
+  const [page, setPage] = useState<number>(0);
+  const getReplys = async ({ page }: { page: number }) => {
+    const response = await axios.get(
+      `/guestbooks/${nickname}?sort=createdAt,desc&page=${page}&size=3`,
+    );
+    return response?.data;
   };
-
-  useEffect(() => {
-    getPageReply();
-  }, [currentPage, nickname]); // 외부에서 미니홈으로 페이지 접속하였을 때 params 값의 변함에 따른 미니홈 정보 리렌더링 및 재호출
-
-  const replyList = pageReplys?.map((e) => (
-    <MinihomeReplyItem
-      key={e.guestbookId}
-      replys={e}
-      getPageReply={getPageReply}
-    />
+  const { data } = useInfiniteQuery({
+    queryKey: ["Replys", user, page],
+    queryFn: () => getReplys({ page }),
+    getNextPageParam: (lastPage) => {
+      // console.log(lastPage);
+      return lastPage;
+    },
+    initialPageParam: 0,
+    enabled: !!user,
+    staleTime: 1000 * 60 * 10,
+  });
+  // console.log(data?.pages[0]);
+  const replyList = data?.pages[0]?.content?.map((e: ReplyData) => (
+    <MinihomeReplyItem key={e.guestbookId} replys={e} />
   ));
+
   const pageNum = () => {
     const numList = [];
-    for (let i = 0; i < pageNum1; i++) {
+    for (let i = 0; i < data?.pages[0]?.totalPages; i++) {
       numList.push(
         <li
-          className={currentPage == i ? style.active_pageNum : style.pageNum}
+          className={
+            data?.pages[data?.pages.length - 1]?.pageable?.pageNumber == i
+              ? style.active_pageNum
+              : style.pageNum
+          }
           value={i}
           key={i}
-          onClick={() => setCurrentPage(i)}
+          onClick={() => setPage(i)}
         >
           {i + 1}
         </li>,
@@ -102,6 +108,7 @@ function MinihomeReplyNew() {
     }
     return numList;
   };
+
   return (
     <div className={style.main_reply}>
       <form

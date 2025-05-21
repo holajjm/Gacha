@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 import ProfileImg from "@assets/Profile";
 
 import MinihomeReplyEdit from "./MinihomeReplyEdit";
@@ -15,32 +16,40 @@ interface ReplyData {
   profileId: number;
 }
 
-function MinihomeReplyItem({
-  replys,
-  getPageReply,
-}: {
-  replys: ReplyData;
-  getPageReply: () => void;
-}) {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
+function MinihomeReplyItem({ replys }: { replys: ReplyData }) {
+  const axios = useCustomAxios();
+  const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const editReply = () => {
     setIsEdit(!isEdit);
   };
 
-  const deleteReply = async () => {
+  const { mutate: deleteReply } = useMutation({
+    mutationFn: async () => {
+      try {
+        const response = await axios.delete(
+          `/guestbooks/${replys?.guestbookId}`,
+        );
+        return response?.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    onSuccess: (data) => {
+      if (data?.error) {
+        alert(data?.error?.message);
+        return;
+      }
+      queryClient.invalidateQueries({ queryKey: ["Replys"] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const handleDelete = () => {
     if (confirm("댓글을 삭제할까요?")) {
-      await fetch(`${SERVER_API}/guestbooks/${replys?.guestbookId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${user?.accessToken}`,
-          "Content-Type": "application/json",
-        },
-      });
-      getPageReply();
+      deleteReply();
     }
-    return;
   };
   const replyTime = () => {
     const time = replys?.createAt;
@@ -71,17 +80,13 @@ function MinihomeReplyItem({
       <main className={style.main_reply_content}>
         <section className={style.main_reply_content_wrapper}>
           {isEdit ? (
-            <MinihomeReplyEdit
-              replys={replys}
-              getPageReply={getPageReply}
-              editReplyResult={editReply}
-            />
+            <MinihomeReplyEdit replys={replys} editReplyResult={editReply} />
           ) : (
             <div className={style.main_bottom}>
               <p>{replys?.content}</p>
               <div className={style.main_buttons}>
                 <p onClick={editReply}>수정</p>
-                <p onClick={deleteReply}>삭제</p>
+                <p onClick={handleDelete}>삭제</p>
               </div>
             </div>
           )}
