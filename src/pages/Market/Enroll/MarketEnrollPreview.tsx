@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 import useImage from "@hooks/useImage";
 import Button from "@components/Button";
+import { toast } from "react-toastify";
 
 import style from "@styles/Market/Enroll/MarketEnrollPreview.module.css";
 
@@ -18,48 +20,48 @@ interface Item {
 }
 
 function MarketEnrollPreview({ item }: { item: Item }) {
-  const [selectItem, setSelectItem] = useState<Item>({
-    imageUrl: "",
-    itemCnt: 0,
-    itemGrade: "",
-    itemId: 0,
-    itemName: "",
-    price: 0,
-    stock: 0,
-    userItemIds: [],
-  });
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
-  const enrollItem = async () => {
-    if (confirm("상품을 판매하시겠습니까?")) {
-      try {
-        await fetch(`${SERVER_API}/products`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
-          body: JSON.stringify({
-            userItemId: selectItem?.userItemIds && +selectItem?.userItemIds[0],
-          }),
-        });
-        alert("상품이 등록되었습니다.");
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
+  const axios = useCustomAxios();
+  const queryClient = useQueryClient();
+  const { mutate: enrollItem } = useMutation({
+    mutationFn: async () => {
+      if (confirm("상품을 판매하시겠습니까?")) {
+        try {
+          const response = await axios.post("/products", {
+            userItemId: item?.userItemIds[0],
+          });
+          return response?.data;
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
-  };
-  useEffect(() => {
-    setSelectItem(item);
-  }, [item]);
-  const imageTag = <img src={useImage(item?.imageUrl)} alt="previewImage" />;
-  // console.log(+selectItem?.userItemIds[0]);
+    },
+    onSuccess: (data) => {
+      if (data?.error) {
+        console.log(data?.error?.message);
+        alert(data?.error?.message);
+        return;
+      }
+      queryClient.invalidateQueries({ queryKey: ["EnrollItemList"] });
+      toast("상품이 등록되었습니다!");
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const imageTag = (
+    <img
+      src={useImage(item?.imageUrl)}
+      alt={item?.itemName || "previewImage"}
+    />
+  );
+  // console.log(item);
 
   return (
     <section className={style.section}>
       <span className={style.header_background}></span>
-      {selectItem?.imageUrl ? (
+      {item?.imageUrl ? (
         <>
           <header className={style.section_header}>{imageTag}</header>
           <article className={style.section_article}>
