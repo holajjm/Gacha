@@ -63,7 +63,7 @@ function MarketMyList() {
       fetchNextPage();
     }
   }, [inView]);
-  
+
   const filterArray = sellingItems?.pages.map((e) => e.content).flat();
   const sellingItemList = filterArray?.map((e: MySellingItemData) => (
     <MarketMySellingItem key={e.productId} data={e} />
@@ -139,7 +139,8 @@ function MarketMyList() {
             </aside>
             <section className={style.article_section}>
               {sellingItemList}
-              {filterArray && !sellingItems?.pages[sellingItems?.pages.length-1]?.last ? (
+              {filterArray &&
+              !sellingItems?.pages[sellingItems?.pages.length - 1]?.last ? (
                 <p ref={ref} className={style.article_section_text}>
                   더보기
                 </p>
