@@ -1,6 +1,8 @@
 import React, { lazy, Suspense, useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 
@@ -14,7 +16,7 @@ const MainGachaPreview = lazy(() => import("./MainGachaPreview"));
 const MainMarketPreview = lazy(() => import("./MainMarketPreview"));
 
 function MainPage() {
-  usePageTitle("GachaGacha");
+  usePageTitle("Welcome to 가챠가챠!");
   usePageUpper();
   const article1Ref = useRef<HTMLDivElement>(null);
   const article2Ref = useRef<HTMLDivElement>(null);
@@ -26,34 +28,29 @@ function MainPage() {
     section.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user, setUser } = useUserStore((state) => state);
-  // console.log("user", user);
-  const getUserInfo = async () => {
-    if (user?.accessToken) {
-      const response = await fetch(`${SERVER_API}/userInfo`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      });
-      const data = await response.json();
-      // console.log(data?.data);
-      if (data?.data) {
-        setUser({
-          ...user,
-          nickname: data?.data?.nickname,
-          profileId: data?.data?.profileId,
-        });
-      } else if (data?.error) {
-        console.log(data?.error);
-      }
-    }
+  const axios = useCustomAxios();
+  const getUser = async () => {
+    const response = await axios.get("/userInfo");
+    return response?.data;
   };
+  const { data } = useQuery({
+    queryKey: ["User", user],
+    queryFn: getUser,
+  });
+  // console.log("user", user);
+  // console.log(data);
+
   useEffect(() => {
-    getUserInfo();
-  }, []);
+    if (data) {
+      setUser({
+        ...user,
+        nickname: data?.nickname,
+        profileId: data?.profileId,
+      });
+    }
+  }, [data]);
+
   useEffect(() => {
     sessionStorage.setItem("user", JSON.stringify(user));
   }, [user]);
