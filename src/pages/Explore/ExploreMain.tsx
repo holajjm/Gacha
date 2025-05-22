@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
 
 import { useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
-import useCustomAxios from "@hooks/useCustomAxios";
 
 import ExploreItem from "./ExploreItem";
 import { SlArrowLeft } from "react-icons/sl";
@@ -17,21 +18,35 @@ interface ExploreItemData {
   totalVisitorCnt: number;
   likeCount: number;
 }
-
+interface ParamData {
+  createdAt?: string;
+  totalVisitorCnt: string;
+  score?: string;
+  likeCount?: string;
+  minihomeId?: number;
+  userId?: number;
+}
 function ExploreMain() {
   usePageTitle("둘러보기");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user } = useUserStore((state) => state);
   const axios = useCustomAxios();
-  const [select, setSelect] = useState<string>("createdAt");
+  const { ref, inView } = useInView();
 
-  // 정렬 방식 선택 로직
+  const [paramData, setParamData] = useState<ParamData>({
+    createdAt: "",
+    totalVisitorCnt: "",
+    score: "",
+    likeCount: "",
+    minihomeId: 0,
+    userId: 0,
+  });
+
+  const [page, setPage] = useState<number>(0);
+  const [select, setSelect] = useState<string>("createdAt");
   const onSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelect(e.target.value);
   };
-
-  // Mount 시 사용자 리스트 최초 호출
   const getUser = async ({
     page,
     select,
@@ -40,47 +55,47 @@ function ExploreMain() {
     select: string;
   }) => {
     const baseURL = {
-      createdAt: "/explore/minihome",
-      totalVisitorCnt: "/explore/minihome",
-      score: "/explore/minihome/score",
-      likeCount: "/explore/minihome/like_count",
+      createdAt: `/explore/minihome/${select}?${select}=${paramData?.createdAt}&minihomeId=${paramData?.minihomeId ? paramData?.minihomeId : ""}&sort=${select},desc&page=${page}&size=7`,
+      totalVisitorCnt: `/explore/minihome/${select}?${select}=${paramData?.totalVisitorCnt ? paramData?.totalVisitorCnt : ""}&minihomeId=${paramData?.minihomeId ? paramData?.minihomeId : ""}&sort=${select},desc&page=${page}&size=7`,
+      score: `/explore/minihome/${select}?score=${paramData?.score ? paramData?.score : ""}&userId=${paramData?.userId ? paramData?.userId : ""}&sort=${select},desc&page=${page}&size=7`,
+      likeCount: `/explore/minihome/${select}?likeCount=${paramData?.likeCount ? paramData?.likeCount : ""}&minihomeId=${paramData?.minihomeId ? paramData?.minihomeId : ""}&sort=${select},desc&page=${page}&size=7`,
     }[select];
-    const response = await axios.get(
-      `${SERVER_API}${baseURL}?sort=${select},desc&page=${page}&size=6`,
-    );
+    const response = await axios.get(`${baseURL}`);
     return response?.data;
   };
+  // console.log(select);
+  // console.log(paramData);
 
-  // 무한 스크롤 + 정렬 방식에 따른 정렬된 데이터 재호출
-  const { data: exploreList } = useInfiniteQuery({
+  const { data: exploreList, fetchNextPage } = useInfiniteQuery({
     queryKey: ["UserList", user, select],
-    queryFn: ({ pageParam = 0 }) => getUser({ page: pageParam, select }),
+    queryFn: () => getUser({ page, select }),
     getNextPageParam: (lastPage) => {
-      // console.log(lastPage);
-      const currentPage = lastPage?.pageable?.pageNumber;
-      const isLast = lastPage?.last;
-      return !isLast ? currentPage + 1 : undefined;
+      return lastPage;
     },
     initialPageParam: 0,
     staleTime: 1000 * 60 * 10,
     enabled: !!user,
   });
+
+  useEffect(() => {
+    const length = exploreList?.pages[0]?.content.length - 1;
+    // console.log(length);
+    if (length >= 7) {
+      setParamData(exploreList?.pages[0]?.content[length]);
+    }
+  }, [exploreList?.pages[0]?.content]);
+
+  const filterUserList = exploreList?.pages.map((e) => e.content).flat();
+  const userList = filterUserList?.map((e: ExploreItemData, i: number) => (
+    <ExploreItem key={i} data={e} />
+  ));
+  useEffect(() => {
+    if (inView) {
+      setPage(page + 1);
+      fetchNextPage();
+    }
+  }, [inView]);
   // console.log(exploreList);
-
-  // 유저 리스트 하위 컴포넌트 렌더링
-  const userList = exploreList?.pages[0]?.content.map(
-    (e: ExploreItemData, i: number) => <ExploreItem key={i} data={e} />,
-  );
-
-  // 페이지 리스트 헨더링
-  const lastPage = Math.ceil(
-    exploreList?.pages[0]?.numberOfElements / exploreList?.pages[0]?.size,
-  );
-  const pageList = [];
-  for (let i = 1; i <= lastPage; i++) {
-    pageList.push(i);
-  }
-  const currentPage = exploreList?.pages[0]?.pageable?.pageNumber + 1;
 
   return (
     <div className={style.container}>
@@ -124,28 +139,13 @@ function ExploreMain() {
           <article className={style.article}>
             <ul className={style.article_upperlist} aria-label="사용자 리스트">
               {userList}
+              {filterUserList &&
+              !exploreList?.pages[exploreList?.pages.length - 1]?.last ? (
+                <p ref={ref} className={style.article_text}>
+                  더보기
+                </p>
+              ) : null}
             </ul>
-            {exploreList?.pages[0]?.last ? (
-              <nav
-                className={style.article_listnav}
-                aria-label="페이지 네비게이션"
-              >
-                <ul className={style.article_pagelist}>
-                  {pageList.map((e) => (
-                    <li
-                      className={
-                        currentPage === e
-                          ? style.article_activePage
-                          : style.article_page
-                      }
-                      key={e}
-                    >
-                      {e}
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            ) : null}
           </article>
         </section>
       </main>
