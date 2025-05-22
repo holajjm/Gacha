@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useUserStore } from "@store/store";
+import React, { useCallback, useEffect, useState } from "react";
+import { useModalState, useUserStore } from "@store/store";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 
 import useCustomAxios from "@hooks/useCustomAxios";
+import { ModalPortal } from "@hooks/ModalPortal";
 import Button from "@components/Button";
+import MarketSellingItemModal from "@components/modals/MarketSellingItemModal";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 
@@ -27,6 +29,7 @@ function MarketMyList() {
   usePageUpper();
   const axios = useCustomAxios();
   const { user } = useUserStore((state) => state);
+  const { modal } = useModalState((state) => state);
   const { ref, inView } = useInView();
   const [selected, setSelected] = useState<string>("latest");
   const [navClick, setNavClick] = useState<string>("");
@@ -64,92 +67,121 @@ function MarketMyList() {
     }
   }, [inView]);
 
+  const [clickItemId, setClickItemId] = useState<number>(0);
+  const handleClickItemId = useCallback((itemId: number) => {
+    setClickItemId(itemId);
+  }, []);
+
   const filterArray = sellingItems?.pages.map((e) => e.content).flat();
   const sellingItemList = filterArray?.map((e: MySellingItemData) => (
-    <MarketMySellingItem key={e.productId} data={e} />
+    <MarketMySellingItem
+      key={e.productId}
+      data={e}
+      handleClickItemId={handleClickItemId}
+    />
   ));
   // console.log(sellingItems);
   // console.log(filterArray);
 
   return (
-    <div className={style.container}>
-      <main className={style.wrapper}>
-        <header className={style.header}>
-          <aside className={style.header_wrapper}>
-            <Button
-              text={<SlArrowLeft />}
-              width={"2.5rem"}
-              onClick={() => window.history.back()}
-            ></Button>
-            <h1 className={style.header_title}>내 판매 목록</h1>
-          </aside>
-          <select onChange={handleSort} className={style.header_filter}>
-            <option value="latest">최신순</option>
-            <option value="oldest">오래된순</option>
-          </select>
-        </header>
-        <section className={style.section}>
-          <nav onClick={handleClick} className={style.section_nav}>
-            <button
-              datatype=""
-              className={navClick === "" ? style.active_button : style.button}
-            >
-              All
-            </button>
-            <button
-              datatype="S"
-              className={navClick === "S" ? style.active_button : style.button}
-            >
-              S등급
-            </button>
-            <button
-              datatype="A"
-              className={navClick === "A" ? style.active_button : style.button}
-            >
-              A등급
-            </button>
-            <button
-              datatype="B"
-              className={navClick === "B" ? style.active_button : style.button}
-            >
-              B등급
-            </button>
-            <button
-              datatype="C"
-              className={navClick === "C" ? style.active_button : style.button}
-            >
-              C등급
-            </button>
-            <button
-              datatype="D"
-              className={navClick === "D" ? style.active_button : style.button}
-            >
-              D등급
-            </button>
-          </nav>
-          <article className={style.article}>
-            <aside className={style.article_aside}>
-              <p className={style.article_aside_background}></p>
-              <p>아이템</p>
-              <p>이름</p>
-              <p>등급</p>
-              <p>가격</p>
-              <p>판매 상태</p>
-              <p></p>
+    <>
+      {modal && (
+        <ModalPortal>
+          <MarketSellingItemModal
+            filterArray={filterArray}
+            clickItemId={clickItemId}
+          />
+        </ModalPortal>
+      )}
+      <div className={style.container}>
+        <main className={style.wrapper}>
+          <header className={style.header}>
+            <aside className={style.header_wrapper}>
+              <Button
+                text={<SlArrowLeft />}
+                width={"2.5rem"}
+                onClick={() => window.history.back()}
+              ></Button>
+              <h1 className={style.header_title}>내 판매 목록</h1>
             </aside>
-            <section className={style.article_section}>
-              {sellingItemList}
-              {filterArray &&
-              !sellingItems?.pages[sellingItems?.pages.length - 1]?.last ? (
-                <p ref={ref} className={style.article_section_text}>
-                  더보기
-                </p>
-              ) : null}
-            </section>
-          </article>
-        </section>
-      </main>
-    </div>
+            <select onChange={handleSort} className={style.header_filter}>
+              <option value="latest">최신순</option>
+              <option value="oldest">오래된순</option>
+            </select>
+          </header>
+          <section className={style.section}>
+            <nav onClick={handleClick} className={style.section_nav}>
+              <button
+                datatype=""
+                className={navClick === "" ? style.active_button : style.button}
+              >
+                All
+              </button>
+              <button
+                datatype="S"
+                className={
+                  navClick === "S" ? style.active_button : style.button
+                }
+              >
+                S등급
+              </button>
+              <button
+                datatype="A"
+                className={
+                  navClick === "A" ? style.active_button : style.button
+                }
+              >
+                A등급
+              </button>
+              <button
+                datatype="B"
+                className={
+                  navClick === "B" ? style.active_button : style.button
+                }
+              >
+                B등급
+              </button>
+              <button
+                datatype="C"
+                className={
+                  navClick === "C" ? style.active_button : style.button
+                }
+              >
+                C등급
+              </button>
+              <button
+                datatype="D"
+                className={
+                  navClick === "D" ? style.active_button : style.button
+                }
+              >
+                D등급
+              </button>
+            </nav>
+            <article className={style.article}>
+              <aside className={style.article_aside}>
+                <p className={style.article_aside_background}></p>
+                <p>아이템</p>
+                <p>이름</p>
+                <p>등급</p>
+                <p>가격</p>
+                <p>판매 상태</p>
+                <p></p>
+              </aside>
+              <section className={style.article_section}>
+                {sellingItemList}
+                {filterArray &&
+                !sellingItems?.pages[sellingItems?.pages.length - 1]?.last ? (
+                  <p ref={ref} className={style.article_section_text}>
+                    더보기
+                  </p>
+                ) : null}
+              </section>
+            </article>
+          </section>
+        </main>
+      </div>
+    </>
   );
 }
 
