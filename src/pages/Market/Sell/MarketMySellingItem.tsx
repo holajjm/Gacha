@@ -4,7 +4,6 @@ import { useModalState } from "@store/store.ts";
 import useImage from "@hooks/useImage";
 import Button from "@components/Button";
 
-import MarketSellingItemModal from "./MarketSellingItemModal";
 import style from "@styles/Market/Sell/MarketMySellingItem.module.css";
 
 interface MySellingItemData {
@@ -17,11 +16,20 @@ interface MySellingItemData {
   transactionDate: null;
 }
 
-function MarketMySellingItem({ data }: { data: MySellingItemData }) {
-  const { modal, modalOpen } = useModalState((state) => state);
-
+function MarketMySellingItem({
+  data,
+  handleClickItemId,
+}: {
+  data: MySellingItemData;
+  handleClickItemId: (itemId: number) => void;
+}) {
+  const { modalOpen } = useModalState((state) => state);
+  const handleClick = () => {
+    handleClickItemId(data?.productId);
+    modalOpen();
+  };
   return (
-    <article className={style.article}>
+    <article onClick={handleClick} className={style.article}>
       <p className={style.article_background}></p>
       <div className={style.article_img}>
         <img src={useImage(data?.imageUrl)} alt="sample" />
@@ -33,7 +41,6 @@ function MarketMySellingItem({ data }: { data: MySellingItemData }) {
       <p className={style.article_item}>
         <Button text={"상세"} width={"60%"} onClick={modalOpen}></Button>
       </p>
-      {modal ? <MarketSellingItemModal data={data} /> : null}
     </article>
   );
 }
