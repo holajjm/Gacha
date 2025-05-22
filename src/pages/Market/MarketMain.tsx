@@ -10,7 +10,7 @@ import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 
 import MarketItem from "./MarketItem";
-import MarketItemModal from "./MarketItemModal";
+import MarketItemModal from "@components/modals/MarketItemModal";
 import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Market/MarketMain.module.css";
