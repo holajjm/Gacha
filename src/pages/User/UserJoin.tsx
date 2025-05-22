@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 import { useUserStore } from "@store/store";
 import Button from "@components/Button";
@@ -20,17 +22,14 @@ interface QueryParams {
 }
 
 function UserJoin() {
-  usePageTitle("Join");
+  usePageTitle("회원가입");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { setUser } = useUserStore((state) => state);
   const location = useLocation();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // clearErrors,
-    // setValue,
   } = useForm<Data>();
 
   // 파라미터로 전달받은 socialId,loginId 값 디코딩하여 객체로 사용
@@ -51,136 +50,53 @@ function UserJoin() {
     getUrlParams();
   }, []);
 
-  // 새로운 회원가입 로직
-  // const [char, setChar] = useState<string>("");
-  // const selectedChar = (e: React.MouseEvent<HTMLInputElement>) => {
-  //   e.preventDefault();
-  //   // console.log((e.target as HTMLDivElement).getAttribute("dataType"));
-  //   const charNum = (e.target as HTMLDivElement).getAttribute("dataType");
-  //   if (charNum) {
-  //     setChar(charNum);
-  //   }
-  //   clearErrors("profileId");
-  // };
-
-  const onSubmit = async (formData: Data) => {
-    console.log(formData);
-    formData.socialType = loginParams.socialType;
-    formData.loginId = loginParams.loginId;
-    const form = new FormData();
-    form.append(
-      "data",
-      new Blob(
-        [
-          JSON.stringify({
-            socialType: loginParams.socialType,
-            loginId: loginParams.loginId,
-            nickname: formData.nickname,
-            profileId: +formData?.profileId,
-          }),
-        ],
-        { type: "application/json" },
-      ),
-    );
-    try {
-      const response = await fetch(`${SERVER_API}/join`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      // const data = await response.json();
-      console.log(response);
-
-      if (response?.status === 200) {
-        setUser({
+  const authAxios = axios.create({
+    baseURL: import.meta.env.VITE_SERVER_API,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const { mutate: getJoin } = useMutation({
+    mutationFn: async (formData: Data) => {
+      try {
+        const response = await authAxios.post("/join", {
           socialType: loginParams.socialType,
           loginId: loginParams.loginId,
-          nickname: formData?.nickname,
+          nickname: formData.nickname,
           profileId: +formData?.profileId,
-          accessToken: "",
-          refreshToken: "",
         });
-        window.location.href = response.url;
+        console.log(response);
+        if (response?.status === 200) {
+          setUser({
+            socialType: loginParams?.socialType,
+            loginId: loginParams?.loginId,
+            nickname: formData?.nickname,
+            profileId: +formData?.profileId,
+            accessToken: "",
+            refreshToken: "",
+          });
+          window.location.href = response?.request?.responseURL;
+        }
+        return response;
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
+    },
+    onSuccess: (data) => {
+      if (data?.data?.error) {
+        alert(data?.data?.error?.message);
+        return;
+      }
+      console.log(data);
+    },
+    onError: (error) => {
       console.log(error);
-    }
+    },
+  });
+
+  const onSubmit = async (formData: Data) => {
+    getJoin(formData);
   };
-
-  // 회원가입 폼 양식 전달 로직
-  // const onSubmit = async (formData: Data) => {
-  //   console.log(formData);
-  //   const form = new FormData();
-  //   form.append(
-  //     "data",
-  //     new Blob(
-  //       [
-  //         JSON.stringify({
-  //           socialType: loginParams.socialType,
-  //           loginId: loginParams.loginId,
-  //           nickname: formData.nickname,
-  //         }),
-  //       ],
-  //       { type: "application/json" },
-  //     ),
-  //   );
-  //   if (!defaultImage && formData?.profileUrl.length > 0) {
-  //     form.append("profileImageFile", imagePreview);
-  //   } else {
-  //     form.append("profileImageFile", "");
-  //   }
-  //   try {
-  //     const response = await fetch(`${SERVER_API}/join`, {
-  //       method: "POST",
-  //       body: form,
-  //     });
-  //     if (response?.status === 200) {
-  //       setUser({
-  //         socialType: loginParams.socialType,
-  //         loginId: loginParams.loginId,
-  //         nickname: formData.nickname,
-  //         profileUrl:
-  //           formData.profileUrl.length > 0 ? formData?.profileUrl[0]?.name : "",
-  //         accessToken: "",
-  //         refreshToken: "",
-  //       });
-  //       window.location.href = response.url;
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // 기본 이미지 설정 및 이미지 미리보기 구현
-  // const [defaultImage, setDefaultImage] = useState<boolean>(false); // 기본 이미지 여부
-  // const [imagePreview, setImagePreview] = useState<string>(
-  //   "/images/LightDefaultImage.png",
-  // );
-  // useEffect(() => {
-  //   if (defaultImage) {
-  //     setImagePreview("/images/LightDefaultImage.png");
-  //   }
-  // }, [defaultImage]);
-
-  // const handleDefaultImage = () => {
-  //   clearErrors("profileUrl"); //useForm의 clearErrors 메서드를 통해 특정 input 값의 에러만 삭제
-  //   setDefaultImage(true);
-  //   setValue("profileUrl", new DataTransfer().files);
-  // };
-  // const handlePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   console.log(e.target.files?.[0]);
-  //   const selectedFile = e.target.files ? e.target.files[0] : null;
-  //   if (selectedFile) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setImagePreview(reader.result as string);
-  //     };
-  //     reader.readAsDataURL(selectedFile);
-  //     setDefaultImage(false);
-  //   }
-  // };
 
   return (
     <div className={style.container}>
@@ -192,9 +108,16 @@ function UserJoin() {
             GACHAGACHA!
           </h1>
         </header>
-        <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={style.form}
+          aria-labelledby="join-form-title"
+        >
           <fieldset className={style.form_fieldset}>
-            <legend className={style.form_legend}>프로필 이미지 선택</legend>
+            <legend id="join-form-title" className={style.form_legend}>
+              프로필 이미지 선택
+            </legend>
             <div
               className={style.form_header_wrapper}
               role="radiogroup"
@@ -223,83 +146,37 @@ function UserJoin() {
                 </figure>
               ))}
             </div>
-            <p className={style.form_header_error}>
+            <p
+              className={style.form_header_error}
+              role="alert"
+              aria-live="assertive"
+            >
               {errors.profileId?.message}
             </p>
           </fieldset>
-          {/* <header className={style.form_header} onClick={selectedChar}>
-            <label className={style.form_header_label} htmlFor="profile">
-              <p className={style.form_header_title}>프로필을 선택하세요.</p>
-              <div className={style.form_header_wrapper}>
-                <img
-                  onClick={() => setValue("profileId", char)}
-                  datatype="1"
-                  src="/images/Bear.svg"
-                  alt="Bear"
-                />
-                <img
-                  onClick={() => setValue("profileId", char)}
-                  datatype="2"
-                  src="/images/Cow.svg"
-                  alt="Cow"
-                />
-                <img
-                  onClick={() => setValue("profileId", char)}
-                  datatype="3"
-                  src="/images/Giraffe.svg"
-                  alt="Giraffe"
-                />
-              </div>
-            </label>
-            <input
-              type="text"
-              id="profile"
-              className={style.form_header_img}
-              {...register("profileId", {
-                required: "프로필 이미지를 선택해주세요.",
-              })}
-            />
-            <p className={style.form_header_error}>
-              {errors ? errors?.profileId?.message : ""}
-            </p> */}
-          {/* <label className={style.main_header_label} htmlFor="profile">
-              <img
-                className={style.main_img1}
-                src={imagePreview}
-                alt="profile"
-              />
-              <img
-                className={style.main_img2}
-                src="/images/Camera.svg"
-                alt="Camera"
-              />
-            </label>
-            <input
-              id="profile"
-              type="file"
-              className={style.main_header_img}
-              {...register("profileUrl", {
-                required: "프로필 이미지를 선택해주세요.",
-              })}
-              onChange={handlePreview}
-            />
-            <p className={style.main_main_error}>
-              {errors ? errors.profileUrl?.message : ""}
-            </p>
-            <div onClick={handleDefaultImage}>기본 이미지로 하기</div> */}
-          {/* </header> */}
+
           <section className={style.form_section}>
             <article className={style.form_section_article}>
               <h1 className={style.form_section_article_title}>닉네임</h1>
               <section className={style.form_section_article_contents}>
+                <label htmlFor="nickname" className="sr-only">
+                  닉네임 입력
+                </label>
                 <input
+                  id="nickname"
                   type="text"
                   placeholder={"닉네임을 입력하세요"}
+                  aria-invalid={errors.nickname ? "true" : "false"}
+                  aria-describedby="nickname-error"
                   {...register("nickname", { required: "닉네임을 입력하세요" })}
                 />
                 <Button text={"Enter"} width="4rem" onClick={() => {}}></Button>
               </section>
-              <p className={style.form_section_article_error}>
+              <p
+                className={style.form_section_article_error}
+                role="alert"
+                aria-live="assertive"
+              >
                 {errors.nickname?.message}
               </p>
             </article>
