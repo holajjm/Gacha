@@ -1,22 +1,20 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import { jwtDecode } from "jwt-decode";
+
 import { useUserStore } from "@store/store";
+import { toast } from "react-toastify";
 
 import style from "@styles/OAuth.module.css";
 
 interface QueryParams {
   [key: string]: string;
 }
-// interface JwtPayload {
-//   exp: number;
-//   iat: number;
-//   nickname: string;
-//   profile: number;
-// }
+
+// 1.기존에는 토큰에 유저 정보를 담아서 주었기에 jwtDecode(jwt-decode) 라이브러리를 통해서 복호화를 거쳐 로그인 처리를 하였지만
+// 쿼리 스트링으로 전달 받아 처리하는 것으로 수정함
+// 2. OAuth.tsx 파일은 소셜 로그인 과정에서 유저 정보를 확인하고 메인 화면으로 이동 시켜주는 파일로 로그인과 메인 화면 중간에 페이지를 보유하면서 위치하고 있다.
 function OAuth() {
   const { user, setUser } = useUserStore((state) => state);
-  console.log(user);
   const navigate = useNavigate();
 
   const handleData = () => {
@@ -35,9 +33,7 @@ function OAuth() {
       };
       // 변환한 유저 정보 객체 변수 초기화
       const queryParams = parseQueryString(data);
-      console.log("queryParams", queryParams);
-      // const token = String(queryParams?.accessToken);
-      // const decodedToken: JwtPayload = jwtDecode(token);
+      // console.log("queryParams", queryParams);
 
       if (queryParams?.accessToken) {
         setUser({
@@ -45,22 +41,15 @@ function OAuth() {
           accessToken: queryParams.accessToken,
           refreshToken: queryParams.refreshToken,
         });
-        // setUser((user) => ({
-        //   ...user,
-        //   // nickname: decodedToken?.nickname,
-        //   // profileId: decodedToken?.profile,
-        //   accessToken: queryParams.accessToken,
-        //   refreshToken: queryParams.refreshToken,
-        // }));
         localStorage.setItem(
           "AccessToken",
-          JSON.stringify(queryParams.accessToken),
+          JSON.stringify(queryParams?.accessToken),
         );
         localStorage.setItem(
           "RefreshToken",
-          JSON.stringify(queryParams.refreshToken),
+          JSON.stringify(queryParams?.refreshToken),
         );
-        alert("환영합니다!");
+        toast("환영합니다!");
         navigate("/main");
       }
     } catch (error) {
@@ -73,11 +62,16 @@ function OAuth() {
   }, []);
 
   return (
-    <div className={style.container}>
-      <main className={style.wrapper}>
-        <img src="/images/Loading.webp" alt="로그인 중..." />
-      </main>
-    </div>
+    <main className={style.container} role="status" aria-live="polite">
+      <section className={style.wrapper}>
+        <figure>
+          <img src="/images/Loading.webp" alt="로그인 처리 중..." />
+          <figcaption className={style.caption}>
+            로그인 중입니다. 잠시만 기다려 주세요.
+          </figcaption>
+        </figure>
+      </section>
+    </main>
   );
 }
 
