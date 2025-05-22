@@ -96,6 +96,9 @@
   display: flex;
   gap: 0.5rem;
 }
+.form_section_article_contents > label {
+  display: none;
+}
 .form_section_article_contents > input {
   padding: 0.5rem;
   border-radius: 10px;
