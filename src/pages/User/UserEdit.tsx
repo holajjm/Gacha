@@ -91,7 +91,8 @@ function UserEdit() {
         localStorage.removeItem("AccessToken");
         localStorage.removeItem("RefreshToken");
         sessionStorage.removeItem("user");
-        navigate("/main", { replace: true });
+        toast("회원 탈퇴 완료");
+        navigate("/main");
         window.location.reload();
         return response?.data;
       } catch (error) {
@@ -104,7 +105,6 @@ function UserEdit() {
         return;
       }
       queryClient.invalidateQueries({ queryKey: ["Minihome"] });
-      toast("회원 탈퇴 완료");
       console.log(data);
     },
   });
