@@ -30,6 +30,8 @@ function GachaMain() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["coin"] });
+      queryClient.invalidateQueries({ queryKey: ["Items"] });
+      queryClient.invalidateQueries({ queryKey: ["EnrollItemList"] });
       if (data?.error) {
         alert(data?.error?.message);
       }
