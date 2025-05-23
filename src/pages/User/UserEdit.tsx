@@ -1,11 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 import { useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import Button from "@components/Button";
+import { toast } from "react-toastify";
 
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/User/UserEdit.module.css";
@@ -16,92 +20,109 @@ interface Data {
 }
 
 function UserEdit() {
-  usePageTitle("프로필 수정");
+  usePageTitle("회원 정보 수정");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const { user, setUser } = useUserStore((state) => state);
+  const customAxios = useCustomAxios();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Data>();
+  } = useForm<Data>({
+    defaultValues: {
+      nickname: user?.nickname,
+      profileId: user?.profileId,
+    },
+  });
+
+  // 회원 정보 수정
+  const { mutate: editUserInfo } = useMutation({
+    mutationFn: async (formData: Data) => {
+      const response = await customAxios.put("/userInfo", {
+        nickname: formData?.nickname,
+        profileId: formData?.profileId,
+      });
+      setUser({
+        ...user,
+        nickname: formData?.nickname,
+        profileId: formData?.profileId,
+      });
+      navigate(`/minihome/${formData?.nickname}`);
+      return response?.data;
+    },
+    onSuccess: (data) => {
+      if (data?.error) {
+        alert(data?.error?.message);
+        return;
+      }
+      toast("수정되었습니다!");
+      queryClient.invalidateQueries({ queryKey: ["Minihome"] });
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   const onSubmit = async (formData: Data) => {
-    const form = new FormData();
-    form.append(
-      "data",
-      new Blob(
-        [
-          JSON.stringify({
-            nickname: formData.nickname,
-            profileId: formData?.profileId,
-          }),
-        ],
-        { type: "application/json" },
-      ),
-    );
-    try {
-      if (confirm("수정하시겠습니까?")) {
-        const response = await fetch(`${SERVER_API}/userInfo`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
-          body: JSON.stringify(formData),
-        });
-        const data = await response.json();
-        console.log(data);
-        if (data?.result === "SUCCESS") {
-          alert("수정되었습니다.");
-          setUser({
-            socialType: user.socialType,
-            loginId: user.loginId,
-            nickname: formData?.nickname,
-            profileId: formData?.profileId,
-            accessToken: user.accessToken,
-            refreshToken: user.refreshToken,
-          });
-          setTimeout(() => {
-            navigate(`/minihome/${formData?.nickname}`);
-          }, 300);
-        } else if (data?.result === "ERROR") {
-          alert(data?.error?.message);
-        }
+    if (confirm("수정하시겠습니까?")) {
+      try {
+        editUserInfo(formData);
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
   };
 
-  // 임시 회원 탈퇴 기능
-  const handleWithDraw = async () => {
+  // 회원 탈퇴 기능
+  const refreshAxios = axios.create({
+    baseURL: import.meta.env.VITE_SERVER_API,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${user?.refreshToken}`,
+    },
+  });
+  const { mutate: deleteUser } = useMutation({
+    mutationFn: async () => {
+      try {
+        const response = await refreshAxios.delete("/withdraw");
+        localStorage.removeItem("AccessToken");
+        localStorage.removeItem("RefreshToken");
+        sessionStorage.removeItem("user");
+        navigate("/main", { replace: true });
+        window.location.reload();
+        return response?.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    onSuccess: (data) => {
+      if (data?.error) {
+        alert(data?.error?.message);
+        return;
+      }
+      queryClient.invalidateQueries({ queryKey: ["Minihome"] });
+      toast("회원 탈퇴 완료");
+      console.log(data);
+    },
+  });
+  const onDelete = () => {
     if (confirm("탈퇴할까요?")) {
-      await fetch(`${SERVER_API}/withdraw`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.refreshToken}`,
-        },
-      });
-      sessionStorage.removeItem("user");
-      localStorage.removeItem("AccessToken");
-      localStorage.removeItem("RefreshToken");
-      alert("회원 탈퇴 완료");
-      navigate("/main");
-      window.location.reload();
+      deleteUser();
     }
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.wrapper}>
+    <main className={style.container}>
+      <section className={style.wrapper}>
         <header className={style.header}>
           <Button
             text={<SlArrowLeft />}
             width={"2.5rem"}
             onClick={() => window.history.back()}
+            aria-label="뒤로가기"
           />
           <h1 className={style.header_title}>프로필 수정</h1>
         </header>
@@ -142,33 +163,40 @@ function UserEdit() {
               </p>
             </fieldset>
           </section>
-          <section>
-            <article className={style.form_section_article}>
-              <h1 className={style.form_section_article_title}>닉네임</h1>
-              <section className={style.form_section_article_contents}>
+          <fieldset className={style.form_fieldset_1}>
+            <article className={style.form_fieldset_1_article}>
+              <legend className={style.form_fieldset_1_article_title}>
+                닉네임
+              </legend>
+              <div className={style.form_fieldset_1_article_contents}>
+                <label htmlFor="nickname" className="sr-only">
+                  닉네임 입력
+                </label>
                 <input
+                  id="nickname"
                   type="text"
                   placeholder={"닉네임을 입력하세요"}
                   {...register("nickname", { required: "닉네임을 입력하세요" })}
                 />
                 <Button text={"수정"} width="4rem" onClick={() => {}}></Button>
-              </section>
-              <p className={style.form_section_article_error}>
+              </div>
+              <p className={style.form_fieldset_1_article_error}>
                 {errors.nickname?.message}
               </p>
             </article>
-          </section>
+          </fieldset>
         </form>
         <footer className={style.footer}>
           <button
+            type="button"
             className={style.footer_button}
-            onClick={() => handleWithDraw()}
+            onClick={onDelete}
           >
             회원 탈퇴
           </button>
         </footer>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
 
