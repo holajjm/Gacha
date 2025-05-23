@@ -54,7 +54,7 @@ function GachaMain() {
         <section className={style.section}>
           <div>
             <img
-              src="/images/GachaSample.webp"
+              src="/images/GachaMain.webp"
               alt="Gacha"
               ref={imgRef}
               width={320}
