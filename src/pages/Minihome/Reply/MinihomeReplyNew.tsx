@@ -73,7 +73,7 @@ function MinihomeReplyNew() {
     return response?.data;
   };
   const { data } = useInfiniteQuery({
-    queryKey: ["Replys", user, page],
+    queryKey: ["Replys", user, page, nickname],
     queryFn: () => getReplys({ page }),
     getNextPageParam: (lastPage) => {
       // console.log(lastPage);
@@ -87,6 +87,7 @@ function MinihomeReplyNew() {
   const replyList = data?.pages[0]?.content?.map((e: ReplyData) => (
     <MinihomeReplyItem key={e.guestbookId} replys={e} />
   ));
+  // console.log(replyList);
 
   const pageNum = () => {
     const numList = [];
