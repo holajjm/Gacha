@@ -42,6 +42,8 @@ function MarketEnrollPreview({ item }: { item: Item }) {
         return;
       }
       queryClient.invalidateQueries({ queryKey: ["EnrollItemList"] });
+      queryClient.invalidateQueries({ queryKey: ["SellingItems"] });
+      queryClient.invalidateQueries({ queryKey: ["MarketItem"] });
       toast("상품이 등록되었습니다!");
       console.log(data);
     },
