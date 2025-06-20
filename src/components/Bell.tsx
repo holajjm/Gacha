@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-// import { useUserStore } from "@store/store";
 import useCustomAxios from "@hooks/useCustomAxios";
 import { toast } from "react-toastify";
 
@@ -9,7 +8,6 @@ import BellItems from "./BellItems";
 import style from "@styles/Layouts/Bell.module.css";
 
 function Bell() {
-  // const { user } = useUserStore((state) => state);
   const axios = useCustomAxios();
 
   const [click, setClick] = useState(false);
@@ -29,7 +27,7 @@ function Bell() {
     queryKey: ["Noti", click],
     queryFn: getNoti,
   });
-  console.log("Notis", Notis);
+  // console.log("Notis", Notis);
 
   const { data: isNewNotis } = useQuery({
     queryKey: ["isNewNoti"],
@@ -38,7 +36,7 @@ function Bell() {
   useEffect(() => {
     getNewNoti();
   }, []);
-  console.log("isNewNotis", isNewNotis);
+  // console.log("isNewNotis", isNewNotis);
 
   useEffect(() => {
     if (isNewNotis?.hasNewNotifications) {
