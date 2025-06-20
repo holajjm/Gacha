@@ -1,21 +1,9 @@
 .main_reply {
-  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   overflow: hidden;
   position: relative;
-}
-.main_reply_input_background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  opacity: 0.6;
-  z-index: -1;
-  border-radius: 10px;
 }
 .main_reply_input {
   display: flex;
@@ -35,6 +23,17 @@
   background: none;
   opacity: 0.7;
 }
+.main_reply_input_background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: 0.6;
+  z-index: -1;
+  border-radius: 10px;
+}
 .main_replyError {
   position: absolute;
   color: red;
@@ -46,7 +45,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  height: 100%;
 }
 .pageList {
   display: flex;
@@ -74,4 +72,58 @@
   width: 1rem;
   text-align: center;
   background-color: gray;
+}
+/* 반응형 UI */
+@media (width <= 1024px) {
+  .main_reply {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .main_reply_input {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    border-radius: 5px;
+    position: relative;
+  }
+  .main_reply_input > input {
+    height: 100%;
+    flex-grow: 1;
+    border: none;
+    border-radius: 5px;
+    padding: 0.2rem 0.5rem;
+    background: none;
+    opacity: 0.7;
+  }
+  .main_reply_input_background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0.6;
+    z-index: -1;
+    border-radius: 10px;
+  }
+  .main_replyList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .pageList {
+    gap: 0.2rem;
+  }
+  .pageNum {
+    font-size: 0.875rem;
+  }
+  .active_pageNum {
+    font-size: 0.875rem;
+    padding: 0.2rem;
+  }
 }

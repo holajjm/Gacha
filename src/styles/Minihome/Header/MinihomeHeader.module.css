@@ -134,3 +134,49 @@
   gap: 1rem;
   width: 50%;
 }
+/* 반응형 UI */
+@media (width <= 1024px) {
+  .header {
+    width: 100%;
+    height: 6rem;
+    padding: 1rem 0;
+  }
+  .header_profile > img {
+    width: 5rem;
+    height: 5rem;
+  }
+  .section {
+    height: 100%;
+  }
+  .section_article {
+    gap: 0.5rem;
+  }
+  .section_article > div {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+  }
+  .section_article > div > p {
+    top: -80%;
+    left: 20%;
+    width: 7rem;
+    font-size: 0.7rem;
+  }
+  .section_article_title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .section_article_coin {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .section_info {
+    font-size: 0.875rem;
+  }
+  .section_bottom {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+  }
+}

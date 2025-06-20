@@ -41,3 +41,18 @@
   top: 0.2rem;
   left: 7rem;
 }
+/* 반응형 UI */
+@media (width <= 1024px) {
+  .edit_main > input {
+    width: 80%;
+  }
+  .edit_bottom {
+    width: 20%;
+    font-size: 0.875rem;
+  }
+  .edit_error {
+    top: 40%;
+    right: 0;
+    font-size: 0.75rem;
+  }
+}
