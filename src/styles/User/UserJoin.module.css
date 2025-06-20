@@ -1,12 +1,11 @@
 .container {
-  min-width: 1280px;
+  min-width: 68rem;
   height: 100vh;
   padding: 4rem 20rem;
   box-sizing: border-box;
   background: linear-gradient(to bottom, #d8faff, #b6cdff);
 }
 .wrapper {
-  height: 100%;
   display: flex;
   gap: 2rem;
   flex-direction: column;
@@ -14,12 +13,7 @@
 }
 /* --------------------------------------------------- */
 .header {
-  width: 100%;
-  height: 30%;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .header_title {
   font-size: 3rem;
@@ -45,7 +39,7 @@
 .form_header_wrapper {
   display: flex;
   gap: 0.5rem;
-  padding: 1rem;
+  padding: 1rem 0 0 0;
 }
 .form_fieldset_figure_input {
   display: none;
@@ -78,7 +72,7 @@
 }
 /* --------------------------------------------- */
 .form_section {
-  height: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -103,4 +97,31 @@
   padding: 0.5rem;
   border-radius: 10px;
   border: none;
+}
+@media (width <= 1024px) {
+  .container {
+    min-width: 375px;
+    padding: 5rem 0.25rem;
+  }
+  .header_title {
+    font-size: 2rem;
+  }
+  .form {
+    gap: 1rem;
+  }
+  .form_fieldset_figure_label {
+    width: 4rem;
+    height: 4rem;
+  }
+  .form_fieldset_figure_label > img {
+    width: 4rem;
+    height: 4rem;
+  }
+  .form_fieldset_figure_label > img:hover {
+    transform: scale(1.05);
+  }
+  .form_section_article_contents {
+    height: 100%;
+    align-items: center;
+  }
 }
