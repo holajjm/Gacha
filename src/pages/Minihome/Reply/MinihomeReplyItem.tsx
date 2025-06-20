@@ -77,21 +77,19 @@ function MinihomeReplyItem({ replys }: { replys: ReplyData }) {
         </div>
         <p className={style.main_reply_date}>{replyTime()}</p>
       </header>
-      <main className={style.main_reply_content}>
-        <section className={style.main_reply_content_wrapper}>
-          {isEdit ? (
-            <MinihomeReplyEdit replys={replys} editReplyResult={editReply} />
-          ) : (
-            <div className={style.main_bottom}>
-              <p>{replys?.content}</p>
-              <div className={style.main_buttons}>
-                <p onClick={editReply}>수정</p>
-                <p onClick={handleDelete}>삭제</p>
-              </div>
+      <section className={style.main_reply_content}>
+        {isEdit ? (
+          <MinihomeReplyEdit replys={replys} editReplyResult={editReply} />
+        ) : (
+          <div className={style.main_bottom}>
+            <p>{replys?.content}</p>
+            <div className={style.main_buttons}>
+              <p onClick={editReply}>수정</p>
+              <p onClick={handleDelete}>삭제</p>
             </div>
-          )}
-        </section>
-      </main>
+          </div>
+        )}
+      </section>
     </div>
   );
 }
