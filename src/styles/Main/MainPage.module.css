@@ -159,3 +159,39 @@
   opacity: 1;
   color: white;
 }
+/* 반응형 UI */
+@media (width <= 1024px) {
+  .container {
+    min-width: 375px;
+    height: 100vh;
+  }
+  .header {
+    padding: 5rem 0.25rem;
+  }
+  .title {
+    font-size: 2rem;
+  }
+  .description {
+    font-size: 1rem;
+  }
+  .article {
+    justify-content: start;
+    padding: 5rem 0.25rem;
+  }
+  .article > h3 {
+    font-size: 1.2rem;
+  }
+  .img_preview > img {
+    width: 90%;
+    height: 100%;
+  }
+  .previews {
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 10rem);
+  }
+  .previewItem {
+    width: 100%;
+    height: 100%;
+  }
+}
