@@ -6,7 +6,7 @@
   height: 100vh;
   background-color: #2d2d2d;
   z-index: 10;
-  opacity: 0.9;
+  opacity: 0.95;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,7 +49,7 @@
 }
 /* ----------------------------------------- */
 .open_lotto {
-  background-color: #858585;
+  background-color: rgb(95, 109, 236);
   width: 40rem;
   height: 20rem;
   border-radius: 10px;
