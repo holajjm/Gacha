@@ -49,6 +49,7 @@ function createModalStore() {
 // 각각 별도 인스턴스로 생성
 export const useFollowerModalState = createModalStore();
 export const useFollowingModalState = createModalStore();
+export const useLottoModalState = createModalStore();
 export const useModalState = createModalStore();
 
 // export const useFollowerModalState = create<ModalState>((set) => ({
