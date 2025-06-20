@@ -61,10 +61,12 @@ function ExploreMain() {
       likeCount: `/explore/minihome/${select}?likeCount=${paramData?.likeCount ? paramData?.likeCount : ""}&minihomeId=${paramData?.minihomeId ? paramData?.minihomeId : ""}&sort=${select},desc&page=${page}&size=7`,
     }[select];
     const response = await axios.get(`${baseURL}`);
+    console.log(baseURL);
     return response?.data;
   };
-  // console.log(select);
-  // console.log(paramData);
+  
+  console.log(select);
+  console.log(paramData);
 
   const { data: exploreList, fetchNextPage } = useInfiniteQuery({
     queryKey: ["UserList", user, select],
@@ -78,9 +80,9 @@ function ExploreMain() {
   });
 
   useEffect(() => {
-    const length = exploreList?.pages[0]?.content.length - 1;
-    // console.log(length);
-    if (length >= 7) {
+    const length = exploreList && exploreList?.pages?.length - 1;
+    console.log(length);
+    if (length && length >= 7) {
       setParamData(exploreList?.pages[0]?.content[length]);
     }
   }, [exploreList?.pages[0]?.content]);
@@ -95,7 +97,8 @@ function ExploreMain() {
       fetchNextPage();
     }
   }, [inView]);
-  // console.log(exploreList);
+  console.log("exploreList", exploreList);
+  console.log("filterUserList", filterUserList);
 
   return (
     <div className={style.container}>
