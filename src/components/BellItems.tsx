@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+
+import { useLottoModalState } from "@store/store";
 
 import Lotto from "./Lotto";
 import BellItem from "./BellItem";
@@ -7,7 +9,7 @@ import style from "@styles/Layouts/BellItems.module.css";
 interface Notis {
   id: number;
   data: string;
-  notificationType: string; //lotto_issued trade_completed
+  notificationType: string;
 }
 interface NotiData {
   count: number;
@@ -16,29 +18,19 @@ interface NotiData {
 
 function BellItems({ data }: { data: NotiData }) {
   console.log(data);
-
-  const [lotto, setLotto] = useState(false);
-  console.log(lotto);
-  const handleLotto = () => {
-    setLotto(true);
-  };
-  const closeLotto = () => {
-    setLotto(false);
-  };
+  const { modal, modalClose } = useLottoModalState((state) => state);
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (e.key === "Escape") {
-      setLotto(false);
+      modalClose();
     }
   };
   const itemList = data?.notifications.map((e) => (
-    <BellItem key={e?.id} data={e} handleLotto={handleLotto} />
+    <BellItem key={e?.id} data={e} />
   ));
   return (
     <>
-      {lotto ? (
-        <Lotto closeLotto={closeLotto} onKeyPress={handleKeyPress} />
-      ) : null}
+      {modal && <Lotto onKeyPress={handleKeyPress} />}
       <section className={style.container}>
         {data?.count ? (
           itemList
