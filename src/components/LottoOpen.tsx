@@ -1,37 +1,31 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import { useLottoModalState, useUserStore } from "@store/store";
+import useCustomAxios from "@hooks/useCustomAxios";
 
 import style from "@styles/Layouts/Lotto.module.css";
 
-interface Lottos {
-  lottoId: number;
-  won: boolean;
-  rewardCoin: number;
-}
-
-function LottoOpen({ closeLotto }: { closeLotto: () => void }) {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
+function LottoOpen() {
   const { user } = useUserStore((state) => state);
-  const [lottos, setLottos] = useState<Lottos[]>([]);
-  const getLotto = async () => {
-    const response = await axios.get(`${SERVER_API}/lottos`, {
-      headers: {
-        Authorization: `Bearer ${user.accessToken}`,
-      },
-    });
-    setLottos(response?.data?.data);
-    console.log(response?.data?.data);
-    return response;
-  };
-  useEffect(() => {
-    getLotto();
-  }, []);
-  // 임시 배열
-  // const lottos = [{lottoId: 0,won: true,rewardCoin: 5000},{lottoId: 1,won: false,rewardCoin: 4000},{lottoId: 2,won: false,rewardCoin: 3000}]
+  const modalClose = useLottoModalState((state) => state.modalClose);
+  const axios = useCustomAxios();
   const [open, setOpen] = useState(false);
+  const getLotto = async () => {
+    const response = await axios.get("/lottos");
+    console.log(response?.data);
+    return response?.data;
+  };
+  const { data } = useQuery({
+    queryKey: ["Lotto"],
+    queryFn: getLotto,
+    enabled: !!user,
+  });
+  console.log(data);
+
   const [i, setI] = useState(0);
+  console.log(i);
+
   const openLotto = () => {
     setOpen(false);
     setTimeout(() => {
@@ -47,22 +41,20 @@ function LottoOpen({ closeLotto }: { closeLotto: () => void }) {
         <div className={style.close_lotto}>복권 여는중...</div>
       ) : (
         <div className={style.open_lotto}>
-          <button className={style.close} onClick={closeLotto}>
+          <button className={style.close} onClick={modalClose}>
             X
           </button>
 
           <div className={style.lotto_text}>
-            {lottos[i]?.won ? (
+            {data[i]?.won ? (
               <p>축하합니다! 코인이 지급되었습니다.</p>
             ) : (
               <p>꽝! 다음 기회에...</p>
             )}
-            {/* <p>축하합니다! 코인이 지급되었습니다.</p> */}
           </div>
-          <p className={style.lotto_result}>{lottos[i]?.rewardCoin} 코인</p>
-          {/* <p className={style.lotto_result}>5000 코인</p> */}
+          <p className={style.lotto_result}>{data[i]?.rewardCoin} 코인</p>
           <div className={style.lotto_button}>
-            {lottos?.length !== i + 1 ? (
+            {data?.length !== i + 1 ? (
               <p
                 className={style.lotto_next_button}
                 onClick={() => setI(i + 1)}
