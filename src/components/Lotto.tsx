@@ -1,20 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import { useLottoModalState } from "@store/store";
 
 import LottoOpen from "./LottoOpen";
-import style from "../styles/Layouts/Lotto.module.css";
+import style from "@styles/Layouts/Lotto.module.css";
 
 function Lotto({
-  closeLotto,
   onKeyPress,
 }: {
-  closeLotto: () => void;
   onKeyPress: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 }) {
   const divRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     divRef.current?.focus();
   }, []);
-  const [isClick, setIsClick] = useState(false);
+  const { modal, modalOpen, modalClose } = useLottoModalState((state) => state);
 
   return (
     <div
@@ -23,11 +22,11 @@ function Lotto({
       ref={divRef}
       className={style.container}
     >
-      {isClick ? (
-        <LottoOpen closeLotto={closeLotto} />
+      {modal ? (
+        <LottoOpen />
       ) : (
-        <div onClick={() => setIsClick(true)} className={style.wait}>
-          <button className={style.close} onClick={closeLotto}>
+        <div onClick={modalOpen} className={style.wait}>
+          <button className={style.close} onClick={modalClose}>
             X
           </button>
           클릭해서 복권 열기
