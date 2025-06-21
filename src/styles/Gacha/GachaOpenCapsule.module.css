@@ -18,7 +18,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 .result_open_capsule > img {
   width: 15rem;
@@ -54,4 +54,21 @@
   justify-content: center;
   gap: 1rem;
   cursor: pointer;
+}
+/* 반응형 UI */
+@media (width <= 1024px) {
+  .wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .open_capsule {
+    width: 12rem;
+    height: 18rem;
+  }
+  .result_open_capsule > img {
+    width: 10rem;
+    height: 10rem;
+  }
 }

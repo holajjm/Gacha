@@ -44,8 +44,28 @@
   align-items: center;
   justify-content: center;
 }
-.section > div> img {
+.section > div > img {
   width: 20rem;
   height: 20rem;
   object-fit: contain;
+}
+/* 반응형 UI */
+@media (width <= 1024px) {
+  .container {
+    min-width: 375px;
+    padding: 5rem 0.25rem;
+  }
+  .wrapper {
+    width: 100%;
+  }
+  .header_title {
+    font-size: 2rem;
+  }
+  .header_description {
+    font-size: 1rem;
+  }
+  .section > div > img {
+    width: 10rem;
+    height: 10rem;
+  }
 }
