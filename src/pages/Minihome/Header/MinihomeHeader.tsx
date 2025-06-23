@@ -126,7 +126,7 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
       if (data?.error) {
         alert(data?.error?.message);
       } else {
-        toast("출석 체크 완료!");
+        toast(`출석 체크 완료! 코인 ${data?.bonusCoin}개 획득!`);
         queryClient.invalidateQueries({ queryKey: ["coin"] });
       }
     },
