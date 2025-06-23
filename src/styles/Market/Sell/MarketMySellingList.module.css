@@ -130,3 +130,33 @@
   width: 100%;
   text-align: center;
 }
+/* 반응형 UI */
+@media (width <= 1024px) {
+  .container {
+    min-width: 375px;
+    padding: 3rem 0.25rem;
+  }
+  .wrapper {
+    width: 100%;
+    gap: 1rem;
+  }
+  .header_title {
+    font-size: 1.2rem;
+  }
+  .header_filter {
+    width: 20%;
+    height: 100%;
+  }
+  .button {
+    height: 2rem;
+    font-size: 1rem;
+  }
+  .active_button {
+    height: 2rem;
+    font-size: 1rem;
+  }
+  .article_aside {
+    height: 2rem;
+    font-size: 1rem;
+  }
+}
