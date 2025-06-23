@@ -107,3 +107,46 @@
   overflow: scroll;
   scrollbar-width: none;
 }
+/* 반응형 UI */
+@media (width <= 1024px) {
+  .container {
+    min-width: 375px;
+    padding: 3rem 0.25rem;
+  }
+  .wrapper {
+    width: 100%;
+    gap: 1rem;
+  }
+  .header_title {
+    font-size: 1.2rem;
+    text-wrap: nowrap;
+  }
+  .button {
+    height: 2rem;
+    font-size: 1rem;
+  }
+  .active_button {
+    height: 2rem;
+    font-size: 1rem;
+  }
+  .article_section {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+  }
+}
+@media (width <= 768px) {
+  .header_nav {
+    width: 50%;
+    gap: 0.5rem;
+  }
+  .article_section {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+  }
+}
+@media (width <= 640px) {
+  .article_section {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+}
