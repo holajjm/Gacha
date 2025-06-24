@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useUserStore } from "@store/store";
+import { useTokenStore, useUserStore } from "@store/store";
 import { toast } from "react-toastify";
 
 import style from "@styles/OAuth.module.css";
@@ -15,6 +15,7 @@ interface QueryParams {
 // 2. OAuth.tsx 파일은 소셜 로그인 과정에서 유저 정보를 확인하고 메인 화면으로 이동 시켜주는 파일로 로그인과 메인 화면 중간에 페이지를 보유하면서 위치하고 있다.
 function OAuth() {
   const { user, setUser } = useUserStore((state) => state);
+  const setToken = useTokenStore((state) => state.setToken);
   const navigate = useNavigate();
 
   const handleData = () => {
@@ -41,14 +42,18 @@ function OAuth() {
           accessToken: queryParams.accessToken,
           refreshToken: queryParams.refreshToken,
         });
-        localStorage.setItem(
-          "AccessToken",
-          JSON.stringify(queryParams?.accessToken),
-        );
-        localStorage.setItem(
-          "RefreshToken",
-          JSON.stringify(queryParams?.refreshToken),
-        );
+        setToken({
+          accessToken: queryParams.accessToken,
+          refreshToken: queryParams.refreshToken,
+        });
+        // localStorage.setItem(
+        //   "AccessToken",
+        //   JSON.stringify(queryParams?.accessToken),
+        // );
+        // localStorage.setItem(
+        //   "RefreshToken",
+        //   JSON.stringify(queryParams?.refreshToken),
+        // );
         toast("환영합니다!");
         navigate("/main");
       }
