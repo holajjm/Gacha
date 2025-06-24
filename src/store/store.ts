@@ -1,5 +1,5 @@
 import { create } from "zustand";
-// import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export interface User {
   loginId?: string;
@@ -13,13 +13,68 @@ interface UserStore {
   user: User;
   setUser: (user: User) => void;
 }
-export const useUserStore = create<UserStore>((set) => ({
-  user: JSON.parse(sessionStorage.getItem("user") || "null"),
-  setUser: (user: User) => {
-    sessionStorage.setItem("user", JSON.stringify(user));
-    set({ user });
-  },
-}));
+
+interface TokenStore {
+  accessToken: string;
+  refreshToken: string;
+  setToken: ({
+    accessToken,
+    refreshToken,
+  }: {
+    accessToken: string;
+    refreshToken: string;
+  }) => void;
+}
+// export const useUserStore = create<UserStore>((set) => ({
+//   user: JSON.parse(sessionStorage.getItem("user") || "null"),
+//   setUser: (user: User) => {
+//     sessionStorage.setItem("user", JSON.stringify(user));
+//     set({ user });
+//   },
+// }));
+
+export const useTokenStore = create<TokenStore>()(
+  persist(
+    (set) => ({
+      accessToken: "",
+      refreshToken: "",
+      setToken: ({
+        accessToken,
+        refreshToken,
+      }: {
+        accessToken: string;
+        refreshToken: string;
+      }) =>
+        set(() => ({
+          accessToken,
+          refreshToken,
+        })),
+    }),
+    {
+      name: "token",
+    },
+  ),
+);
+
+export const useUserStore = create<UserStore>()(
+  persist(
+    (set) => ({
+      user: {
+        loginId: "",
+        socialType: "",
+        nickname: "",
+        profileId: 0,
+        accessToken: "",
+        refreshToken: "",
+      },
+      setUser: (user: User) => set(() => ({ user })),
+    }),
+    {
+      name: "user",
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
+);
 
 interface CoinState {
   coinUpdate: number;
