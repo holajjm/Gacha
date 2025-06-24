@@ -21,8 +21,7 @@ function Header() {
         try {
           const response = axios.delete("/logout", {});
           sessionStorage.removeItem("user");
-          localStorage.removeItem("AccessToken");
-          localStorage.removeItem("RefreshToken");
+          localStorage.removeItem("token");
           window.location.reload();
           return response;
         } catch (error) {
