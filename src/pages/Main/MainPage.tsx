@@ -49,11 +49,12 @@ function MainPage() {
         profileId: data?.profileId,
       });
     }
+    return
   }, [data]);
 
-  useEffect(() => {
-    sessionStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
+  // useEffect(() => {
+  //   sessionStorage.setItem("user", JSON.stringify(user));
+  // }, [user]);
 
   return (
     <div className={style.container}>
