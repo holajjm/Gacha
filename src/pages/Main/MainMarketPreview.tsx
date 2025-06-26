@@ -14,31 +14,41 @@ function MainMarketPreview({
         <img
           src="/images/Market.webp"
           alt="MarketPreview1"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
         <img
           src="/images/MarketItemModal.webp"
           alt="MarketPreview2"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
         <img
           src="/images/MarketSell.webp"
           alt="MarketPreview3"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
         <img
           src="/images/MarketSellModal.webp"
           alt="MarketPreview4"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
         <img
           src="/images/MarketEnroll.webp"
           alt="MarketPreview5"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
       </div>

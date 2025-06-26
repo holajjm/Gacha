@@ -14,31 +14,41 @@ function MainMiniHomePreview({
         <img
           src="/images/MiniHomeMain.webp"
           alt="MiniHomeMainPreview1"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
         <img
           src="/images/MiniHomeMain1.webp"
           alt="MiniHomeMainPreview2"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
         <img
           src="/images/MiniHomeItemBook.webp"
           alt="MiniHomeMainPreview3"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
         <img
           src="/images/MiniHomeAdornBackground.webp"
           alt="MiniHomeMainPreview4"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
         <img
           src="/images/MiniHomeAdornItem.webp"
           alt="MiniHomeMainPreview5"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
       </div>

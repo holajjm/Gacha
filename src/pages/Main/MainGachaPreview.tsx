@@ -14,19 +14,25 @@ function MainGachaPreview({
         <img
           src="/images/Gacha.webp"
           alt="GachaPreview1"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
         <img
           src="/images/GachaClose.webp"
           alt="GachaPreview2"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
         <img
           src="/images/GachaOpen.webp"
           alt="GachaPreview3"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
       </div>

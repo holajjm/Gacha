@@ -14,7 +14,9 @@ function MainExplorePreview({
         <img
           src="/images/Explore.webp"
           alt="ExplorePreview"
-          loading="lazy"
+          width={320}
+          height={160}
+          fetchPriority="high"
           decoding="async"
         />
       </div>
