@@ -16,7 +16,8 @@ function MainExplorePreview({
           alt="ExplorePreview"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
       </div>

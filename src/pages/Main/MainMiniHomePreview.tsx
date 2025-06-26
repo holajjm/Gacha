@@ -16,7 +16,8 @@ function MainMiniHomePreview({
           alt="MiniHomeMainPreview1"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
         <img
@@ -24,7 +25,8 @@ function MainMiniHomePreview({
           alt="MiniHomeMainPreview2"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
         <img
@@ -32,7 +34,8 @@ function MainMiniHomePreview({
           alt="MiniHomeMainPreview3"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
         <img
@@ -40,7 +43,8 @@ function MainMiniHomePreview({
           alt="MiniHomeMainPreview4"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
         <img
@@ -48,7 +52,8 @@ function MainMiniHomePreview({
           alt="MiniHomeMainPreview5"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
       </div>

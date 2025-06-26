@@ -16,7 +16,8 @@ function MainMarketPreview({
           alt="MarketPreview1"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
         <img
@@ -24,7 +25,8 @@ function MainMarketPreview({
           alt="MarketPreview2"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
         <img
@@ -32,7 +34,8 @@ function MainMarketPreview({
           alt="MarketPreview3"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
         <img
@@ -40,7 +43,8 @@ function MainMarketPreview({
           alt="MarketPreview4"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
         <img
@@ -48,7 +52,8 @@ function MainMarketPreview({
           alt="MarketPreview5"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
       </div>

@@ -16,7 +16,8 @@ function MainGachaPreview({
           alt="GachaPreview1"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
         <img
@@ -24,7 +25,8 @@ function MainGachaPreview({
           alt="GachaPreview2"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
         <img
@@ -32,7 +34,8 @@ function MainGachaPreview({
           alt="GachaPreview3"
           width={320}
           height={160}
-          fetchPriority="high"
+          fetchPriority="low"
+          loading="lazy"
           decoding="async"
         />
       </div>
