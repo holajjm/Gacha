@@ -6,7 +6,7 @@ import useCustomAxios from "@hooks/useCustomAxios";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import { ModalPortal } from "@hooks/ModalPortal";
-import PreviewModal from "@components/modals/PreviewModal";
+import PreviewModal, { ModalCategory } from "@components/modals/PreviewModal";
 
 import style from "@styles/Main/MainPage.module.css";
 
@@ -15,7 +15,7 @@ function MainPage() {
   usePageUpper();
   const modal = usePreviewModalState((state) => state.modal);
   const modalOpen = usePreviewModalState((state) => state.modalOpen);
-  const [modalState, setModalState] = useState<string>("");
+  const [modalState, setModalState] = useState<ModalCategory>("미니홈");
 
   const { user, setUser } = useUserStore((state) => state);
   const axios = useCustomAxios();
@@ -85,7 +85,7 @@ function MainPage() {
                   onClick={(e: React.MouseEvent<HTMLDivElement>) => {
                     modalOpen();
                     setModalState(
-                      e.currentTarget.getAttribute("data-value") as string,
+                      e.currentTarget.getAttribute("data-value") as ModalCategory,
                     );
                   }}
                   data-value={item.label}

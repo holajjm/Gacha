@@ -28,7 +28,7 @@ const imageList = {
     "/images/MarketSellModal.webp",
     "/images/MarketEnroll.webp",
   ],
-};
+} as const;
 const explainList = {
   미니홈: [
     "나만의 미니홈을 꾸밀 수 있어요!",
@@ -48,9 +48,9 @@ const explainList = {
     "내가 등록한 아이템 목록을 확인해요!",
     "내가 판매할 아이템을 등록해요!",
   ],
-};
-
-function PreviewModal({ modalState }: { modalState: string }) {
+} as const;
+export type ModalCategory = keyof typeof imageList;
+function PreviewModal({ modalState }: { modalState: ModalCategory }) {
   const modalClose = usePreviewModalState((state) => state.modalClose);
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
