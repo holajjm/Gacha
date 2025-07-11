@@ -71,15 +71,15 @@ function MarketMain() {
 
   return (
     <>
-      {modal && (
-        <ModalPortal>
-          <MarketItemModal
-            clickItemId={clickItemId}
-            onKeyPress={handleKeyPress}
-          />
-        </ModalPortal>
-      )}
       <div className={style.container}>
+        {modal && (
+          <ModalPortal>
+            <MarketItemModal
+              clickItemId={clickItemId}
+              onKeyPress={handleKeyPress}
+            />
+          </ModalPortal>
+        )}
         <main className={style.wrapper}>
           <header className={style.header}>
             <aside className={style.header_aside}>
