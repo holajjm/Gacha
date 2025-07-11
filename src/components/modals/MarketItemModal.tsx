@@ -34,7 +34,7 @@ function MarketItemModal({
     throwOnError: true,
     select: (data) => data?.data,
   });
-  console.log(data);
+  // console.log(data);
 
   const { mutate: buyItem } = useMutation({
     mutationFn: async () => {
