@@ -69,6 +69,7 @@ export const useUserStore = create<UserStore>()(
       },
       setUser: (user: User) => set(() => ({ user })),
     }),
+    
     {
       name: "user",
       storage: createJSONStorage(() => sessionStorage),
@@ -106,6 +107,7 @@ export const useFollowerModalState = createModalStore();
 export const useFollowingModalState = createModalStore();
 export const useLottoModalState = createModalStore();
 export const useModalState = createModalStore();
+export const usePreviewModalState = createModalStore();
 
 // export const useFollowerModalState = create<ModalState>((set) => ({
 //   modal: false,
