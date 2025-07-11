@@ -38,7 +38,7 @@ function Header() {
   });
 
   return (
-    <div className={style.container}>
+    <header className={style.container}>
       <section className={style.wrapper}>
         <a className={style.title} href="/main" aria-label="홈으로 이동">
           <img
@@ -90,7 +90,7 @@ function Header() {
           )}
         </nav>
       </section>
-    </div>
+    </header>
   );
 }
 

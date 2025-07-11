@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <div className={style.container}>
+    <footer className={style.container}>
       <div className={style.wrapper}>
         <header className={style.header}>
           <p>이용약관</p>
@@ -20,7 +20,7 @@ function Footer() {
           </Link>
         </main>
       </div>
-    </div>
+    </footer>
   )
 }
 
