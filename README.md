@@ -16,7 +16,7 @@
 
 > ### 배포 링크 및 테스트 계정
 
-👉🏻 [GachaGacha](https://gacha-ruddy.vercel.app/ "바로가기")
+👉🏻 <a href="https://gacha-ruddy.vercel.app/" alt="바로가기">GachaGacha</a>
 
 </br>
 
