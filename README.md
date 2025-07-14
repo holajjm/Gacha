@@ -16,7 +16,7 @@
 
 > ### 배포 링크 및 테스트 계정
 
-👉🏻 [GachaGacha](https://gacha-ruddy.vercel.app/, "바로가기")
+👉🏻 [GachaGacha](https://gacha-ruddy.vercel.app/ "바로가기")
 
 </br>
 
@@ -368,7 +368,7 @@
 
 |                               가챠 - 메인                               |                              가챠 - 뽑는중                              |
 | :---------------------------------------------------------------------: | :---------------------------------------------------------------------: |
-| <img width="200px" src="./public/images/GachaMain.webp" alt="Preview" > | <img width="400px" src="./public/images/GachaClose.webp" alt="Preview"> |
+| <div width="400px"><img width="200px" margin="0 auto" src="./public/images/GachaMain.webp" alt="Preview" ></div> | <img width="400px" src="./public/images/GachaClose.webp" alt="Preview"> |
 
 |                            가챠 - 뽑기 완료                             |                             마켓 - 메인                             |
 | :---------------------------------------------------------------------: | :-----------------------------------------------------------------: |
