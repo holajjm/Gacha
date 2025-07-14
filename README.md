@@ -28,17 +28,17 @@
 > ### 사용 기술
 
 <div>
-  <img src="https://img.shields.io/badge/typescript-251ef7?style=for-the-badge&logo=typescript&logoColor=251ef7" />
-  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=61DAFB"/>
-  <img src="https://img.shields.io/badge/CSSModules-38B2AC?style=for-the-badge&logo=css-modules&logoColor=38B2AC"/>
-  <img src="https://img.shields.io/badge/TailWindCSS-1ee9f7?style=for-the-badge&logo=tailwindcss&logoColor=1ee9f7"/>
-  <img src="https://img.shields.io/badge/Zustand-3578E5?style=for-the-badge&logo=zustand&logoColor=3578E5"/>
+  <img src="https://img.shields.io/badge/typescript-251ef7?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"/>
+  <img src="https://img.shields.io/badge/CSSModules-38B2AC?style=for-the-badge&logo=css-modules&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TailWindCSS-1ee9f7?style=for-the-badge&logo=tailwindcss&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Zustand-3578E5?style=for-the-badge&logo=zustand&logoColor=white"/>
 </br> 
-  <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=5A29E4"/>
-  <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=for-the-badge&logo=react-query&logoColor=FF4154"/>
-  <img src="https://img.shields.io/badge/ReactRouter-CA4245?style=for-the-badge&logo=react-router&logoColor=CA4245"/>
-  <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=F7B93E"/>
-  <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=4B32C3"/>
+  <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"/>
+  <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=for-the-badge&logo=react-query&logoColor=white"/>
+  <img src="https://img.shields.io/badge/ReactRouter-CA4245?style=for-the-badge&logo=react-router&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=white"/>
+  <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white"/>
 </div>
 <div>
   <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>
@@ -58,75 +58,105 @@
   </tbody>
 </table>
 
-
-## 3. 세부 역할**
+## 3. 세부 역할
 
 ### 💜 정종민
 
-> **공통 컴포넌트 작성 & 커스텀 훅 생성**
-> **공통 컴포넌트 작성 & 커스텀 훅 생성**
-> **공통 컴포넌트 작성 & 커스텀 훅 생성**
-> **공통 컴포넌트 작성 & 커스텀 훅 생성**
+> **프론트엔드 전반적인 설계 및 기능 구현**
 
+- 전체 폴더 구조 설계
+- 깃 브랜치 및 커밋 메세지 규칙 설정
+- 전체 기능 구현 및 스타일링
 
+> **UI/기능 구현**
 
-> **⚙️ 공통 컴포넌트 작성 & 커스텀 훅 생성**
+#### 메인 페이지
 
-- 공통 컴포넌트 개발
-  - `DetailPageHeader` 작성
-  - `useCustomAxios` 작성
-  - 리드미 작성
-    <br />
+- Header, Footer 구현
+- 각 페이지 모달창을 통한 미리보기 기능 구현
 
-> **UI 구현**
+#### 미니홈 페이지
 
-#### 커뮤니티 메인 화면
+- 미니홈 메인 페이지
+  - 유저 프로필, 팔로워/팔로잉 목록, 출석 체크, 설정 UI 구현
+  - 꾸미기 영역 구현
+  - 댓글 등록, 댓글 목록 구현
 
-- 인기 포스팅 출력 화면
-- 게시글 목록 렌더링 화면
+- 아이템 북 페이지
+  - 보유 아이템 목록 구현
 
-#### 게시글 작성 화면
+- 꾸미기 페이지
+  - 꾸밈 영역, 배경 아이템, 요소 아이템 구현
 
-- 게시글 작성 영역
-- 날씨 이모티콘 선택 버튼 영역
-- 파일 첨부 영역
+#### 둘러보기 페이지
 
-#### 게시글 상세 조회 화면
+- 모든 유저 목록 구현
 
-- 댓글 리스트 영역 출력 화면
-- 상세 댓글
+#### 가챠 페이지
+
+- 가챠 메인 페이지 구현
+- 아이템 뽑기 애니메이션 구현
+
+#### 마켓 페이지
+
+- 마켓 메인 페이지
+  - 판매 중인 아이템 목록 구현
+  - 아이템 상세 정보 모달창 구현
+
+- 내 판매 목록 페이지
+  - 내 판매 목록 구현
+  - 판매 아이템 상태 정보 모달창 구현
+
+- 판매 아이템 등록 페이지
+ - 판매 아이템 목록 구현
+ - 등록할 아이템 정보 미리보기 영역 구현
 
 <br/>
 
-> **기능 구현**
+<!-- > **기능 구현**
 
-#### 커뮤니티 메인 페이지
+#### 메인 페이지
 
-- 각 게시글의 조회 수가 높은 순서대로 인기 게시물 출력
-- 각 게시글의 조회 수 및 날씨 정보, 댓글 수,글 내용, 첨부 사진 출력
-- 특정 게시글의 내용 검색 시 검색 기능
+- Header, Footer 구현
+- 각 페이지 모달창을 통한 미리보기 기능 구현
 
-#### 커뮤니티 게시글 상세 조회 페이지
+#### 미니홈 페이지
 
-- 게시글의 조회 수, 댓글 수, 작성 시간 정보 출력
-- 게시글에 작성자 유효성 검사를 통한 삭제 기능 제한적 구현
+- 미니홈 메인 페이지
+  - 유저 프로필, 팔로워/팔로잉 목록, 출석 체크, 설정 UI 구현
+  - 꾸미기 영역 구현
+  - 댓글 등록, 댓글 목록 구현
+  
+- 아이템 북 페이지
+  - 보유 아이템 목록 구현
 
-#### 커뮤니티 게시글 작성 페이지
+- 꾸미기 페이지
+  - 꾸밈 영역, 배경 아이템, 요소 아이템 구현
 
-- 게시글 작성 시 이미지 파일 첨부 기능
-- 게시글 작성 시 날씨에 따른 이모티콘 설정 후 날씨 정보 첨부 기능
-- 게시글 내용 작성 기능
+#### 둘러보기 페이지
 
-#### 댓글 작성 기능
+- 모든 유저 목록 구현
 
-- 특정 게시글에 댓글 등록 기능 구현
-- 댓글 작성 시 작성자 정보, 작성 시간, 댓글 내용 출력 구현
-- 댓글 작성자 유효성 검사를 통해 삭제 기능 제한적 구현
+#### 가챠 페이지
 
-#### 마이페이지 작성 글 조회
+- 가챠 메인 페이지 구현
+- 아이템 뽑기 애니메이션 구현
 
-- 특정 유저가 본인이 작성한 글 조회 기능 구현
+#### 마켓 페이지
 
+- 마켓 메인 페이지
+  - 판매 중인 아이템 목록 구현
+  - 아이템 상세 정보 모달창 구현
+
+- 내 판매 목록 페이지
+  - 내 판매 목록 구현
+  - 판매 아이템 상태 정보 모달창 구현
+
+- 판매 아이템 등록 페이지
+ - 판매 아이템 목록 구현
+ - 등록할 아이템 정보 미리보기 영역 구현
+
+<br/> -->
 
 ## 4. 프로젝트 폴더 구조
 
@@ -320,36 +350,36 @@
 
 ### 웹 버전
 
-|                  메인 화면 - 로그인 전                   |                  메인 화면 - 로그인 후                   |
-| :---------------------------------------------------: | :----------------------------------------------------: |
+|                     메인 화면 - 로그인 전                     |                 메인 화면 - 로그인 후                  |
+| :-----------------------------------------------------------: | :----------------------------------------------------: |
 | <img width="400px" src="./public/images/k.gif" alt="Preview"> | <img width="400px" src="./public/l.gif" alt="Preview"> |
 
-|                    미니홈 - 메인                        |                      미니홈 - 댓글                      |
-| :---------------------------------------------------: | :----------------------------------------------------: |
-| <img width="400px" src="./public/images/MiniHomeMain.webp" alt="Preview"> | <img width="400px" src="./public/images/MainHomeMain1.webp" alt="Preview" > |
+|                               미니홈 - 메인                               |                                미니홈 - 댓글                                |
+| :-----------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
+| <img width="400px" src="./public/images/MiniHomeMain.webp" alt="Preview"> | <img width="400px" src="./public/images/MiniHomeMain1.webp" alt="Preview" > |
 
-|                    미니홈 - 아이템 북                   |                    미니홈 - 꾸미기(1)                    |
-| :---------------------------------------------------: | :----------------------------------------------------: |
-| <img width="400px" src="./public/images/MainHomeItemBook.webp" alt="Preview" > | <img width="400px" src="./public/images/MainHomeAdornBackground.webp" alt="Preview"> |
+|                               미니홈 - 아이템 북                               |                                  미니홈 - 꾸미기(1)                                  |
+| :----------------------------------------------------------------------------: | :----------------------------------------------------------------------------------: |
+| <img width="400px" src="./public/images/MiniHomeItemBook.webp" alt="Preview" > | <img width="400px" src="./public/images/MiniHomeAdornBackground.webp" alt="Preview"> |
 
-|                    미니홈 - 꾸미기(2)                   |                      둘러보기 - 메인                     |
-| :---------------------------------------------------: | :----------------------------------------------------: |
-| <img width="400px" src="./public/images/MainHomeAdornItem.webp" alt="Preview" > | <img width="400px" src="./public/images/Explore.webp" alt="Preview"> |
+|                               미니홈 - 꾸미기(2)                                |                           둘러보기 - 메인                            |
+| :-----------------------------------------------------------------------------: | :------------------------------------------------------------------: |
+| <img width="400px" src="./public/images/MiniHomeAdornItem.webp" alt="Preview" > | <img width="400px" src="./public/images/Explore.webp" alt="Preview"> |
 
-|                     가챠 - 메인                        |                      가챠 - 뽑는중                      |
-| :---------------------------------------------------: | :---------------------------------------------------: |
-| <img width="400px" src="./public/images/GachaMain.webp" alt="Preview" > | <img width="400px" src="./public/images/GachaClose.webp" alt="Preview"> |
+|                               가챠 - 메인                               |                              가챠 - 뽑는중                              |
+| :---------------------------------------------------------------------: | :---------------------------------------------------------------------: |
+| <img width="200px" src="./public/images/GachaMain.webp" alt="Preview" > | <img width="400px" src="./public/images/GachaClose.webp" alt="Preview"> |
 
-|                     가챠 - 뽑기 완료                    |                      마켓 - 메인                       |
-| :---------------------------------------------------: | :---------------------------------------------------: |
+|                            가챠 - 뽑기 완료                             |                             마켓 - 메인                             |
+| :---------------------------------------------------------------------: | :-----------------------------------------------------------------: |
 | <img width="400px" src="./public/images/GachaOpen.webp" alt="Preview" > | <img width="400px" src="./public/images/Market.webp" alt="Preview"> |
 
-|                       마켓 - 판매중인 아이템                      |                   마켓 - 내 판매 목록                 |
-| :---------------------------------------------------: | :---------------------------------------------------: |
+|                            마켓 - 판매중인 아이템                             |                           마켓 - 내 판매 목록                           |
+| :---------------------------------------------------------------------------: | :---------------------------------------------------------------------: |
 | <img width="400px" src="./public/images/MarketItemModal.webp" alt="Preview" > | <img width="400px" src="./public/images/MarketSell.webp" alt="Preview"> |
 
-|                  마켓 - 내 판매 목록 상세                |                     마켓 - 판매 등록                    |
-| :---------------------------------------------------: | :---------------------------------------------------: |
+|                           마켓 - 내 판매 목록 상세                            |                             마켓 - 판매 등록                              |
+| :---------------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
 | <img width="400px" src="./public/images/MarketSellModal.webp" alt="Preview" > | <img width="400px" src="./public/images/MarketEnroll.webp" alt="Preview"> |
 
 <!-- ### 모바일 버전
