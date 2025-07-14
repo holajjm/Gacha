@@ -16,7 +16,7 @@
 
 > ### 배포 링크 및 테스트 계정
 
-👉🏻 <a href="https://gacha-ruddy.vercel.app/" alt="바로가기">GachaGacha</a>
+👉🏻 <a target="_blank" href="https://gacha-ruddy.vercel.app/" alt="바로가기">GachaGacha</a>
 
 </br>
 
@@ -32,7 +32,7 @@
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"/>
   <img src="https://img.shields.io/badge/CSSModules-38B2AC?style=for-the-badge&logo=css-modules&logoColor=white"/>
   <img src="https://img.shields.io/badge/TailWindCSS-1ee9f7?style=for-the-badge&logo=tailwindcss&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Zustand-3578E5?style=for-the-badge&logo=zustand&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Zustand-40374f?style=for-the-badge&logo=zustand&logoColor=white"/>
 </br> 
   <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"/>
   <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=for-the-badge&logo=react-query&logoColor=white"/>
@@ -368,7 +368,7 @@
 
 |                               가챠 - 메인                               |                              가챠 - 뽑는중                              |
 | :---------------------------------------------------------------------: | :---------------------------------------------------------------------: |
-| <div width="400px"><img width="200px" margin="0 auto" src="./public/images/GachaMain.webp" alt="Preview" ></div> | <img width="400px" src="./public/images/GachaClose.webp" alt="Preview"> |
+| <img width="200px" src="./public/images/GachaMain.webp" alt="Preview" > | <img width="400px" src="./public/images/GachaClose.webp" alt="Preview"> |
 
 |                            가챠 - 뽑기 완료                             |                             마켓 - 메인                             |
 | :---------------------------------------------------------------------: | :-----------------------------------------------------------------: |
