@@ -11,24 +11,15 @@ import useCustomAxios from "@hooks/useCustomAxios";
 import { ModalPortal } from "@hooks/ModalPortal";
 import Button from "@components/Button";
 import { toast } from "react-toastify";
-import ProfileImg from "@assets/Profile";
+import ProfileImg from "constants/Profile";
 
 import MinihomeFollowerModal from "@components/modals/MinihomeFollowerModal";
 import MinihomeFollowingModal from "@components/modals/MinihomeFollowingModal";
 import { FcSettings } from "react-icons/fc";
 import style from "@styles/Minihome/Header/MinihomeHeader.module.css";
+import { MiniHomeMainData } from "types/minihome";
 
-interface MiniHomeMainData {
-  followersCnt: number;
-  followingCnt: number;
-  isFollowing: boolean;
-  isOwner: boolean;
-  layout: null;
-  nickname: string;
-  profileId: number;
-  score: number;
-  totalVisitorCnt: number;
-}
+
 
 function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
   const axios = useCustomAxios();

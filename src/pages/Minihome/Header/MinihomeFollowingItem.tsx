@@ -7,16 +7,11 @@ import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
 import { toast } from "react-toastify";
 
-import ProfileImg from "@assets/Profile";
+import ProfileImg from "constants/Profile";
 import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
+import { Followings } from "types/minihome";
 
-interface Followings {
-  isCurrentUser: boolean;
-  isFollowing: boolean;
-  nickname: string;
-  profileId: number;
-  userId: number;
-}
+
 
 function MinihomeFollowingItem({ followings }: { followings: Followings }) {
   const { user } = useUserStore((state) => state);

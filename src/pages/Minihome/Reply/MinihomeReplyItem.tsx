@@ -2,21 +2,14 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import useCustomAxios from "@hooks/useCustomAxios";
-import ProfileImg from "@assets/Profile";
+import ProfileImg from "constants/Profile";
 
 import MinihomeReplyEdit from "./MinihomeReplyEdit";
 import style from "@styles/Minihome/Reply/MinihomeReplyItem.module.css";
+import { ReplyItemData } from "types/minihome";
 
-interface ReplyData {
-  content: string;
-  createAt: string;
-  guestbookId: number;
-  isAuthor: boolean;
-  nickname: string;
-  profileId: number;
-}
 
-function MinihomeReplyItem({ replys }: { replys: ReplyData }) {
+function MinihomeReplyItem({ replys }: { replys: ReplyItemData }) {
   const axios = useCustomAxios();
   const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState<boolean>(false);

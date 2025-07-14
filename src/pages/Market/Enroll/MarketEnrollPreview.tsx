@@ -7,17 +7,8 @@ import Button from "@components/Button";
 import { toast } from "react-toastify";
 
 import style from "@styles/Market/Enroll/MarketEnrollPreview.module.css";
+import { Item } from "types/market";
 
-interface Item {
-  imageUrl: string;
-  itemCnt: number;
-  itemGrade: string;
-  itemId: number;
-  itemName: string;
-  price: number;
-  stock: number;
-  userItemIds: number[];
-}
 
 function MarketEnrollPreview({ item }: { item: Item }) {
   const axios = useCustomAxios();

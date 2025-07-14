@@ -14,18 +14,8 @@ import Button from "@components/Button";
 
 import MinihomeReplyItem from "./MinihomeReplyItem";
 import style from "@styles/Minihome/Reply/MinihomeReplyNew.module.css";
+import { ReplyItemData, ReplySendData } from "types/minihome";
 
-interface ReplySendData {
-  content: string;
-}
-interface ReplyData {
-  content: string;
-  createAt: string;
-  guestbookId: number;
-  isAuthor: boolean;
-  nickname: string;
-  profileId: number;
-}
 function MinihomeReplyNew() {
   const axios = useCustomAxios();
   const queryClient = useQueryClient();
@@ -84,7 +74,7 @@ function MinihomeReplyNew() {
     staleTime: 1000 * 60 * 10,
   });
   // console.log(data?.pages[0]);
-  const replyList = data?.pages[0]?.content?.map((e: ReplyData) => (
+  const replyList = data?.pages[0]?.content?.map((e: ReplyItemData) => (
     <MinihomeReplyItem key={e.guestbookId} replys={e} />
   ));
   // console.log(replyList);

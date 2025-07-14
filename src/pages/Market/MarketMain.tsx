@@ -14,12 +14,7 @@ import MarketItemModal from "@components/modals/MarketItemModal";
 import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Market/MarketMain.module.css";
-
-interface MarketItemData {
-  hasStock: string;
-  imageUrl: string;
-  itemId: number;
-}
+import { MarketItemData } from "types/market";
 
 function MarketMain() {
   usePageTitle("마켓");

@@ -3,12 +3,8 @@ import React from "react";
 import { useLottoModalState } from "@store/store";
 
 import style from "@styles/Layouts/BellItems.module.css";
+import { Notis } from "types/component";
 
-interface Notis {
-  id: number;
-  data: string;
-  notificationType: string;
-}
 
 function BellItem({ data }: { data: Notis }) {
   console.log(data);

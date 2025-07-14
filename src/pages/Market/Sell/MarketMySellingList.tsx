@@ -13,16 +13,8 @@ import usePageUpper from "@hooks/usePageUpper";
 import MarketMySellingItem from "./MarketMySellingItem";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Market/Sell/MarketMySellingList.module.css";
+import { MySellingItemData } from "types/market";
 
-interface MySellingItemData {
-  grade: string;
-  imageUrl: string;
-  name: string;
-  price: number;
-  productId: number;
-  status: string;
-  transactionDate: null;
-}
 
 function MarketMyList() {
   usePageTitle("Market - MySelling");

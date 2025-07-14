@@ -12,13 +12,8 @@ import MinihomeReplyNew from "./Reply/MinihomeReplyNew";
 import MinihomeHeader from "./Header/MinihomeHeader";
 import MiniHomeItem from "./MiniHomeItem";
 import style from "@styles/Minihome/MiniHomeMain.module.css";
+import { AdornDataItem } from "types/minihome";
 
-interface AdornDataItem {
-  imageUrl: string;
-  subId: number;
-  x: number;
-  y: number;
-}
 
 function MiniHomeMain() {
   usePageTitle("MiniHome");

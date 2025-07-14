@@ -11,21 +11,8 @@ import usePageUpper from "@hooks/usePageUpper";
 import ExploreItem from "./ExploreItem";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Explore/ExploreMain.module.css";
+import { ExploreItemData, ParamData } from "types/explore";
 
-interface ExploreItemData {
-  profileId: number;
-  nickname: string;
-  totalVisitorCnt: number;
-  likeCount: number;
-}
-interface ParamData {
-  createdAt?: string;
-  totalVisitorCnt: string;
-  score?: string;
-  likeCount?: string;
-  minihomeId?: number;
-  userId?: number;
-}
 function ExploreMain() {
   usePageTitle("둘러보기");
   usePageUpper();

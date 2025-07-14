@@ -6,18 +6,11 @@ import { useFollowerModalState, useUserStore } from "@store/store.ts";
 import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
 import { toast } from "react-toastify";
-import ProfileImg from "@assets/Profile";
+import ProfileImg from "constants/Profile";
 
 import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
+import { Followers } from "types/minihome";
 
-interface Followers {
-  userId: number;
-  nickname: string;
-  profileId: number;
-  isFollowing: boolean;
-  isRemovable: boolean;
-  isCurrentUser: boolean;
-}
 
 function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
   const { user } = useUserStore((state) => state);

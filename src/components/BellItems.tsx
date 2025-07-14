@@ -5,16 +5,7 @@ import { useLottoModalState } from "@store/store";
 import Lotto from "./Lotto";
 import BellItem from "./BellItem";
 import style from "@styles/Layouts/BellItems.module.css";
-
-interface Notis {
-  id: number;
-  data: string;
-  notificationType: string;
-}
-interface NotiData {
-  count: number;
-  notifications: Notis[];
-}
+import { NotiData } from "types/component";
 
 function BellItems({ data }: { data: NotiData }) {
   console.log(data);

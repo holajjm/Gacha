@@ -4,19 +4,10 @@ import useImage from "@hooks/useImage";
 import Draggable, { DraggableData } from "react-draggable";
 
 import style from "@styles/Minihome/Adorn/MinihomeAdornDraggableItem.module.css";
+import { newData, Position } from "types/minihome";
 
-interface newData {
-  imageUrl?: string;
-  itemGrade?: string;
-  itemId?: number;
-  subId?: number;
-  x?: number;
-  y?: number;
-}
-interface Position {
-  x: number;
-  y: number;
-}
+
+
 function MinihomeAdornEditDraggableItem({
   data,
   handleEditPosition,

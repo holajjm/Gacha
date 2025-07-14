@@ -7,14 +7,8 @@ import useCustomAxios from "@hooks/useCustomAxios";
 
 import MinihomeFollowingItem from "@pages/Minihome/Header/MinihomeFollowingItem";
 import style from "@styles/Layouts/modals/MinihomeFollowModal.module.css";
+import { Followings } from "types/minihome";
 
-interface Followings {
-  isCurrentUser: boolean;
-  isFollowing: boolean;
-  nickname: string;
-  profileId: number;
-  userId: number;
-}
 
 function MinihomeFollowingModal() {
   // {

@@ -6,17 +6,9 @@ import useCustomAxios from "@hooks/useCustomAxios";
 import { toast } from "react-toastify";
 
 import style from "@styles/Minihome/Reply/MinihomeReplyEdit.module.css";
+import { ReplyData, ReplySendData } from "types/minihome";
 
-interface ReplySendData {
-  content: string;
-}
-interface ReplyData {
-  content: string;
-  createAt: string;
-  guestbookId: number;
-  isAuthor: boolean;
-  nickname: string;
-}
+
 function MinihomeReplyEdit({
   replys,
   editReplyResult,

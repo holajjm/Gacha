@@ -9,16 +9,7 @@ import Button from "@components/Button";
 import { toast } from "react-toastify";
 
 import style from "@styles/Layouts/modals/MarketSellingItemModal.module.css";
-
-interface MySellingItemData {
-  grade: string;
-  imageUrl: string;
-  name: string;
-  price: number;
-  productId: number;
-  status: string;
-  transactionDate: string | null;
-}
+import { MySellingItemData } from "types/market";
 
 function MarketSellingItemModal({
   filterArray,

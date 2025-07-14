@@ -11,13 +11,9 @@ import MinihomeItems from "./MinihomeItems";
 import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Minihome/ItemBook/MinihomeItemBook.module.css";
+import { ItemBookData } from "types/minihome";
 
-interface ItemBookData {
-  imageUrl: string;
-  itemCnt: number;
-  itemGrade: string;
-  itemId: number;
-}
+
 
 function MinihomeItemBook() {
   usePageTitle("MiniHome - ItemBook");

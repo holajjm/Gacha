@@ -10,16 +10,8 @@ import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 
 import style from "@styles/User/UserJoin.module.css";
+import { QueryParams, UserData } from "types/user";
 
-interface Data {
-  nickname: string;
-  profileId: number;
-  socialType: string;
-  loginId: string;
-}
-interface QueryParams {
-  [key: string]: string;
-}
 
 function UserJoin() {
   usePageTitle("회원가입");
@@ -30,7 +22,7 @@ function UserJoin() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Data>();
+  } = useForm<UserData>();
 
   // 파라미터로 전달받은 socialId,loginId 값 디코딩하여 객체로 사용
   const [loginParams, setLoginParams] = useState<QueryParams>({
@@ -57,7 +49,7 @@ function UserJoin() {
     },
   });
   const { mutate: getJoin } = useMutation({
-    mutationFn: async (formData: Data) => {
+    mutationFn: async (formData: UserData) => {
       try {
         const response = await authAxios.post("/join", {
           socialType: loginParams.socialType,
@@ -94,7 +86,7 @@ function UserJoin() {
     },
   });
 
-  const onSubmit = async (formData: Data) => {
+  const onSubmit = async (formData: UserData) => {
     getJoin(formData);
   };
 

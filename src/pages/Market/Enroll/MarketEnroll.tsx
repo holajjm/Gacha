@@ -11,17 +11,8 @@ import MarketEnrollPreview from "./MarketEnrollPreview";
 import MarketEnrollItem from "./MarketEnrollItem";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Market/Enroll/MarketEnroll.module.css";
+import { Item } from "types/market";
 
-interface Item {
-  imageUrl: string;
-  itemCnt: number;
-  itemGrade: string;
-  itemId: number;
-  itemName: string;
-  price: number;
-  stock: number;
-  userItemIds: number[];
-}
 
 function MarketEnrollItemList() {
   usePageTitle("마켓 - 판매 등록");

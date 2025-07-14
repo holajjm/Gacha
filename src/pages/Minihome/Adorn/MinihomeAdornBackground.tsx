@@ -4,11 +4,8 @@ import { useUserStore } from "@store/store";
 
 import MinihomeAdornBackgroundItem from "./MinihomeAdornBackgroundItem";
 import style from "@styles/Minihome/Adorn/MinihomeAdornBackground.module.css";
+import { BackgroundItemData } from "types/minihome";
 
-interface BackgroundItemData {
-  backgroundId: number;
-  imageUrl: string;
-}
 
 function MinihomeAdornBackground({
   getBack,

@@ -5,13 +5,8 @@ import { useUserStore } from "@store/store";
 import MinihomeAdornItem from "./MinihomeAdornItem";
 import style from "@styles/Minihome/Adorn/MinihomeAdornItemList.module.css";
 import MinihomeAdornItemSkeleton from "@components/skeleton/MinihomeAdornItemSkeleton";
+import { AdornItemData } from "types/minihome";
 
-interface AdornItemData {
-  imageUrl: string;
-  itemGrade: string;
-  itemId: number;
-  subId: number;
-}
 
 function MinihomeAdornItemList({
   getItem,

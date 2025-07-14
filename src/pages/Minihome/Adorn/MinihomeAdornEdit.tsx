@@ -13,58 +13,8 @@ import usePageUpper from "@hooks/usePageUpper";
 import { useUserStore } from "@store/store";
 import { useNavigate } from "react-router-dom";
 import MinihomeAdornDraggableItem from "./MinihomeAdornDraggableItem";
+import { AdornFetchData, AdornItem, AdornItemData, AdornPageData, BackgroundItemData, NewData, Position } from "types/minihome";
 
-interface BackgroundItemData {
-  backgroundId: number;
-  imageUrl: string;
-}
-interface AdornItemData {
-  imageUrl: string;
-  itemGrade: string;
-  itemId: number;
-  subId: number;
-}
-interface AdornItem {
-  itemId: number;
-  subId: number;
-  x: number;
-  y: number;
-}
-interface AdornFetchData {
-  backgroundId: number;
-  items: AdornItem[];
-}
-interface Position {
-  x: number;
-  y: number;
-}
-interface AdornPageData {
-  background: {
-    backgroundId: number;
-    imageUrl: string;
-  };
-  items: [
-    {
-      imageUrl: string;
-      itemId: number;
-      subId: number;
-      x: number;
-      y: number;
-    },
-  ];
-}
-interface NewData {
-  imageUrl: string;
-  itemId: number;
-  subId: number;
-  x: number;
-  y: number;
-}
-// interface NewItemData {
-//   imageUrl: string;
-//   itemId: number;
-//   subId: number;
-// }
 
 function MinihomeAdornEdit({ adornPage }: { adornPage: AdornPageData }) {
   usePageTitle("MiniHome - Adorn");
@@ -209,6 +159,8 @@ function MinihomeAdornEdit({ adornPage }: { adornPage: AdornPageData }) {
 
   // ---------------------------------------------개별 아이템
   const [adornEditItemArr, setAdornEditItemArr] = useState<AdornItem[]>([]);
+  console.log(adornEditItemArr);
+  
   // const [adornEditItem, setAdornEditItem] = useState<AdornItem>({
   //   itemId: 0,
   //   subId: 0,

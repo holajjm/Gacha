@@ -1,13 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 
 import useImage from '@hooks/useImage';
+import { AdornItemData } from 'types/minihome';
 
-interface AdornItemData {
-  imageUrl: string;
-  itemGrade: string;
-  itemId: number;
-  subId: number;
-}
 
 function MinihomeAdornItem({data,onClick}:{data:AdornItemData,onClick:(data:AdornItemData) => void}) {
   

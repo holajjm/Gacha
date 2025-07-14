@@ -5,10 +5,8 @@ import { useTokenStore, useUserStore } from "@store/store";
 import { toast } from "react-toastify";
 
 import style from "@styles/OAuth.module.css";
+import { QueryParams } from "types/user";
 
-interface QueryParams {
-  [key: string]: string;
-}
 
 // 1.기존에는 토큰에 유저 정보를 담아서 주었기에 jwtDecode(jwt-decode) 라이브러리를 통해서 복호화를 거쳐 로그인 처리를 하였지만
 // 쿼리 스트링으로 전달 받아 처리하는 것으로 수정함

@@ -2,12 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 import useImage from "@hooks/useImage";
 import style from "@styles/Market/MarketItem.module.css";
-
-interface MarketItemData {
-  hasStock: string;
-  imageUrl: string;
-  itemId: number;
-}
+import { MarketItemData } from "types/market";
 
 function MarketItem({
   data,

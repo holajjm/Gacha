@@ -3,13 +3,8 @@ import React, { useEffect, useRef } from "react";
 import useImage from "@hooks/useImage";
 
 import style from "@styles/Minihome/ItemBook/MinihomeItem.module.css";
+import { ItemBookData } from "types/minihome";
 
-interface ItemBookData {
-  imageUrl: string;
-  itemCnt: number;
-  itemGrade: string;
-  itemId: number;
-}
 
 function MinihomeItems({ data }: { data: ItemBookData }) {
   const imgRef = useRef<HTMLImageElement>(null);

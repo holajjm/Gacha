@@ -15,47 +15,9 @@ import MinihomeAdornDraggableItem from "./MinihomeAdornDraggableItem";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css";
 import MinihomeAdornEdit from "./MinihomeAdornEdit";
+import { AdornFetchData, AdornItem, AdornItemData, AdornPageData, BackgroundItemData, Position } from "types/minihome";
 
-interface BackgroundItemData {
-  backgroundId: number;
-  imageUrl: string;
-}
 
-interface AdornItemData {
-  imageUrl: string;
-  itemGrade: string;
-  itemId: number;
-  subId: number;
-}
-interface AdornItem {
-  itemId: number;
-  subId: number;
-  x: number;
-  y: number;
-}
-interface AdornFetchData {
-  backgroundId: number;
-  items: AdornItem[];
-}
-interface Position {
-  x: number;
-  y: number;
-}
-interface AdornPageData {
-  background: {
-    backgroundId: number;
-    imageUrl: string;
-  };
-  items: [
-    {
-      imageUrl: string;
-      itemId: number;
-      subId: number;
-      x: number;
-      y: number;
-    },
-  ];
-}
 
 function MinihomeAdorn() {
   usePageTitle("MiniHome - Adorn");

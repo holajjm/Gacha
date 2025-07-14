@@ -5,16 +5,7 @@ import useImage from "@hooks/useImage";
 import Button from "@components/Button";
 
 import style from "@styles/Market/Sell/MarketMySellingItem.module.css";
-
-interface MySellingItemData {
-  grade: string;
-  imageUrl: string;
-  name: string;
-  price: number;
-  productId: number;
-  status: string;
-  transactionDate: null;
-}
+import { MySellingItemData } from "types/market";
 
 function MarketMySellingItem({
   data,

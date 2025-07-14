@@ -3,17 +3,7 @@ import React, { useEffect, useRef } from "react";
 import useImage from "@hooks/useImage";
 
 import style from "@styles/Market/Enroll/MarketEnrollItem.module.css";
-
-interface Item {
-  imageUrl: string;
-  itemCnt: number;
-  itemGrade: string;
-  itemId: number;
-  itemName: string;
-  price: number;
-  stock: number;
-  userItemIds: number[];
-}
+import { Item } from "types/market";
 
 function MarketEnrollItem({
   item,

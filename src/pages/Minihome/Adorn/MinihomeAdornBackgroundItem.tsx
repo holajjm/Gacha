@@ -3,11 +3,7 @@ import React, { useEffect, useRef } from "react";
 import useImage from "@hooks/useImage";
 
 import style from "@styles/Minihome/Adorn/MinihomeAdornBackgroundItem.module.css";
-
-interface BackgroundItemData {
-  backgroundId: number;
-  imageUrl: string;
-}
+import { BackgroundItemData } from "types/minihome";
 
 function MinihomeAdornBackgroundItem({
   data,
