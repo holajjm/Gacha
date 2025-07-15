@@ -6,7 +6,7 @@ import { useFollowerModalState, useUserStore } from "@store/store.ts";
 import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
 import { toast } from "react-toastify";
-import ProfileImg from "constants/Profile";
+import ProfileImg from "@constants/Profile.ts";
 
 import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
 import { Followers } from "types/minihome";

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "@components/Button";
-import ProfileImg from "constants/Profile";
+import ProfileImg from "@constants/Profile.ts";
 
 import style from "@styles/Explore/ExploreItem.module.css";
 import { ExploreItemData } from "types/explore";

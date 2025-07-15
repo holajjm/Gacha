@@ -11,7 +11,7 @@ import useCustomAxios from "@hooks/useCustomAxios";
 import { ModalPortal } from "@hooks/ModalPortal";
 import Button from "@components/Button";
 import { toast } from "react-toastify";
-import ProfileImg from "constants/Profile";
+import ProfileImg from "@constants/Profile.ts";
 
 import MinihomeFollowerModal from "@components/modals/MinihomeFollowerModal";
 import MinihomeFollowingModal from "@components/modals/MinihomeFollowingModal";
