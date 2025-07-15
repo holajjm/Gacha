@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import useCustomAxios from "@hooks/useCustomAxios";
-import ProfileImg from "constants/Profile";
+import { TimeDiff } from "@hooks/TimeDiff";
+import ProfileImg from "@constants/Profile.ts";
 
 import MinihomeReplyEdit from "./MinihomeReplyEdit";
 import style from "@styles/Minihome/Reply/MinihomeReplyItem.module.css";
 import { ReplyItemData } from "types/minihome";
-
+import { useUserStore } from "@store/store";
 
 function MinihomeReplyItem({ replys }: { replys: ReplyItemData }) {
   const axios = useCustomAxios();
   const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const user = useUserStore((state) => state.user);
   const editReply = () => {
     setIsEdit(!isEdit);
   };
@@ -44,14 +46,6 @@ function MinihomeReplyItem({ replys }: { replys: ReplyItemData }) {
       deleteReply();
     }
   };
-  const replyTime = () => {
-    const time = replys?.createAt;
-    const pattern = /(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/;
-    const resultTime = time.match(pattern);
-    if (resultTime) {
-      return `${resultTime[1]} ${resultTime[2]}`;
-    }
-  };
 
   return (
     <div className={style.main_reply}>
@@ -68,18 +62,22 @@ function MinihomeReplyItem({ replys }: { replys: ReplyItemData }) {
           />
           <p>{replys?.nickname}</p>
         </div>
-        <p className={style.main_reply_date}>{replyTime()}</p>
+        <p className={style.main_reply_date}>{TimeDiff(replys?.createAt)}</p>
       </header>
       <section className={style.main_reply_content}>
         {isEdit ? (
           <MinihomeReplyEdit replys={replys} editReplyResult={editReply} />
-        ) : (
+        ) : replys?.nickname === user.nickname ? (
           <div className={style.main_bottom}>
             <p>{replys?.content}</p>
             <div className={style.main_buttons}>
               <p onClick={editReply}>수정</p>
               <p onClick={handleDelete}>삭제</p>
             </div>
+          </div>
+        ) : (
+          <div className={style.main_bottom}>
+            <p>{replys?.content}</p>
           </div>
         )}
       </section>
