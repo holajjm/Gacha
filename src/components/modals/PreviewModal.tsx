@@ -9,24 +9,24 @@ import "swiper/css/pagination";
 
 const imageList = {
   미니홈: [
-    "/images/MiniHomeMain.webp",
-    "/images/MiniHomeMain1.webp",
-    "/images/MiniHomeItemBook.webp",
-    "/images/MiniHomeAdornBackground.webp",
-    "/images/MiniHomeAdornItem.webp",
+    "/images/preview/MinihomeMain.webp",
+    "/images/preview/MinihomeFollow.webp",
+    "/images/preview/MinihomeReply.webp",
+    "/images/preview/MinihomeItemBook.webp",
+    "/images/preview/MinihomeAdorn.webp",
   ],
-  둘러보기: ["/images/Explore.webp"],
+  둘러보기: ["/images/preview/ExploreMain.webp"],
   가챠: [
-    "/images/Gacha.webp",
-    "/images/GachaClose.webp",
-    "/images/GachaOpen.webp",
+    "/images/preview/GachaMain.webp",
+    "/images/preview/GachaClose.webp",
+    "/images/preview/GachaOpen.webp",
   ],
   마켓: [
-    "/images/Market.webp",
-    "/images/MarketItemModal.webp",
-    "/images/MarketSell.webp",
-    "/images/MarketSellModal.webp",
-    "/images/MarketEnroll.webp",
+    "/images/preview/MarketMain.webp",
+    "/images/preview/MarketMainModal.webp",
+    "/images/preview/MarketSell.webp",
+    "/images/preview/MarketSellModal.webp",
+    "/images/preview/MarketEnroll.webp",
   ],
 } as const;
 const explainList = {

@@ -49,14 +49,14 @@ function MainPage() {
   //   sessionStorage.setItem("user", JSON.stringify(user));
   // }, [user]);
   const previewItems = [
-    { src: "/images/MiniHomeMain.webp", label: "미니홈" },
-    { src: "/images/Explore.webp", label: "둘러보기" },
-    { src: "/images/Gacha.webp", label: "가챠" },
-    { src: "/images/Market.webp", label: "마켓" },
+    { src: "/images/preview/MinihomeMain.webp", label: "미니홈" },
+    { src: "/images/preview/ExploreMain.webp", label: "둘러보기" },
+    { src: "/images/preview/GachaMain.webp", label: "가챠" },
+    { src: "/images/preview/MarketMain.webp", label: "마켓" },
   ];
   
   // console.log(modalState);
-
+  
   return (
     <>
       <main className={style.container}>
@@ -98,7 +98,7 @@ function MainPage() {
                       alt={item.label}
                       width={224}
                       height={112}
-                      fetchPriority="high"
+                      {...{fetchpriority:"high"}}
                     />
                   </div>
                   <p className={style.text}>{item.label} &rarr;</p>
