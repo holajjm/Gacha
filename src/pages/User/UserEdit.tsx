@@ -9,8 +9,8 @@ import useCustomAxios from "@hooks/useCustomAxios";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import Button from "@components/Button";
-import { toast } from "react-toastify";
 
+import { toast } from "react-toastify";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/User/UserEdit.module.css";
 
@@ -104,7 +104,7 @@ function UserEdit() {
         alert(data?.error?.message);
         return;
       }
-      queryClient.invalidateQueries({ queryKey: ["Minihome"] });
+      queryClient.invalidateQueries({ queryKey: ["User"] });
       console.log(data);
     },
   });
