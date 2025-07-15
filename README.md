@@ -13,7 +13,7 @@
 - 이전의 싸이월드 미니홈피와 일본의 가챠샵을 접목하여 구현한 프로젝트로, 가챠를 통해 뽑은 아이템을 활용하여 개인 미니홈을 꾸미고, 아이템을 사고 팔 수 있는 서비스입니다.
 
 </br>
-
+z
 > ### 배포 링크 및 테스트 계정
 
 👉🏻 <a target="_blank" href="https://gacha-ruddy.vercel.app/" alt="바로가기">GachaGacha</a>
@@ -162,10 +162,17 @@
 
 ```
 📦GachaGacha
+ ┣ 📂.vercel
+ ┣ 📂dist
+ ┣ 📂node_modules
  ┣ 📂public
+ ┃ ┣ 📂fonts
+ ┃ ┣ 📂images
+ ┃ ┣ 📜robots.txt
+ ┃ ┗ 📜sitemap.xml
  ┣ 📂src
- ┃ ┣ 📂assets
  ┃ ┣ 📂api
+ ┃ ┣ 📂assets
  ┃ ┣ 📂components
  ┃ ┃ ┣ 📂layouts
  ┃ ┃ ┃ ┣ 📜Footer.tsx
@@ -189,10 +196,10 @@
  ┃ ┃ ┣ 📜Lotto.tsx
  ┃ ┃ ┗ 📜LottoOpen.tsx
  ┃ ┣ 📂constants
- ┃ ┃ ┣ 📜.env
  ┃ ┃ ┗ 📜Profile.ts
  ┃ ┣ 📂hooks
  ┃ ┃ ┣ 📜ModalPortal.ts
+ ┃ ┃ ┣ 📜TimeDiff.ts
  ┃ ┃ ┣ 📜useCustomAxios.tsx
  ┃ ┃ ┣ 📜useImage.tsx
  ┃ ┃ ┣ 📜usePageTitle.tsx
@@ -330,6 +337,7 @@
  ┃ ┣ 📜main.tsx
  ┃ ┃ 📜routes.tsx
  ┃ ┗ 📜vite-env.d.ts
+ ┣ 📜.env
  ┣ 📜.gitignore
  ┣ 📜.prettierrc.cjs
  ┣ 📜eslint.config.js
@@ -352,36 +360,43 @@
 
 |                     메인 화면 - 로그인 전                     |                 메인 화면 - 로그인 후                  |
 | :-----------------------------------------------------------: | :----------------------------------------------------: |
-| <img width="400px" src="./public/images/k.gif" alt="Preview"> | <img width="400px" src="./public/l.gif" alt="Preview"> |
+| <img width="400px" src="./public/images/preview/MainPageBefore.webp" alt="Preview"> | <img width="400px" src="./public/images/preview/MainPageAfter.webp" alt="Preview"> |
 
-|                               미니홈 - 메인                               |                                미니홈 - 댓글                                |
+|                     메인 화면 - 미리보기                     |                 미니홈 - 메인                  |
+| :-----------------------------------------------------------: | :----------------------------------------------------: |
+| <img width="400px" src="./public/images/preview/MainPageModal.webp" alt="Preview"> | <img width="400px" src="./public/images/preview/MinihomeMain.webp" alt="Preview"> |
+
+|                               미니홈 - 팔로우/팔로잉                               |                                미니홈 - 댓글                                |
 | :-----------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
-| <img width="400px" src="./public/images/MiniHomeMain.webp" alt="Preview"> | <img width="400px" src="./public/images/MiniHomeMain1.webp" alt="Preview" > |
+| <img width="400px" src="./public/images/preview/MinihomeFollow.webp" alt="Preview"> | <img width="400px" src="./public/images/preview/MinihomeReply.webp" alt="Preview" > |
 
-|                               미니홈 - 아이템 북                               |                                  미니홈 - 꾸미기(1)                                  |
+|                               미니홈 - 아이템 북                               |                                  미니홈 - 꾸미기                                  |
 | :----------------------------------------------------------------------------: | :----------------------------------------------------------------------------------: |
-| <img width="400px" src="./public/images/MiniHomeItemBook.webp" alt="Preview" > | <img width="400px" src="./public/images/MiniHomeAdornBackground.webp" alt="Preview"> |
+| <img width="400px" src="./public/images/preview/MinihomeItemBook.webp" alt="Preview" > | <img width="400px" src="./public/images/preview/MinihomeAdorn.webp" alt="Preview"> |
 
-|                               미니홈 - 꾸미기(2)                                |                           둘러보기 - 메인                            |
+|                               둘러보기 - 메인                                |                           가챠 - 메인                            |
 | :-----------------------------------------------------------------------------: | :------------------------------------------------------------------: |
-| <img width="400px" src="./public/images/MiniHomeAdornItem.webp" alt="Preview" > | <img width="400px" src="./public/images/Explore.webp" alt="Preview"> |
+| <img width="400px" src="./public/images/preview/ExploreMain.webp" alt="Preview" > | <img width="400px" src="./public/images/preview/GachaMain.webp" alt="Preview"> |
 
-|                               가챠 - 메인                               |                              가챠 - 뽑는중                              |
+|                               가챠 - 뽑는중                               |                              가챠 - 뽑기 완료                              |
 | :---------------------------------------------------------------------: | :---------------------------------------------------------------------: |
-| <img width="200px" src="./public/images/GachaMain.webp" alt="Preview" > | <img width="400px" src="./public/images/GachaClose.webp" alt="Preview"> |
+| <img width="200px" src="./public/images/preview/GachaClose.webp" alt="Preview" > | <img width="400px" src="./public/images/preview/GachaOpen.webp" alt="Preview"> |
 
-|                            가챠 - 뽑기 완료                             |                             마켓 - 메인                             |
+|                            마켓 - 메인                             |                             마켓 - 판매중인 아이템                             |
 | :---------------------------------------------------------------------: | :-----------------------------------------------------------------: |
-| <img width="400px" src="./public/images/GachaOpen.webp" alt="Preview" > | <img width="400px" src="./public/images/Market.webp" alt="Preview"> |
+| <img width="400px" src="./public/images/preview/MarketMain.webp" alt="Preview" > | <img width="400px" src="./public/images/preview/MarketMainModal.webp" alt="Preview"> |
 
-|                            마켓 - 판매중인 아이템                             |                           마켓 - 내 판매 목록                           |
+|                            마켓 - 내 판매 목록                             |                           마켓 - 내 판매 목록 상세                           |
 | :---------------------------------------------------------------------------: | :---------------------------------------------------------------------: |
-| <img width="400px" src="./public/images/MarketItemModal.webp" alt="Preview" > | <img width="400px" src="./public/images/MarketSell.webp" alt="Preview"> |
+| <img width="400px" src="./public/images/preview/MarketSell.webp" alt="Preview" > | <img width="400px" src="./public/images/preview/MarketSellModal.webp" alt="Preview"> |
 
-|                           마켓 - 내 판매 목록 상세                            |                             마켓 - 판매 등록                              |
+|                           마켓 - 판매 등록                            |                             유저 - 회원가입                              |
 | :---------------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
-| <img width="400px" src="./public/images/MarketSellModal.webp" alt="Preview" > | <img width="400px" src="./public/images/MarketEnroll.webp" alt="Preview"> |
+| <img width="400px" src="./public/images/preview/MarketEnroll.webp" alt="Preview" > | <img width="400px" src="./public/images/preview/UserSignIn.webp" alt="Preview"> |
 
+|                           유저 - 로그인                            |                             유저 - 회원 정보 수정                              |
+| :---------------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
+| <img width="400px" src="./public/images/preview/UserLogin.webp" alt="Preview" > | <img width="400px" src="./public/images/preview/UserEdit.webp" alt="Preview"> |
 <!-- ### 모바일 버전
 
 |                        시작 화면                         |                        메인 화면                         |                  메인 화면 - 전국 날씨                   |
