@@ -1,30 +1,8 @@
+import { UserStore, TokenStore } from "types/extra";
+import { User } from "types/user";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-export interface User {
-  loginId?: string;
-  socialType?: string;
-  nickname: string;
-  profileId: number;
-  accessToken: string;
-  refreshToken: string;
-}
-interface UserStore {
-  user: User;
-  setUser: (user: User) => void;
-}
-
-interface TokenStore {
-  accessToken: string;
-  refreshToken: string;
-  setToken: ({
-    accessToken,
-    refreshToken,
-  }: {
-    accessToken: string;
-    refreshToken: string;
-  }) => void;
-}
 // export const useUserStore = create<UserStore>((set) => ({
 //   user: JSON.parse(sessionStorage.getItem("user") || "null"),
 //   setUser: (user: User) => {
@@ -69,7 +47,7 @@ export const useUserStore = create<UserStore>()(
       },
       setUser: (user: User) => set(() => ({ user })),
     }),
-    
+
     {
       name: "user",
       storage: createJSONStorage(() => sessionStorage),
