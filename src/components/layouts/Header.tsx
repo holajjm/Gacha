@@ -46,8 +46,7 @@ function Header() {
             alt="MainLogo"
             width={280}
             height={36}
-            fetchPriority="high"
-            decoding="async"
+            {...{ fetchpriority: "high" }}
           />
         </a>
         <nav className={style.link_wrapper} aria-label="주요 메뉴">
