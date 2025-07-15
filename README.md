@@ -13,7 +13,7 @@
 - 이전의 싸이월드 미니홈피와 일본의 가챠샵을 접목하여 구현한 프로젝트로, 가챠를 통해 뽑은 아이템을 활용하여 개인 미니홈을 꾸미고, 아이템을 사고 팔 수 있는 서비스입니다.
 
 </br>
-z
+
 > ### 배포 링크 및 테스트 계정
 
 👉🏻 <a target="_blank" href="https://gacha-ruddy.vercel.app/" alt="바로가기">GachaGacha</a>
@@ -380,7 +380,7 @@ z
 
 |                               가챠 - 뽑는중                               |                              가챠 - 뽑기 완료                              |
 | :---------------------------------------------------------------------: | :---------------------------------------------------------------------: |
-| <img width="200px" src="./public/images/preview/GachaClose.webp" alt="Preview" > | <img width="400px" src="./public/images/preview/GachaOpen.webp" alt="Preview"> |
+| <img width="400px" src="./public/images/preview/GachaClose.webp" alt="Preview" > | <img width="400px" src="./public/images/preview/GachaOpen.webp" alt="Preview"> |
 
 |                            마켓 - 메인                             |                             마켓 - 판매중인 아이템                             |
 | :---------------------------------------------------------------------: | :-----------------------------------------------------------------: |
