@@ -4,12 +4,13 @@ import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 
 import style from "@styles/User/UserLogin.module.css";
+import { ENV } from "@constants/env";
 
 function UserLogin() {
   usePageTitle("로그인");
   usePageUpper();
-  const CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
-  const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+  const CLIENT_ID = ENV.KAKAO_CLIENT_ID;
+  const REDIRECT_URI = ENV.KAKAO_REDIRECT_URI;
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   const kakaoLogin = async () => {
@@ -44,6 +45,7 @@ function UserLogin() {
                       alt="카카오 로고"
                       width={24}
                       height={24}
+                      {...{ fetchpriority: "high" }}
                     />
                     <span>카카오로 시작하기</span>
                   </button>
