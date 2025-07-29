@@ -30,6 +30,7 @@ export const useTokenStore = create<TokenStore>()(
     }),
     {
       name: "token",
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );
