@@ -22,6 +22,10 @@ export default defineConfig({
           replacement: path.resolve(__dirname, "src/constants"),
         },
         {
+          find: "@features",
+          replacement: path.resolve(__dirname, "src/features"),
+        },
+        {
           find: "@hooks",
           replacement: path.resolve(__dirname, "src/hooks"),
         },
