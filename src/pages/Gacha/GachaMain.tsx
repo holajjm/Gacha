@@ -1,47 +1,19 @@
-import React, { useEffect, useRef } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React from "react";
 
 import { useModalState } from "@store/store";
-import useCustomAxios from "@hooks/useCustomAxios";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import Button from "@components/Button";
 
 import GachaCapsule from "./GachaCapsule";
 import style from "@styles/Gacha/GachaMain.module.css";
+import { useGachaQuery } from "@features/gacha/useGachaQuery";
 
 function GachaMain() {
   usePageTitle("가챠 뽑기");
   usePageUpper();
-  const axios = useCustomAxios();
-  const queryClient = useQueryClient();
   const { modal, modalOpen } = useModalState((state) => state);
-  const imgRef = useRef<HTMLImageElement>(null);
-  useEffect(() => {
-    if (imgRef.current) {
-      imgRef.current.setAttribute("fetchpriority", "high");
-    }
-  }, []);
-
-  const { data: gachaData, mutate: getGacha } = useMutation({
-    mutationFn: async () => {
-      const response = await axios.post("/gacha", {});
-      return response?.data;
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["coin"] });
-      queryClient.invalidateQueries({ queryKey: ["Items"] });
-      queryClient.invalidateQueries({ queryKey: ["EnrollItemList"] });
-      if (data?.error) {
-        alert(data?.error?.message);
-      }
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
+  const { data: gachaData, mutate: getGacha } = useGachaQuery();
   const handleGachaClick = () => {
     getGacha();
     modalOpen();
@@ -58,9 +30,10 @@ function GachaMain() {
             <img
               src="/images/GachaMain.webp"
               alt="Gacha"
-              ref={imgRef}
               width={320}
               height={320}
+              {...{ fetchpriority: "high" }}
+              decoding="async"
             />
           </div>
           <Button
