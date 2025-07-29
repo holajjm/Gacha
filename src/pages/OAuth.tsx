@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useTokenStore, useUserStore } from "@store/store";
-import { toast } from "react-toastify";
-
 import style from "@styles/OAuth.module.css";
-import { QueryParams } from "types/user";
 
+import { toast } from "react-toastify";
+import type { QueryParams } from "types/user";
 
 // 1.기존에는 토큰에 유저 정보를 담아서 주었기에 jwtDecode(jwt-decode) 라이브러리를 통해서 복호화를 거쳐 로그인 처리를 하였지만
 // 쿼리 스트링으로 전달 받아 처리하는 것으로 수정함
 // 2. OAuth.tsx 파일은 소셜 로그인 과정에서 유저 정보를 확인하고 메인 화면으로 이동 시켜주는 파일로 로그인과 메인 화면 중간에 페이지를 보유하면서 위치하고 있다.
 function OAuth() {
-  const { user, setUser } = useUserStore((state) => state);
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
   const setToken = useTokenStore((state) => state.setToken);
   const navigate = useNavigate();
 
@@ -44,14 +44,6 @@ function OAuth() {
           accessToken: queryParams.accessToken,
           refreshToken: queryParams.refreshToken,
         });
-        // localStorage.setItem(
-        //   "AccessToken",
-        //   JSON.stringify(queryParams?.accessToken),
-        // );
-        // localStorage.setItem(
-        //   "RefreshToken",
-        //   JSON.stringify(queryParams?.refreshToken),
-        // );
         toast("환영합니다!");
         navigate("/main");
       }
