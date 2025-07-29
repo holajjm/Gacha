@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useModalState } from "@store/store";
@@ -16,12 +16,12 @@ function GachaOpenCapsule({
   const navigate = useNavigate();
   const { modalClose } = useModalState((state) => state);
   const image = useImage(itemImageUrl);
-  const imgRef = useRef<HTMLImageElement>(null);
-  useEffect(() => {
-    if (imgRef.current) {
-      imgRef.current.setAttribute("fetchpriority", "high");
-    }
-  }, []);
+  // const imgRef = useRef<HTMLImageElement>(null);
+  // useEffect(() => {
+  //   if (imgRef.current) {
+  //     imgRef.current.setAttribute("fetchpriority", "high");
+  //   }
+  // }, []);
 
   return (
     <main className={style.wrapper}>
@@ -29,13 +29,23 @@ function GachaOpenCapsule({
         className={style.open_capsule}
         src={`/images/${color}OpenCapsule.webp`}
         alt="Open"
-        ref={imgRef}
+        // ref={imgRef}
         width={320}
         height={448}
+        {...{ fetchpriority: "high" }}
+        decoding="async"
       />
       {image ? (
         <div className={style.result_open_capsule}>
-          <img src={image} alt="item" ref={imgRef} width={240} height={240} />
+          <img
+            src={image}
+            alt="item"
+            // ref={imgRef}
+            width={240}
+            height={240}
+            {...{ fetchpriority: "high" }}
+            decoding="async"
+          />
         </div>
       ) : null}
       <section className={style.section}>
