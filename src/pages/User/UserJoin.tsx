@@ -4,14 +4,14 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
-import { useUserStore } from "@store/store";
 import Button from "@components/Button";
+import { ENV } from "@constants/env";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
-
+import { useUserStore } from "@store/store";
 import style from "@styles/User/UserJoin.module.css";
-import { QueryParams, UserData } from "types/user";
 
+import type { QueryParams, UserData } from "types/user";
 
 function UserJoin() {
   usePageTitle("회원가입");
@@ -43,7 +43,7 @@ function UserJoin() {
   }, []);
 
   const authAxios = axios.create({
-    baseURL: import.meta.env.VITE_SERVER_API,
+    baseURL: ENV.SERVER_API,
     headers: {
       "Content-Type": "application/json",
     },
