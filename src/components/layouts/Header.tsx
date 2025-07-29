@@ -1,41 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
-import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
-
-import Coin from "@components/Coin";
 import Bell from "@components/Bell";
+import Coin from "@components/Coin";
+import { useUserLogout } from "@features/user/useUserLogout";
+import { useTokenStore, useUserStore } from "@store/store";
 import style from "@styles/Layouts/Header.module.css";
 
 function Header() {
-  const { user } = useUserStore((state) => state);
-  const axios = useCustomAxios();
+  const user = useUserStore((state) => state.user);
+  const accessToken = useTokenStore((state) => state?.accessToken);
   const navigate = useNavigate();
-
-  const { mutate: handleLogout } = useMutation({
-    mutationFn: async () => {
-      if (confirm("로그아웃 하시겠습니까?")) {
-        try {
-          const response = axios.delete("/logout", {});
-          sessionStorage.removeItem("user");
-          localStorage.removeItem("token");
-          window.location.reload();
-          return response;
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    },
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const { mutate: handleLogout } = useUserLogout();
 
   return (
     <header className={style.container}>
@@ -50,7 +27,7 @@ function Header() {
           />
         </a>
         <nav className={style.link_wrapper} aria-label="주요 메뉴">
-          {user && user?.accessToken ? (
+          {accessToken ? (
             <>
               <Bell />
               <Coin />
