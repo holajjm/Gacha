@@ -2,30 +2,32 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Index from "@components/layouts/Index";
 //Main
-import MainPage from "@pages/Main/MainPage";
+export const MainPage = React.lazy(() => import("@pages/Main/MainPage"));
 //Minihome
-import MiniHomeMain from "@pages/Minihome/MiniHomeMain";
-import MinihomeAdorn from "@pages/Minihome/Adorn/MinihomeAdorn";
-import MinihomeItemBook from "@pages/Minihome/ItemBook/MinihomeItemBook";
+export const MiniHomeMain = React.lazy(() => import("@pages/Minihome/MiniHomeMain"));
+export const MinihomeAdorn = React.lazy(() => import("@pages/Minihome/Adorn/MinihomeAdorn"));
+export const MinihomeItemBook = React.lazy(() => import("@pages/Minihome/ItemBook/MinihomeItemBook"));
 //Explore
-import ExploreMain from "@pages/Explore/ExploreMain";
+export const ExploreMain = React.lazy(() => import("@pages/Explore/ExploreMain"));
 //Gacha
-import GachaMain from "@pages/Gacha/GachaMain";
+export const GachaMain = React.lazy(() => import("@pages/Gacha/GachaMain"));
 //Market
-import MarketMain from "@pages/Market/MarketMain";
-import MarketEnroll from "@pages/Market/Enroll/MarketEnroll";
-import MarketMySellingList from "@pages/Market/Sell/MarketMySellingList";
+export const MarketMain = React.lazy(() => import("@pages/Market/MarketMain"));
+export const MarketEnroll = React.lazy(() => import("@pages/Market/Enroll/MarketEnroll"));
+export const MarketMySellingList = React.lazy(() => import("@pages/Market/Sell/MarketMySellingList"));
 //User
-import UserLogin from "@pages/User/UserLogin";
-import UserJoin from "@pages/User/UserJoin";
-import UserEdit from "@pages/User/UserEdit";
-import ErrorPage from "@pages/ErrorPage";
-import OAuth from "@pages/OAuth";
+export const UserLogin = React.lazy(() => import("@pages/User/UserLogin"));
+export const UserJoin = React.lazy(() => import("@pages/User/UserJoin"));
+export const UserEdit = React.lazy(() => import("@pages/User/UserEdit"));
+export const ErrorPage = React.lazy(() => import("@pages/ErrorPage"));
+export const OAuth = React.lazy(() => import("@pages/OAuth"));
+
+import WithSuspense from "@components/layouts/WithSuspense";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    errorElement: <ErrorPage />,
+    errorElement: WithSuspense(<ErrorPage />),
     children: [
       {
         path: "/",
@@ -33,65 +35,65 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <MainPage />,
+            element: WithSuspense(<MainPage />),
           },
           //Main
           {
             path: "main",
-            element: <MainPage />,
+            element: WithSuspense(<MainPage />),
           },
           //Minihome
           {
             path: "minihome/:nickname",
-            element: <MiniHomeMain />,
+            element: WithSuspense(<MiniHomeMain />),
           },
           {
             path: "minihome/adorn",
-            element: <MinihomeAdorn />,
+            element: WithSuspense(<MinihomeAdorn />),
           },
           {
             path: "minihome/itembook",
-            element: <MinihomeItemBook />,
+            element: WithSuspense(<MinihomeItemBook />),
           },
           //Gacha
           {
             path: "gacha",
-            element: <GachaMain />,
+            element: WithSuspense(<GachaMain />),
           },
           //Explore
           {
             path: "explore",
-            element: <ExploreMain />,
+            element: WithSuspense(<ExploreMain />),
           },
           //Market
           {
             path: "market",
-            element: <MarketMain />,
+            element: WithSuspense(<MarketMain />),
           },
           {
             path: "market/enroll",
-            element: <MarketEnroll />,
+            element: WithSuspense(<MarketEnroll />),
           },
           {
             path: "market/mysellingitem",
-            element: <MarketMySellingList />,
+            element: WithSuspense(<MarketMySellingList />),
           },
           //User
           {
             path: "login",
-            element: <UserLogin />,
+            element: WithSuspense(<UserLogin />),
           },
           {
             path: "join",
-            element: <UserJoin />,
+            element: WithSuspense(<UserJoin />),
           },
           {
             path: "edit",
-            element: <UserEdit />,
+            element: WithSuspense(<UserEdit />),
           },
           {
             path: "auth",
-            element: <OAuth />,
+            element: WithSuspense(<OAuth />),
           },
         ],
       },
