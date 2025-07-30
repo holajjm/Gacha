@@ -1,13 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import useCustomAxios from "@hooks/useCustomAxios";
-import { toast } from "react-toastify";
-
+import { useReplyEdit } from "@features/reply/useReplyEdit";
 import style from "@styles/Minihome/Reply/MinihomeReplyEdit.module.css";
-import { ReplyData, ReplySendData } from "types/minihome";
 
+import type { ReplyData, ReplySendData } from "types/minihome";
 
 function MinihomeReplyEdit({
   replys,
@@ -16,37 +13,13 @@ function MinihomeReplyEdit({
   replys: ReplyData;
   editReplyResult: () => void;
 }) {
-  const axios = useCustomAxios();
-  const queryClient = useQueryClient();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ReplySendData>();
 
-  const { mutate: editReply } = useMutation({
-    mutationFn: async (formData: ReplySendData) => {
-      if (confirm("수정하시겠습니까?")) {
-        const response = await axios.put(`/guestbooks/${replys?.guestbookId}`, {
-          content: formData.content,
-        });
-        return response?.data;
-      }
-    },
-    onSuccess: (data) => {
-      if (data?.error) {
-        alert(data?.error?.message);
-        return;
-      }
-      queryClient.invalidateQueries({ queryKey: ["Replys"] });
-      toast("수정되었습니다.");
-      editReplyResult();
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const { mutate: editReply } = useReplyEdit({ replys, editReplyResult });
 
   const editReplyForm = (formData: ReplySendData) => {
     editReply(formData);
