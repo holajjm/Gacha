@@ -1,20 +1,20 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { useFollowingModalState, useUserStore } from "@store/store.ts";
-// import useCustomAxios from "@hooks/useCustomAxios";
-import Button from "@components/Button";
-// import { toast } from "react-toastify";
 
 import ProfileImg from "@constants/Profile.ts";
-import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
-import { Followings } from "types/minihome";
+import Button from "@components/Button";
 import { useUnfollow } from "@features/minihome/useUnfollow";
+import { useFollowingModalState, useUserStore } from "@store/store.ts";
+import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
+
+import { Followings } from "types/minihome";
+// import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import useCustomAxios from "@hooks/useCustomAxios";
+// import { toast } from "react-toastify";
 
 function MinihomeFollowingItem({ followings }: { followings: Followings }) {
-  const { user } = useUserStore((state) => state);
-  const { modalClose } = useFollowingModalState((state) => state);
+  const user = useUserStore((state) => state.user);
+  const modalClose = useFollowingModalState((state) => state.modalClose);
   const { nickname } = useParams();
   const navigate = useNavigate();
   const { mutate: unFollow } = useUnfollow({ followings });
