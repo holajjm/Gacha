@@ -3,14 +3,6 @@ import { User } from "types/user";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-// export const useUserStore = create<UserStore>((set) => ({
-//   user: JSON.parse(sessionStorage.getItem("user") || "null"),
-//   setUser: (user: User) => {
-//     sessionStorage.setItem("user", JSON.stringify(user));
-//     set({ user });
-//   },
-// }));
-
 export const useTokenStore = create<TokenStore>()(
   persist(
     (set) => ({
