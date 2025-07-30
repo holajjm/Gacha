@@ -58,6 +58,10 @@ function MinihomeFollowingItem({ followings }: { followings: Followings }) {
           <img
             src={ProfileImg[followings?.profileId]?.profileImg}
             alt="profile"
+            width={48}
+            height={48}
+            {...{ fetchpriority: "high" }}
+            decoding="async"
           />
         </div>
         <p className={style.article_nickname}>{followings?.nickname}</p>
