@@ -1,54 +1,29 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import { useMinihomeData } from "@features/minihome/useMinihomeData";
+import { useMinihomeAdorn } from "@features/minihome/useMinihomeAdorn";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
-import useCustomAxios from "@hooks/useCustomAxios";
 import useImage from "@hooks/useImage";
+import style from "@styles/Minihome/MiniHomeMain.module.css";
 
-import MinihomeReplyNew from "./Reply/MinihomeReplyNew";
 import MinihomeHeader from "./Header/MinihomeHeader";
 import MiniHomeItem from "./MiniHomeItem";
-import style from "@styles/Minihome/MiniHomeMain.module.css";
-import { AdornDataItem } from "types/minihome";
-
+import MinihomeReplyNew from "./Reply/MinihomeReplyNew";
+import type { AdornDataItem } from "types/minihome";
 
 function MiniHomeMain() {
   usePageTitle("MiniHome");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
   const { nickname } = useParams<{ nickname: string }>();
-  const axios = useCustomAxios();
 
   // 미니홈 유저 정보 호출
-  const getMinihome = async () => {
-    const response = await axios.get(
-      `${SERVER_API}/minihomes/${nickname && nickname}`,
-    );
-    return response?.data;
-  };
-  const { data: minihomeData } = useQuery({
-    queryKey: ["Minihome", user, nickname],
-    queryFn: getMinihome,
-    staleTime: 1000 * 60 * 10,
-    enabled: !!user,
-  });
+  const { data: minihomeData } = useMinihomeData({ nickname });
   // console.log(minihomeData);
 
   //꾸미기 데이터 호출
-  const adorn = async () => {
-    const response = await axios.get(`${SERVER_API}/decoration/${nickname}`);
-    return response?.data;
-  };
-  const { data: adornData } = useQuery({
-    queryKey: ["AdornData", user, nickname],
-    queryFn: adorn,
-    staleTime: 1000 * 60 * 10,
-    enabled: !!user,
-  });
+  const { data: adornData } = useMinihomeAdorn({ nickname });
   // console.log(adornData);
 
   const itemList = adornData?.items?.map((e: AdornDataItem) => (
@@ -74,6 +49,10 @@ function MiniHomeMain() {
               <img
                 src={useImage(adornData?.background?.imageUrl)}
                 alt="Background"
+                width={960}
+                height={480}
+                {...{ fetchpriority: "high" }}
+                decoding="async"
               />
             </div>
             <div className={style.section_article_1_imgList}>{itemList}</div>

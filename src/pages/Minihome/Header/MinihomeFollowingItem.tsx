@@ -1,46 +1,47 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useFollowingModalState, useUserStore } from "@store/store.ts";
-import useCustomAxios from "@hooks/useCustomAxios";
+// import useCustomAxios from "@hooks/useCustomAxios";
 import Button from "@components/Button";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 import ProfileImg from "@constants/Profile.ts";
 import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
 import { Followings } from "types/minihome";
-
-
+import { useUnfollow } from "@features/minihome/useUnfollow";
 
 function MinihomeFollowingItem({ followings }: { followings: Followings }) {
   const { user } = useUserStore((state) => state);
   const { modalClose } = useFollowingModalState((state) => state);
   const { nickname } = useParams();
-  const axios = useCustomAxios();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const { mutate: unFollow } = useMutation({
-    mutationFn: async () => {
-      if (confirm(`${followings?.nickname}님을 언팔로우 할까요?`)) {
-        const response = await axios.delete("/users/unfollow", {
-          data: { followeeUserNickname: followings?.nickname },
-        });
-        // console.log(response?.data);
-        toast("언팔로우 되었습니다.");
-        modalClose();
-        return response?.data;
-      }
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["Followings"] });
-      queryClient.invalidateQueries({ queryKey: ["Minihome"] });
-      if (data?.error) {
-        alert(data?.error?.message);
-      }
-      console.log(data);
-    },
-  });
+  const { mutate: unFollow } = useUnfollow({ followings });
+
+  // const axios = useCustomAxios();
+  // const queryClient = useQueryClient();
+  // const { mutate: unFollow } = useMutation({
+  //   mutationFn: async () => {
+  //     if (confirm(`${followings?.nickname}님을 언팔로우 할까요?`)) {
+  //       const response = await axios.delete("/users/unfollow", {
+  //         data: { followeeUserNickname: followings?.nickname },
+  //       });
+  //       // console.log(response?.data);
+  //       toast("언팔로우 되었습니다.");
+  //       modalClose();
+  //       return response?.data;
+  //     }
+  //   },
+  //   onSuccess: (data) => {
+  //     queryClient.invalidateQueries({ queryKey: ["Followings"] });
+  //     queryClient.invalidateQueries({ queryKey: ["Minihome"] });
+  //     if (data?.error) {
+  //       alert(data?.error?.message);
+  //     }
+  //     console.log(data);
+  //   },
+  // });
 
   return (
     <article className={style.article}>

@@ -1,47 +1,21 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useFollowerModalState, useUserStore } from "@store/store.ts";
-import useCustomAxios from "@hooks/useCustomAxios";
-import Button from "@components/Button";
-import { toast } from "react-toastify";
 import ProfileImg from "@constants/Profile.ts";
-
+import Button from "@components/Button";
+import { useFollowerDelete } from "@features/minihome/useFollowerDelete";
+import { useUserStore } from "@store/store";
 import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
+
 import { Followers } from "types/minihome";
 
-
 function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
-  const { user } = useUserStore((state) => state);
-  const { modalClose } = useFollowerModalState((state) => state);
+  const user = useUserStore((state) => state.user);
   const { nickname } = useParams();
-  const axios = useCustomAxios();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   // 팔로워 삭제 로직
-  const { mutate: deleteFollower } = useMutation({
-    mutationFn: async () => {
-      if (confirm("팔로워를 삭제할까요?")) {
-        const response = await axios.delete(
-          `/users/follower/${followers?.nickname}`,
-        );
-        console.log(response?.data);
-        toast("삭제되었습니다.");
-        modalClose();
-        return response?.data;
-      }
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["Followers"] });
-      queryClient.invalidateQueries({ queryKey: ["Minihome"] });
-      if (data?.error) {
-        alert(data?.error?.message);
-      }
-      console.log(data);
-    },
-  });
+  const { mutate: deleteFollower } = useFollowerDelete({ followers });
 
   return (
     <article className={style.article}>
