@@ -1,46 +1,22 @@
 import React, { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import useCustomAxios from "@hooks/useCustomAxios";
-import { TimeDiff } from "@hooks/TimeDiff";
 import ProfileImg from "@constants/Profile.ts";
+import { useReplyDelete } from "@features/reply/useReplyDelete";
+import { TimeDiff } from "@hooks/TimeDiff";
+import { useUserStore } from "@store/store";
+import style from "@styles/Minihome/Reply/MinihomeReplyItem.module.css";
 
 import MinihomeReplyEdit from "./MinihomeReplyEdit";
-import style from "@styles/Minihome/Reply/MinihomeReplyItem.module.css";
 import { ReplyItemData } from "types/minihome";
-import { useUserStore } from "@store/store";
 
 function MinihomeReplyItem({ replys }: { replys: ReplyItemData }) {
-  const axios = useCustomAxios();
-  const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const user = useUserStore((state) => state.user);
   const editReply = () => {
     setIsEdit(!isEdit);
   };
 
-  const { mutate: deleteReply } = useMutation({
-    mutationFn: async () => {
-      try {
-        const response = await axios.delete(
-          `/guestbooks/${replys?.guestbookId}`,
-        );
-        return response?.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    onSuccess: (data) => {
-      if (data?.error) {
-        alert(data?.error?.message);
-        return;
-      }
-      queryClient.invalidateQueries({ queryKey: ["Replys"] });
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const { mutate: deleteReply } = useReplyDelete({ replys });
   const handleDelete = () => {
     if (confirm("댓글을 삭제할까요?")) {
       deleteReply();
@@ -59,6 +35,10 @@ function MinihomeReplyItem({ replys }: { replys: ReplyItemData }) {
                 : ProfileImg[replys?.profileId - 1]?.profileImg
             }
             alt="profile"
+            width={36}
+            height={36}
+            {...{ fetchpriority: "high" }}
+            decoding="async"
           />
           <p>{replys?.nickname}</p>
         </div>

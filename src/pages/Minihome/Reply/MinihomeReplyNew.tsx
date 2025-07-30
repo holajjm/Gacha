@@ -1,24 +1,20 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import Button from "@components/Button";
+import { useReplyNew } from "@features/reply/useReplyNew";
 import useCustomAxios from "@hooks/useCustomAxios";
 import usePageTitle from "@hooks/usePageTitle";
-import Button from "@components/Button";
+import { useUserStore } from "@store/store";
+import style from "@styles/Minihome/Reply/MinihomeReplyNew.module.css";
 
 import MinihomeReplyItem from "./MinihomeReplyItem";
-import style from "@styles/Minihome/Reply/MinihomeReplyNew.module.css";
-import { ReplyItemData, ReplySendData } from "types/minihome";
+import type { ReplyItemData, ReplySendData } from "types/minihome";
 
 function MinihomeReplyNew() {
   const axios = useCustomAxios();
-  const queryClient = useQueryClient();
   const { user } = useUserStore((state) => state);
   const { nickname } = useParams<{ nickname: string }>();
   usePageTitle(`미니홈 - ${nickname}`);
@@ -29,28 +25,7 @@ function MinihomeReplyNew() {
     reset,
   } = useForm<ReplySendData>(); //useForm의 타입과 handleSubmit에 들어가는 form 제출 함수의 매개변수 타입을 일치 시켜주어야 한다.
 
-  const { mutate: enrollReply } = useMutation({
-    mutationFn: async (formData: ReplySendData) => {
-      try {
-        const response = await axios.post(`/guestbooks/${nickname}`, {
-          content: formData.content,
-        });
-        return response?.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    onSuccess: (data) => {
-      if (data?.error) {
-        alert(data?.error?.message);
-        return;
-      }
-      queryClient.invalidateQueries({ queryKey: ["Replys"] });
-      reset();
-      console.log(data);
-    },
-    onError: (error) => console.log(error),
-  });
+  const { mutate: enrollReply } = useReplyNew({ nickname, reset });
   const onSubmit = (formData: ReplySendData) => {
     enrollReply(formData);
   };
