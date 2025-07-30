@@ -77,6 +77,10 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
                       src="/images/NewCoin.webp"
                       alt="coin"
                       className={style.section_article_coin}
+                      width={32}
+                      height={32}
+                      {...{ fetchpriority: "high" }}
+                      decoding="async"
                     />
                     <p>출석체크하고 코인 받기!</p>
                   </div>

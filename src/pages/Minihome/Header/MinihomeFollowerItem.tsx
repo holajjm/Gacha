@@ -32,6 +32,10 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
           <img
             src={ProfileImg[followers?.profileId]?.profileImg}
             alt="profile"
+            width={48}
+            height={48}
+            {...{ fetchpriority: "high" }}
+            decoding="async"
           />
         </div>
         <p className={style.article_nickname}>{followers?.nickname}</p>
