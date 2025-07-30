@@ -1,62 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
 
-import { usePreviewModalState, useUserStore } from "@store/store";
-import useCustomAxios from "@hooks/useCustomAxios";
+import PreviewModal, { ModalCategory } from "@components/modals/PreviewModal";
+import { useGetUserInfo } from "@features/user/useGetUserInfo";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import { ModalPortal } from "@hooks/ModalPortal";
-import PreviewModal, { ModalCategory } from "@components/modals/PreviewModal";
-
+import { usePreviewModalState } from "@store/store";
 import style from "@styles/Main/MainPage.module.css";
 
 function MainPage() {
   usePageTitle("Welcome to 가챠가챠!");
   usePageUpper();
+  useGetUserInfo();
   const modal = usePreviewModalState((state) => state.modal);
   const modalOpen = usePreviewModalState((state) => state.modalOpen);
   const [modalState, setModalState] = useState<ModalCategory>("미니홈");
 
-  const { user, setUser } = useUserStore((state) => state);
-  const axios = useCustomAxios();
-  const getUser = async () => {
-    if (user?.accessToken) {
-      const response = await axios.get("/userInfo");
-      return response?.data;
-    }
-    return;
-  };
-  const { data } = useQuery({
-    queryKey: ["User", user],
-    queryFn: getUser,
-    enabled: !!user,
-  });
-  // console.log("user", user);
-  // console.log(data);
-
-  useEffect(() => {
-    if (data) {
-      setUser({
-        ...user,
-        nickname: data?.nickname,
-        profileId: data?.profileId,
-      });
-    }
-    return;
-  }, [data]);
-
-  // useEffect(() => {
-  //   sessionStorage.setItem("user", JSON.stringify(user));
-  // }, [user]);
   const previewItems = [
     { src: "/images/preview/MinihomeMain.webp", label: "미니홈" },
     { src: "/images/preview/ExploreMain.webp", label: "둘러보기" },
     { src: "/images/preview/GachaMain.webp", label: "가챠" },
     { src: "/images/preview/MarketMain.webp", label: "마켓" },
   ];
-  
+
   // console.log(modalState);
-  
+
   return (
     <>
       <main className={style.container}>
@@ -85,7 +53,9 @@ function MainPage() {
                   onClick={(e: React.MouseEvent<HTMLDivElement>) => {
                     modalOpen();
                     setModalState(
-                      e.currentTarget.getAttribute("data-value") as ModalCategory,
+                      e.currentTarget.getAttribute(
+                        "data-value",
+                      ) as ModalCategory,
                     );
                   }}
                   data-value={item.label}
@@ -98,7 +68,7 @@ function MainPage() {
                       alt={item.label}
                       width={224}
                       height={112}
-                      {...{fetchpriority:"high"}}
+                      {...{ fetchpriority: "high" }}
                     />
                   </div>
                   <p className={style.text}>{item.label} &rarr;</p>
