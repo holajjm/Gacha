@@ -72,16 +72,16 @@
 /* ------------------------------------------ */
 .section_article {
   height: 100%;
-  overflow: scroll;
-  scrollbar-width: none;
-}
-.section_article_section {
-  height: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
   gap: 0.5rem;
   box-sizing: border-box;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+.section_article_section {
+  height: 100%;
   overflow: scroll;
   scrollbar-width: none;
 }

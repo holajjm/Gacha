@@ -83,6 +83,11 @@
 /* ----------------------------------------------- */
 .article {
   height: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 0.5rem;
+  box-sizing: border-box;
   overflow: scroll;
   scrollbar-width: none;
 }
@@ -96,16 +101,6 @@
 .article_loading > img {
   width: 16rem;
   height: 16rem;
-}
-.article_section {
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(7, 1fr);
-  gap: 0.5rem;
-  box-sizing: border-box;
-  overflow: scroll;
-  scrollbar-width: none;
 }
 /* 반응형 UI */
 @media (width <= 1024px) {
