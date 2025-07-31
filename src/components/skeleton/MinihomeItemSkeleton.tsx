@@ -4,7 +4,7 @@ import style from "@styles/Layouts/skeleton/MinihomeItemSkeleton.module.css";
 
 function MinihomeItemSkeleton() {
   return (
-    <div className={style.wrapper}>
+    <>
       <div className={style.item}>
         <div></div>
       </div>
@@ -83,7 +83,7 @@ function MinihomeItemSkeleton() {
       <div className={style.item}>
         <div></div>
       </div>
-    </div>
+    </>
   );
 }
 
