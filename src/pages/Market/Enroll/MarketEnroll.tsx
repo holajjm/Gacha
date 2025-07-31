@@ -1,23 +1,23 @@
 import React, { useCallback, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { useUserStore } from "@store/store";
+import Button from "@components/Button";
 import useCustomAxios from "@hooks/useCustomAxios";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
-import Button from "@components/Button";
+import { useUserStore } from "@store/store";
+import style from "@styles/Market/Enroll/MarketEnroll.module.css";
 
 import MarketEnrollPreview from "./MarketEnrollPreview";
 import MarketEnrollItem from "./MarketEnrollItem";
 import { SlArrowLeft } from "react-icons/sl";
-import style from "@styles/Market/Enroll/MarketEnroll.module.css";
-import { Item } from "types/market";
+import type { Item } from "types/market";
 
 
 function MarketEnrollItemList() {
   usePageTitle("마켓 - 판매 등록");
   usePageUpper();
-  const { user } = useUserStore((state) => state);
+  const user = useUserStore((state) => state.user);
   const axios = useCustomAxios();
   const [selectedItem, setSelectedItem] = useState<Item>({
     imageUrl: "",
