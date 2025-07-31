@@ -1,52 +1,33 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 
-import useCustomAxios from "@hooks/useCustomAxios";
-import { useUserStore } from "@store/store";
 import Button from "@components/Button";
+import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
+import { useItemBookQuery } from "@features/minihome/useItemBookQuery";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
+import style from "@styles/Minihome/ItemBook/MinihomeItemBook.module.css";
 
 import MinihomeItems from "./MinihomeItems";
-import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
 import { SlArrowLeft } from "react-icons/sl";
-import style from "@styles/Minihome/ItemBook/MinihomeItemBook.module.css";
-import { ItemBookData } from "types/minihome";
-
-
+import type { ItemBookData } from "types/minihome";
 
 function MinihomeItemBook() {
   usePageTitle("MiniHome - ItemBook");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
-  const axios = useCustomAxios();
   const [click, setClick] = useState<string>("");
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     setClick((e.target as HTMLElement).getAttribute("datatype") as string);
   };
   const text = click ? `?grade=${click}` : click;
-
-  const getItemList = async ():Promise<ItemBookData[]> => {
-    const response = await axios.get(
-      `${SERVER_API}/itembook/${user?.nickname}${text && text}`,
-    );
-    return response?.data;
-  };
-  const { data:itemList, isLoading }= useQuery<ItemBookData[]>({
-    queryKey: ["Items", text, user],
-    queryFn: getItemList,
-    staleTime: 1000 * 60 * 10,
-    enabled: !!user,
-  });
+  const { data: itemList, isLoading } = useItemBookQuery({ text });
   // console.log(itemList);
 
   const items = itemList?.map((e: ItemBookData) => (
     <MinihomeItems key={e.itemId} data={e} />
   ));
   return (
-    <div className={style.container}>
-      <main className={style.wrapper}>
+    <main className={style.container}>
+      <section className={style.wrapper}>
         <header className={style.header}>
           <Button
             text={<SlArrowLeft />}
@@ -56,43 +37,57 @@ function MinihomeItemBook() {
           <h1 className={style.header_title}>아이템 북 관리</h1>
         </header>
         <section className={style.section}>
-          <nav onClick={handleClick} className={style.section_nav}>
-            <button
-              className={click === "" ? style.active_button : style.button}
-              datatype=""
-            >
-              All
-            </button>
-            <button
-              className={click === "S" ? style.active_button : style.button}
-              datatype="S"
-            >
-              S등급
-            </button>
-            <button
-              className={click === "A" ? style.active_button : style.button}
-              datatype="A"
-            >
-              A등급
-            </button>
-            <button
-              className={click === "B" ? style.active_button : style.button}
-              datatype="B"
-            >
-              B등급
-            </button>
-            <button
-              className={click === "C" ? style.active_button : style.button}
-              datatype="C"
-            >
-              C등급
-            </button>
-            <button
-              className={click === "D" ? style.active_button : style.button}
-              datatype="D"
-            >
-              D등급
-            </button>
+          <nav onClick={handleClick}>
+            <ul className={style.section_nav}>
+              <li>
+                <button
+                  className={click === "" ? style.active_button : style.button}
+                  datatype=""
+                >
+                  All
+                </button>
+              </li>
+              <li>
+                <button
+                  className={click === "S" ? style.active_button : style.button}
+                  datatype="S"
+                >
+                  S등급
+                </button>
+              </li>
+              <li>
+                <button
+                  className={click === "A" ? style.active_button : style.button}
+                  datatype="A"
+                >
+                  A등급
+                </button>
+              </li>
+              <li>
+                <button
+                  className={click === "B" ? style.active_button : style.button}
+                  datatype="B"
+                >
+                  B등급
+                </button>
+              </li>
+              <li>
+                <button
+                  className={click === "C" ? style.active_button : style.button}
+                  datatype="C"
+                >
+                  C등급
+                </button>
+              </li>
+              <li>
+                <button
+                  className={click === "D" ? style.active_button : style.button}
+                  datatype="D"
+                >
+                  D등급
+                </button>
+              </li>
+            </ul>
           </nav>
           <article className={style.section_article}>
             {!isLoading ? (
@@ -104,8 +99,8 @@ function MinihomeItemBook() {
             )}
           </article>
         </section>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
 
