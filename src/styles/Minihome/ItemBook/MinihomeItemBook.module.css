@@ -39,6 +39,10 @@
   align-items: center;
   justify-content: space-between;
 }
+.section_nav > li {
+  list-style: none;
+  width: 100%;
+}
 /* --------------------------------------------- */
 .button {
   width: 100%;
