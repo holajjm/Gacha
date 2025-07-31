@@ -5,12 +5,11 @@ import Button from "@components/Button";
 import Bell from "@components/Bell";
 import Coin from "@components/Coin";
 import { useUserLogout } from "@features/user/useUserLogout";
-import { useTokenStore, useUserStore } from "@store/store";
+import { useUserStore } from "@store/store";
 import style from "@styles/Layouts/Header.module.css";
 
 function Header() {
   const user = useUserStore((state) => state.user);
-  const accessToken = useTokenStore((state) => state?.accessToken);
   const navigate = useNavigate();
   const { mutate: handleLogout } = useUserLogout();
 
@@ -27,7 +26,7 @@ function Header() {
           />
         </a>
         <nav className={style.link_wrapper} aria-label="주요 메뉴">
-          {accessToken ? (
+          {user?.nickname ? (
             <>
               <Bell />
               <Coin />
