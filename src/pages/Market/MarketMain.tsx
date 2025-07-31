@@ -1,29 +1,28 @@
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 
-import useCustomAxios from "@hooks/useCustomAxios";
-import { useModalState, useUserStore } from "@store/store.ts";
 import Button from "@components/Button";
+import MarketItemModal from "@components/modals/MarketItemModal";
+import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
+import { useDataQuery } from "@features/market/useDataQuery";
 import { ModalPortal } from "@hooks/ModalPortal";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
+import { useModalState } from "@store/store.ts";
+import style from "@styles/Market/MarketMain.module.css";
 
 import MarketItem from "./MarketItem";
-import MarketItemModal from "@components/modals/MarketItemModal";
-import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
 import { SlArrowLeft } from "react-icons/sl";
-import style from "@styles/Market/MarketMain.module.css";
-import { MarketItemData } from "types/market";
+import type { MarketItemData } from "types/market";
+import ItemListNavbar from "@components/ItemListNavbar";
 
 function MarketMain() {
   usePageTitle("마켓");
   usePageUpper();
   const navigate = useNavigate();
-  const axios = useCustomAxios();
-  const { user } = useUserStore((state) => state);
-  const { modal, modalOpen, modalClose } = useModalState((state) => state);
-
+  const modal = useModalState((state) => state.modal);
+  const modalOpen = useModalState((state) => state.modalOpen);
+  const modalClose = useModalState((state) => state.modalClose);
   const [clickItemId, setClickItemId] = useState<number>(0);
   const [navClick, setNavClick] = useState<string>("");
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -31,17 +30,8 @@ function MarketMain() {
   };
   const text = navClick ? `?grade=${navClick}` : navClick;
 
-  const getMarketItem = async () => {
-    const response = await axios.get(`/products${text && text}`);
-    return response;
-  };
-  const { data, isLoading } = useQuery({
-    queryKey: ["MarketItem", user, text],
-    queryFn: getMarketItem,
-    select: (data) => data?.data,
-    throwOnError: true,
-  });
-  // console.log(data);
+  const { data: marketData, isLoading } = useDataQuery({ text });
+  // console.log(marketData);
 
   const handleClicked = () => {
     modalOpen();
@@ -55,7 +45,7 @@ function MarketMain() {
   const handleClickItemId = useCallback((itemId: number) => {
     setClickItemId(itemId);
   }, []);
-  const renderItemList = data?.map((e: MarketItemData) => (
+  const renderItemList = marketData?.map((e: MarketItemData) => (
     <MarketItem
       key={e.itemId}
       data={e}
@@ -99,70 +89,13 @@ function MarketMain() {
             </nav>
           </header>
           <section className={style.section}>
-            <nav onClick={handleClick} className={style.section_nav}>
-              <button
-                datatype=""
-                className={navClick === "" ? style.active_button : style.button}
-              >
-                All
-              </button>
-              <button
-                datatype="S"
-                className={
-                  navClick === "S" ? style.active_button : style.button
-                }
-              >
-                S등급
-              </button>
-              <button
-                datatype="A"
-                className={
-                  navClick === "A" ? style.active_button : style.button
-                }
-              >
-                A등급
-              </button>
-              <button
-                datatype="B"
-                className={
-                  navClick === "B" ? style.active_button : style.button
-                }
-              >
-                B등급
-              </button>
-              <button
-                datatype="C"
-                className={
-                  navClick === "C" ? style.active_button : style.button
-                }
-              >
-                C등급
-              </button>
-              <button
-                datatype="D"
-                className={
-                  navClick === "D" ? style.active_button : style.button
-                }
-              >
-                D등급
-              </button>
-            </nav>
+            <ItemListNavbar
+              handleClick={handleClick}
+              click={navClick}
+              type={"market"}
+            />
             <article className={style.article}>
-              {isLoading ? (
-                <div className={style.article_loading}>
-                  {/* <img
-                  src="/images/Loading.webp"
-                  alt="Loading"
-                  width={256}
-                  height={256}
-                /> */}
-                  <MinihomeItemSkeleton />
-                </div>
-              ) : (
-                <section className={style.article_section}>
-                  {renderItemList}
-                </section>
-              )}
+              {isLoading ? <MinihomeItemSkeleton /> : <>{renderItemList}</>}
             </article>
           </section>
         </main>

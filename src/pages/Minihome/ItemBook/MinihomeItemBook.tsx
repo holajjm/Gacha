@@ -10,6 +10,7 @@ import style from "@styles/Minihome/ItemBook/MinihomeItemBook.module.css";
 import MinihomeItems from "./MinihomeItems";
 import { SlArrowLeft } from "react-icons/sl";
 import type { ItemBookData } from "types/minihome";
+import ItemListNavbar from "@components/ItemListNavbar";
 
 function MinihomeItemBook() {
   usePageTitle("MiniHome - ItemBook");
@@ -37,66 +38,13 @@ function MinihomeItemBook() {
           <h1 className={style.header_title}>아이템 북 관리</h1>
         </header>
         <section className={style.section}>
-          <nav onClick={handleClick}>
-            <ul className={style.section_nav}>
-              <li>
-                <button
-                  className={click === "" ? style.active_button : style.button}
-                  datatype=""
-                >
-                  All
-                </button>
-              </li>
-              <li>
-                <button
-                  className={click === "S" ? style.active_button : style.button}
-                  datatype="S"
-                >
-                  S등급
-                </button>
-              </li>
-              <li>
-                <button
-                  className={click === "A" ? style.active_button : style.button}
-                  datatype="A"
-                >
-                  A등급
-                </button>
-              </li>
-              <li>
-                <button
-                  className={click === "B" ? style.active_button : style.button}
-                  datatype="B"
-                >
-                  B등급
-                </button>
-              </li>
-              <li>
-                <button
-                  className={click === "C" ? style.active_button : style.button}
-                  datatype="C"
-                >
-                  C등급
-                </button>
-              </li>
-              <li>
-                <button
-                  className={click === "D" ? style.active_button : style.button}
-                  datatype="D"
-                >
-                  D등급
-                </button>
-              </li>
-            </ul>
-          </nav>
-          <article className={style.section_article}>
-            {!isLoading ? (
-              <section className={style.section_article_section}>
-                {items}
-              </section>
-            ) : (
-              <MinihomeItemSkeleton />
-            )}
+          <ItemListNavbar
+            handleClick={handleClick}
+            click={click}
+            type={"itembook"}
+          />
+          <article className={style.article}>
+            {!isLoading ? <>{items}</> : <MinihomeItemSkeleton />}
           </article>
         </section>
       </section>
