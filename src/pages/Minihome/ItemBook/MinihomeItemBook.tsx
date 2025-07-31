@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import Button from "@components/Button";
-import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
+import ItemListSkeleton from "@components/skeleton/ItemListSkeleton";
 import { useItemBookQuery } from "@features/minihome/useItemBookQuery";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
@@ -44,7 +44,7 @@ function MinihomeItemBook() {
             type={"itembook"}
           />
           <article className={style.article}>
-            {!isLoading ? <>{items}</> : <MinihomeItemSkeleton />}
+            {!isLoading ? <>{items}</> : <ItemListSkeleton />}
           </article>
         </section>
       </section>

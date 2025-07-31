@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "@components/Button";
 import MarketItemModal from "@components/modals/MarketItemModal";
-import MinihomeItemSkeleton from "@components/skeleton/MinihomeItemSkeleton";
+import ItemListSkeleton from "@components/skeleton/ItemListSkeleton";
 import { useDataQuery } from "@features/market/useDataQuery";
 import { ModalPortal } from "@hooks/ModalPortal";
 import usePageTitle from "@hooks/usePageTitle";
@@ -95,7 +95,7 @@ function MarketMain() {
               type={"market"}
             />
             <article className={style.article}>
-              {isLoading ? <MinihomeItemSkeleton /> : <>{renderItemList}</>}
+              {isLoading ? <ItemListSkeleton /> : <>{renderItemList}</>}
             </article>
           </section>
         </main>
