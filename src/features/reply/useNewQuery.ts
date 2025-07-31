@@ -1,16 +1,22 @@
 import useCustomAxios from "@hooks/useCustomAxios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { ReplyItemData } from "types/minihome";
+import type { ReplySendData } from "types/minihome";
 
-export function useReplyDelete({ replys }: { replys: ReplyItemData }) {
+export function useNewQuery({
+  nickname,
+  reset,
+}: {
+  nickname: string | undefined;
+  reset: () => void;
+}) {
   const axios = useCustomAxios();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async (formData: ReplySendData) => {
       try {
-        const response = await axios.delete(
-          `/guestbooks/${replys?.guestbookId}`,
-        );
+        const response = await axios.post(`/guestbooks/${nickname}`, {
+          content: formData.content,
+        });
         return response?.data;
       } catch (error) {
         console.log(error);
@@ -22,9 +28,9 @@ export function useReplyDelete({ replys }: { replys: ReplyItemData }) {
         return;
       }
       queryClient.invalidateQueries({ queryKey: ["Replys"] });
+      reset();
+      console.log(data);
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => console.log(error),
   });
 }

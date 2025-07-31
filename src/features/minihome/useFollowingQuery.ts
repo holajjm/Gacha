@@ -5,7 +5,7 @@ import useCustomAxios from "@hooks/useCustomAxios";
 import { toast } from "react-toastify";
 import type { MiniHomeMainData } from "types/minihome";
 
-export function useFollowing({
+export function useFollowingQuery({
   minihomeData,
 }: {
   minihomeData: MiniHomeMainData;

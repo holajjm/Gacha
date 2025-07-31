@@ -6,7 +6,7 @@ import { useFollowerModalState } from "@store/store";
 import { toast } from "react-toastify";
 import type { Followers } from "types/minihome";
 
-export function useFollowerDelete({ followers }: { followers: Followers }) {
+export function useDeleteFollowerQuery({ followers }: { followers: Followers }) {
   const axios = useCustomAxios();
   const queryClient = useQueryClient();
   const modalClose = useFollowerModalState((state) => state.modalClose);

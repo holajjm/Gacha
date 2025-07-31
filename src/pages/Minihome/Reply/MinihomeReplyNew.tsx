@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 import Button from "@components/Button";
-import { useReplyNew } from "@features/reply/useReplyNew";
+import { useNewQuery } from "@features/reply/useNewQuery";
 import useCustomAxios from "@hooks/useCustomAxios";
 import usePageTitle from "@hooks/usePageTitle";
 import { useUserStore } from "@store/store";
@@ -25,7 +25,7 @@ function MinihomeReplyNew() {
     reset,
   } = useForm<ReplySendData>(); //useForm의 타입과 handleSubmit에 들어가는 form 제출 함수의 매개변수 타입을 일치 시켜주어야 한다.
 
-  const { mutate: enrollReply } = useReplyNew({ nickname, reset });
+  const { mutate: enrollReply } = useNewQuery({ nickname, reset });
   const onSubmit = (formData: ReplySendData) => {
     enrollReply(formData);
   };

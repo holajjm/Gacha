@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { useReplyEdit } from "@features/reply/useReplyEdit";
+import { useEditQuery } from "@features/reply/useEditQuery";
 import style from "@styles/Minihome/Reply/MinihomeReplyEdit.module.css";
 
 import type { ReplyData, ReplySendData } from "types/minihome";
@@ -19,7 +19,7 @@ function MinihomeReplyEdit({
     formState: { errors },
   } = useForm<ReplySendData>();
 
-  const { mutate: editReply } = useReplyEdit({ replys, editReplyResult });
+  const { mutate: editReply } = useEditQuery({ replys, editReplyResult });
 
   const editReplyForm = (formData: ReplySendData) => {
     editReply(formData);

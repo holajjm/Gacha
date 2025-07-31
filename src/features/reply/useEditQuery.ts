@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import type { ReplyData, ReplySendData } from "types/minihome";
 
-export function useReplyEdit({
+export function useEditQuery({
   replys,
   editReplyResult,
 }: {

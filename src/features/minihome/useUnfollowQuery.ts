@@ -5,7 +5,7 @@ import useCustomAxios from "@hooks/useCustomAxios";
 import { toast } from "react-toastify";
 import type { Followings, MiniHomeMainData } from "types/minihome";
 
-export function useUnfollow({ minihomeData,followings }: { minihomeData?: MiniHomeMainData,followings?: Followings }){
+export function useUnfollowQuery({ minihomeData,followings }: { minihomeData?: MiniHomeMainData,followings?: Followings }){
   const axios = useCustomAxios();
   const queryClient = useQueryClient();
   return useMutation({

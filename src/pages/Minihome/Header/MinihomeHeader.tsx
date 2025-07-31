@@ -5,9 +5,9 @@ import ProfileImg from "@constants/Profile.ts";
 import Button from "@components/Button";
 import MinihomeFollowerModal from "@components/modals/MinihomeFollowerModal";
 import MinihomeFollowingModal from "@components/modals/MinihomeFollowingModal";
-import { useMinihomeCoin } from "@features/minihome/useMinihomeCoin";
-import { useUnfollow } from "@features/minihome/useUnfollow";
-import { useFollowing } from "@features/minihome/useFollowing";
+import { useCoinQuery } from "@features/minihome/useCoinQuery";
+import { useUnfollowQuery } from "@features/minihome/useUnfollowQuery";
+import { useFollowingQuery } from "@features/minihome/useFollowingQuery";
 import { ModalPortal } from "@hooks/ModalPortal";
 import {
   useFollowerModalState,
@@ -30,13 +30,13 @@ function MinihomeHeader({ minihomeData }: { minihomeData: MiniHomeMainData }) {
   const followingModalOpen = useFollowingModalState((state) => state.modalOpen);
 
   // 유저 팔로잉하기 기능
-  const { mutate: getFollowing } = useFollowing({ minihomeData });
+  const { mutate: getFollowing } = useFollowingQuery({ minihomeData });
 
   // 유저 언팔로우 기능
-  const { mutate: getUnFollowing } = useUnfollow({ minihomeData });
+  const { mutate: getUnFollowing } = useUnfollowQuery({ minihomeData });
 
   // 출석체크 및 코인 획득 로직
-  const { mutate: createPost } = useMinihomeCoin();
+  const { mutate: createPost } = useCoinQuery();
   // console.log(minihomeData);1
 
   return (

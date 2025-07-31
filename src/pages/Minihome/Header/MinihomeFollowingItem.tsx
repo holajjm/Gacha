@@ -3,11 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import ProfileImg from "@constants/Profile.ts";
 import Button from "@components/Button";
-import { useUnfollow } from "@features/minihome/useUnfollow";
+import { useUnfollowQuery } from "@features/minihome/useUnfollowQuery";
 import { useFollowingModalState, useUserStore } from "@store/store.ts";
 import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
 
-import { Followings } from "types/minihome";
+import type { Followings } from "types/minihome";
 // import { useMutation, useQueryClient } from "@tanstack/react-query";
 // import useCustomAxios from "@hooks/useCustomAxios";
 // import { toast } from "react-toastify";
@@ -17,7 +17,7 @@ function MinihomeFollowingItem({ followings }: { followings: Followings }) {
   const modalClose = useFollowingModalState((state) => state.modalClose);
   const { nickname } = useParams();
   const navigate = useNavigate();
-  const { mutate: unFollow } = useUnfollow({ followings });
+  const { mutate: unFollow } = useUnfollowQuery({ followings });
 
   // const axios = useCustomAxios();
   // const queryClient = useQueryClient();

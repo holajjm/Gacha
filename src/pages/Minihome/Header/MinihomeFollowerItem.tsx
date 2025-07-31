@@ -3,11 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import ProfileImg from "@constants/Profile.ts";
 import Button from "@components/Button";
-import { useFollowerDelete } from "@features/minihome/useFollowerDelete";
+import { useDeleteFollowerQuery } from "@features/minihome/useDeleteFollowerQuery";
 import { useUserStore } from "@store/store";
 import style from "@styles/Minihome/Header/MinihomeFollowItem.module.css";
 
-import { Followers } from "types/minihome";
+import type { Followers } from "types/minihome";
 
 function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
   const user = useUserStore((state) => state.user);
@@ -15,7 +15,7 @@ function MiniHomeFollowerItem({ followers }: { followers: Followers }) {
   const navigate = useNavigate();
 
   // 팔로워 삭제 로직
-  const { mutate: deleteFollower } = useFollowerDelete({ followers });
+  const { mutate: deleteFollower } = useDeleteFollowerQuery({ followers });
 
   return (
     <article className={style.article}>

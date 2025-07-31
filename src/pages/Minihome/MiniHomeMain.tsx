@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-import { useMinihomeData } from "@features/minihome/useMinihomeData";
-import { useMinihomeAdorn } from "@features/minihome/useMinihomeAdorn";
+import { useDataQuery } from "@features/minihome/useDataQuery";
+import { useAdornQuery } from "@features/minihome/useAdornQuery";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import useImage from "@hooks/useImage";
@@ -19,11 +19,11 @@ function MiniHomeMain() {
   const { nickname } = useParams<{ nickname: string }>();
 
   // 미니홈 유저 정보 호출
-  const { data: minihomeData } = useMinihomeData({ nickname });
+  const { data: minihomeData } = useDataQuery({ nickname });
   // console.log(minihomeData);
 
   //꾸미기 데이터 호출
-  const { data: adornData } = useMinihomeAdorn({ nickname });
+  const { data: adornData } = useAdornQuery({ nickname });
   // console.log(adornData);
 
   const itemList = adornData?.items?.map((e: AdornDataItem) => (

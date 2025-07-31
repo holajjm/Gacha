@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import ProfileImg from "@constants/Profile.ts";
-import { useReplyDelete } from "@features/reply/useReplyDelete";
+import { useDeleteQuery } from "@features/reply/useDeleteQuery";
 import { TimeDiff } from "@hooks/TimeDiff";
 import { useUserStore } from "@store/store";
 import style from "@styles/Minihome/Reply/MinihomeReplyItem.module.css";
@@ -16,7 +16,7 @@ function MinihomeReplyItem({ replys }: { replys: ReplyItemData }) {
     setIsEdit(!isEdit);
   };
 
-  const { mutate: deleteReply } = useReplyDelete({ replys });
+  const { mutate: deleteReply } = useDeleteQuery({ replys });
   const handleDelete = () => {
     if (confirm("댓글을 삭제할까요?")) {
       deleteReply();

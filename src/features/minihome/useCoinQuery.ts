@@ -2,7 +2,7 @@ import useCustomAxios from "@hooks/useCustomAxios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
-export function useMinihomeCoin() {
+export function useCoinQuery() {
   const axios = useCustomAxios();
   const queryClient = useQueryClient();
   return useMutation({
