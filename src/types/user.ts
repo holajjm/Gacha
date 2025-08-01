@@ -5,8 +5,8 @@ export interface QueryParams {
 export interface UserData {
   nickname: string;
   profileId: number;
-  socialType: string;
-  loginId: string;
+  socialType?: string;
+  loginId?: string;
 }
 
 export interface User {
