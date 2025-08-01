@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 
 import Button from "@components/Button";
-import { ENV } from "@constants/env";
+import { useJoinMutate } from "@features/user/useJoinMutate";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
-import { useUserStore } from "@store/store";
 import style from "@styles/User/UserJoin.module.css";
 
 import type { QueryParams, UserData } from "types/user";
@@ -16,7 +13,6 @@ import type { QueryParams, UserData } from "types/user";
 function UserJoin() {
   usePageTitle("회원가입");
   usePageUpper();
-  const { setUser } = useUserStore((state) => state);
   const location = useLocation();
   const {
     register,
@@ -42,49 +38,7 @@ function UserJoin() {
     getUrlParams();
   }, []);
 
-  const authAxios = axios.create({
-    baseURL: ENV.SERVER_API,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const { mutate: getJoin } = useMutation({
-    mutationFn: async (formData: UserData) => {
-      try {
-        const response = await authAxios.post("/join", {
-          socialType: loginParams.socialType,
-          loginId: loginParams.loginId,
-          nickname: formData.nickname,
-          profileId: +formData?.profileId,
-        });
-        console.log(response);
-        if (response?.status === 200) {
-          setUser({
-            socialType: loginParams?.socialType,
-            loginId: loginParams?.loginId,
-            nickname: formData?.nickname,
-            profileId: +formData?.profileId,
-            accessToken: "",
-            refreshToken: "",
-          });
-          window.location.href = response?.request?.responseURL;
-        }
-        return response;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    onSuccess: (data) => {
-      if (data?.data?.error) {
-        alert(data?.data?.error?.message);
-        return;
-      }
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const { mutate: getJoin } = useJoinMutate({ loginParams });
 
   const onSubmit = async (formData: UserData) => {
     getJoin(formData);

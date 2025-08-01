@@ -1,27 +1,19 @@
 import React from "react";
 
+import { ENV } from "@constants/env";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
-
 import style from "@styles/User/UserLogin.module.css";
-import { ENV } from "@constants/env";
 
 function UserLogin() {
   usePageTitle("로그인");
   usePageUpper();
-  const CLIENT_ID = ENV.KAKAO_CLIENT_ID;
-  const REDIRECT_URI = ENV.KAKAO_REDIRECT_URI;
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
   const kakaoLogin = async () => {
-    window.location.href = kakaoURL;
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${ENV.KAKAO_CLIENT_ID}&redirect_uri=${ENV.KAKAO_REDIRECT_URI}&response_type=code`;
   };
-
-  const githubURL =
-    "https://github.com/login/oauth/authorize?client_id=Iv23lica8LFNbzOrB595";
-
   const githubLogin = async () => {
-    window.location.href = githubURL;
+    window.location.href =
+      "https://github.com/login/oauth/authorize?client_id=Iv23lica8LFNbzOrB595";
   };
 
   return (

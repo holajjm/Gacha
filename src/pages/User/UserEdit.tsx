@@ -1,36 +1,26 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 
-import { useUserStore } from "@store/store";
-import useCustomAxios from "@hooks/useCustomAxios";
+import Button from "@components/Button";
+import { useEditMutate } from "@features/user/useEditMutate";
+import { useDeleteMutate } from "@features/user/useDeleteMutate";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
-import Button from "@components/Button";
-
-import { toast } from "react-toastify";
-import { SlArrowLeft } from "react-icons/sl";
+import { useUserStore } from "@store/store";
 import style from "@styles/User/UserEdit.module.css";
 
-interface Data {
-  nickname: string;
-  profileId: number;
-}
+import { SlArrowLeft } from "react-icons/sl";
+import type { UserData } from "types/user";
 
 function UserEdit() {
   usePageTitle("회원 정보 수정");
   usePageUpper();
-  const { user, setUser } = useUserStore((state) => state);
-  const customAxios = useCustomAxios();
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const user = useUserStore((state) => state.user);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Data>({
+  } = useForm<UserData>({
     defaultValues: {
       nickname: user?.nickname,
       profileId: user?.profileId,
@@ -38,35 +28,8 @@ function UserEdit() {
   });
 
   // 회원 정보 수정
-  const { mutate: editUserInfo } = useMutation({
-    mutationFn: async (formData: Data) => {
-      const response = await customAxios.put("/userInfo", {
-        nickname: formData?.nickname,
-        profileId: formData?.profileId,
-      });
-      setUser({
-        ...user,
-        nickname: formData?.nickname,
-        profileId: formData?.profileId,
-      });
-      navigate(`/minihome/${formData?.nickname}`);
-      return response?.data;
-    },
-    onSuccess: (data) => {
-      if (data?.error) {
-        alert(data?.error?.message);
-        return;
-      }
-      toast("수정되었습니다!");
-      queryClient.invalidateQueries({ queryKey: ["Minihome"] });
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
-  const onSubmit = async (formData: Data) => {
+  const { mutate: editUserInfo } = useEditMutate();
+  const onSubmit = async (formData: UserData) => {
     if (confirm("수정하시겠습니까?")) {
       try {
         editUserInfo(formData);
@@ -77,37 +40,7 @@ function UserEdit() {
   };
 
   // 회원 탈퇴 기능
-  const refreshAxios = axios.create({
-    baseURL: import.meta.env.VITE_SERVER_API,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${user?.refreshToken}`,
-    },
-  });
-  const { mutate: deleteUser } = useMutation({
-    mutationFn: async () => {
-      try {
-        const response = await refreshAxios.delete("/withdraw");
-        localStorage.removeItem("AccessToken");
-        localStorage.removeItem("RefreshToken");
-        sessionStorage.removeItem("user");
-        toast("회원 탈퇴 완료");
-        navigate("/main");
-        window.location.reload();
-        return response?.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    onSuccess: (data) => {
-      if (data?.error) {
-        alert(data?.error?.message);
-        return;
-      }
-      queryClient.invalidateQueries({ queryKey: ["User"] });
-      console.log(data);
-    },
-  });
+  const { mutate: deleteUser } = useDeleteMutate();
   const onDelete = () => {
     if (confirm("탈퇴할까요?")) {
       deleteUser();
