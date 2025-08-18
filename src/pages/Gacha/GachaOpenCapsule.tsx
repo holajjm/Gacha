@@ -14,7 +14,7 @@ function GachaOpenCapsule({
   itemImageUrl: string;
 }) {
   const navigate = useNavigate();
-  const { modalClose } = useModalState((state) => state);
+  const modalClose = useModalState((state) => state.modalClose);
   const image = useImage(itemImageUrl);
 
   return (

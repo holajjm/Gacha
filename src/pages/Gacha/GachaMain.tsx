@@ -12,7 +12,8 @@ import { useGachaQuery } from "@features/gacha/useGachaQuery";
 function GachaMain() {
   usePageTitle("가챠 뽑기");
   usePageUpper();
-  const { modal, modalOpen } = useModalState((state) => state);
+  const modal = useModalState((state) => state.modal);
+  const modalOpen = useModalState((state) => state.modalOpen);
   const { data: gachaData, mutate: getGacha } = useGachaQuery();
   const handleGachaClick = () => {
     getGacha();
