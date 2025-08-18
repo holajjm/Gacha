@@ -1,6 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 import { useNavigate } from "react-router-dom";
 
+import { ENV } from "@constants/env";
 import { useUserStore } from "@store/store";
 
 interface Config extends InternalAxiosRequestConfig {
@@ -8,7 +9,6 @@ interface Config extends InternalAxiosRequestConfig {
 }
 
 function useCustomAxios() {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
   // console.log(user);
@@ -22,7 +22,7 @@ function useCustomAxios() {
   const getAccessToken = async () => {
     try {
       const response = await plainAxios.post(
-        `${SERVER_API}/tokens/renew`,
+        `${ENV.SERVER_API}/tokens/renew`,
         null,
         {
           headers: {
@@ -52,7 +52,7 @@ function useCustomAxios() {
   // 로그아웃 함수
   const logout = async () => {
     try {
-      await plainAxios.delete(`${SERVER_API}/logout`, {
+      await plainAxios.delete(`${ENV.SERVER_API}/logout`, {
         headers: {
           Authorization: `Bearer ${user?.refreshToken}`,
         },
@@ -60,7 +60,7 @@ function useCustomAxios() {
       sessionStorage.removeItem("user");
       localStorage.removeItem("AccessToken");
       localStorage.removeItem("RefreshToken");
-      
+
       alert("로그아웃되었습니다. 메인 화면으로 이동합니다.");
       navigate("/main");
       window.location.reload();
@@ -71,7 +71,7 @@ function useCustomAxios() {
 
   // axios 인스턴스
   const instance = axios.create({
-    baseURL: SERVER_API,
+    baseURL: ENV.SERVER_API,
     timeout: 5000,
     headers: {
       "Content-Type": "application/json",
@@ -115,16 +115,14 @@ function useCustomAxios() {
           return instance(config);
         } else {
           // 토큰 재발급 실패
-        if (!config.headers["X-Token-Retry"]) {
-          config.headers["X-Token-Retry"] = "true"; // 이걸로 재발급 실패 응답에도 confirm 무한 호출 방지
-          if (
-            confirm("세션이 만료되었습니다. 로그인 페이지로 이동합니다.")
-          ) {
-            await logout();
-            navigate("/main");
+          if (!config.headers["X-Token-Retry"]) {
+            config.headers["X-Token-Retry"] = "true"; // 이걸로 재발급 실패 응답에도 confirm 무한 호출 방지
+            if (confirm("세션이 만료되었습니다. 로그인 페이지로 이동합니다.")) {
+              await logout();
+              navigate("/main");
+            }
           }
-        }
-        return Promise.reject("토큰 만료. 로그아웃 처리됨.");
+          return Promise.reject("토큰 만료. 로그아웃 처리됨.");
         }
       }
 

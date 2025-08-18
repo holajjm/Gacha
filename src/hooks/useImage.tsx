@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
+import { ENV } from "@constants/env";
+
 function useImage(imageUrl: string) {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const [image, setImage] = useState<string>();
   const getImage = async () => {
-    const response = await fetch(`${SERVER_API}${imageUrl && imageUrl}`, {
+    const response = await fetch(`${ENV.SERVER_API}${imageUrl && imageUrl}`, {
       method: "GET",
       headers: {
         "Content-Type": "image/webp",

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { EventSourcePolyfill } from "event-source-polyfill";
+
+import { ENV } from "@constants/env";
 import { useUserStore } from "@store/store";
 
 interface Notis {
@@ -15,7 +17,6 @@ interface Options {
   withCredentials: boolean
 }
 function useSSE() {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const user = useUserStore((state) => state.user);
   const [SSECompleted, setSSECompleted] = useState<string>("");
   const [SSETestData, setSSETestData] = useState<Notis>({
@@ -36,7 +37,7 @@ function useSSE() {
       console.log("No access token found, skipping SSE connection.");
       return;
     }
-    const eventSource = new EventSourcePolyfill(`${SERVER_API}/sse/connect`, {
+    const eventSource = new EventSourcePolyfill(`${ENV.SERVER_API}/sse/connect`, {
       headers: {
         Authorization: `Bearer ${user?.accessToken}`,
       },
