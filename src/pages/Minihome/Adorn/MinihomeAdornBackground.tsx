@@ -13,7 +13,7 @@ function MinihomeAdornBackground({
   getBack: (data: BackgroundItemData) => void;
 }) {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
+  const user = useUserStore((state) => state.user);
   const [backgroundItemList, setBackgroundItemList] = useState<
     BackgroundItemData[]
   >([]);

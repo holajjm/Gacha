@@ -20,7 +20,7 @@ function MinihomeAdornEdit({ adornPage }: { adornPage: AdornPageData }) {
   usePageTitle("MiniHome - Adorn");
   usePageUpper();
   const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
+  const user = useUserStore((state) => state.user);
   const navigate = useNavigate();
   const [active, setActive] = useState<string | null>("BACKGROUND");
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {

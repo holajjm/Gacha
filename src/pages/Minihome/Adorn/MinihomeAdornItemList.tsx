@@ -14,7 +14,7 @@ function MinihomeAdornItemList({
   getItem: (data: AdornItemData) => void;
 }) {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
+  const user = useUserStore((state) => state.user);
   const [itemList, setItemList] = useState<AdornItemData[]>([]);
   const [page, setPage] = useState<number>(0);
   const [pageParams, setPageParams] = useState<boolean>(false);
