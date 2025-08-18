@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 
+import { ENV } from "@constants/env";
+import MinihomeAdornItemSkeleton from "@components/skeleton/MinihomeAdornItemSkeleton";
 import { useUserStore } from "@store/store";
+import style from "@styles/Minihome/Adorn/MinihomeAdornItemList.module.css";
 
 import MinihomeAdornItem from "./MinihomeAdornItem";
-import style from "@styles/Minihome/Adorn/MinihomeAdornItemList.module.css";
-import MinihomeAdornItemSkeleton from "@components/skeleton/MinihomeAdornItemSkeleton";
-import { AdornItemData } from "types/minihome";
+import type { AdornItemData } from "types/minihome";
 
 
 function MinihomeAdornItemList({
@@ -13,7 +14,6 @@ function MinihomeAdornItemList({
 }: {
   getItem: (data: AdornItemData) => void;
 }) {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const user = useUserStore((state) => state.user);
   const [itemList, setItemList] = useState<AdornItemData[]>([]);
   const [page, setPage] = useState<number>(0);
@@ -22,7 +22,7 @@ function MinihomeAdornItemList({
   const getItems = async () => {
     if (pageParams) return;
     const response = await fetch(
-      `${SERVER_API}/items/${user?.nickname}?page=${page}&size=7&sort=createdAt,desc`,
+      `${ENV.SERVER_API}/items/${user?.nickname}?page=${page}&size=7&sort=createdAt,desc`,
       {
         method: "GET",
         headers: {

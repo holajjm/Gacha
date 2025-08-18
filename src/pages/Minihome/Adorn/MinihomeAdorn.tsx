@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useUserStore } from "@store/store";
+import { ENV } from "@constants/env";
 import Button from "@components/Button";
 import usePageTitle from "@hooks/usePageTitle";
 import useImage from "@hooks/useImage";
 import usePageUpper from "@hooks/usePageUpper";
+import { useUserStore } from "@store/store";
+import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css";
 
 import MinihomeAdornBackground from "./MinihomeAdornBackground";
 import MinihomeAdornItemList from "./MinihomeAdornItemList";
@@ -13,16 +15,14 @@ import MinihomeAdornDraggableItem from "./MinihomeAdornDraggableItem";
 // import MinihomeAdornEditDraggableItem from "./MinihomeAdornEditDraggableItem";
 // import MiniHomeItem from "../MiniHomeItem";
 import { SlArrowLeft } from "react-icons/sl";
-import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css";
 import MinihomeAdornEdit from "./MinihomeAdornEdit";
-import { AdornFetchData, AdornItem, AdornItemData, AdornPageData, BackgroundItemData, Position } from "types/minihome";
+import type { AdornFetchData, AdornItem, AdornItemData, AdornPageData, BackgroundItemData, Position } from "types/minihome";
 
 
 
 function MinihomeAdorn() {
   usePageTitle("MiniHome - Adorn");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const user = useUserStore((state) => state.user);
   const navigate = useNavigate();
   const [active, setActive] = useState<string | null>("BACKGROUND");
@@ -135,7 +135,7 @@ function MinihomeAdorn() {
     if (confirm("저장하시겠습니까?")) {
       try {
         const response = await fetch(
-          `${SERVER_API}/decoration/${user?.nickname}`,
+          `${ENV.SERVER_API}/decoration/${user?.nickname}`,
           {
             method: "PUT",
             headers: {
@@ -171,7 +171,7 @@ function MinihomeAdorn() {
     ],
   });
   const getAdorn = async () => {
-    const response = await fetch(`${SERVER_API}/decoration/${user?.nickname}`, {
+    const response = await fetch(`${ENV.SERVER_API}/decoration/${user?.nickname}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

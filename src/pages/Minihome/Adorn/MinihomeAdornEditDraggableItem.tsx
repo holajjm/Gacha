@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-
-import useImage from "@hooks/useImage";
 import Draggable, { DraggableData } from "react-draggable";
 
+import useImage from "@hooks/useImage";
 import style from "@styles/Minihome/Adorn/MinihomeAdornDraggableItem.module.css";
-import { newData, Position } from "types/minihome";
+
+import type { newData, Position } from "types/minihome";
 
 
 

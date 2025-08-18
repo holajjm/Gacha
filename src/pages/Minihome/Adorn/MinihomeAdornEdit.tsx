@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import useImage from "@hooks/useImage";
+import { ENV } from "@constants/env";
 import Button from "@components/Button";
-
-import MinihomeAdornBackground from "./MinihomeAdornBackground";
-import MinihomeAdornItemList from "./MinihomeAdornItemList";
-import { SlArrowLeft } from "react-icons/sl";
-import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css";
-import MinihomeAdornEditDraggableItem from "./MinihomeAdornEditDraggableItem";
+import useImage from "@hooks/useImage";
 import usePageTitle from "@hooks/usePageTitle";
 import usePageUpper from "@hooks/usePageUpper";
 import { useUserStore } from "@store/store";
-import { useNavigate } from "react-router-dom";
+import style from "@styles/Minihome/Adorn/MinihomeAdorn.module.css";
+
+import MinihomeAdornBackground from "./MinihomeAdornBackground";
+import MinihomeAdornItemList from "./MinihomeAdornItemList";
+import MinihomeAdornEditDraggableItem from "./MinihomeAdornEditDraggableItem";
 import MinihomeAdornDraggableItem from "./MinihomeAdornDraggableItem";
-import { AdornFetchData, AdornItem, AdornItemData, AdornPageData, BackgroundItemData, NewData, Position } from "types/minihome";
+import { SlArrowLeft } from "react-icons/sl";
+import type { AdornFetchData, AdornItem, AdornItemData, AdornPageData, BackgroundItemData, NewData, Position } from "types/minihome";
 
 
 function MinihomeAdornEdit({ adornPage }: { adornPage: AdornPageData }) {
   usePageTitle("MiniHome - Adorn");
   usePageUpper();
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const user = useUserStore((state) => state.user);
   const navigate = useNavigate();
   const [active, setActive] = useState<string | null>("BACKGROUND");
@@ -196,7 +196,7 @@ function MinihomeAdornEdit({ adornPage }: { adornPage: AdornPageData }) {
     if (confirm("저장하시겠습니까?")) {
       try {
         const response = await fetch(
-          `${SERVER_API}/decoration/${user?.nickname}`,
+          `${ENV.SERVER_API}/decoration/${user?.nickname}`,
           {
             method: "PUT",
             headers: {

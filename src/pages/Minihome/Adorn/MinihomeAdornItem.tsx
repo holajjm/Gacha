@@ -1,7 +1,7 @@
 import React from "react";
 
 import useImage from "@hooks/useImage";
-import { AdornItemData } from "types/minihome";
+import type { AdornItemData } from "types/minihome";
 
 function MinihomeAdornItem({
   data,

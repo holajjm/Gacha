@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
+import { ENV } from "@constants/env";
 import { useUserStore } from "@store/store";
 
 import MinihomeAdornBackgroundItem from "./MinihomeAdornBackgroundItem";
 import style from "@styles/Minihome/Adorn/MinihomeAdornBackground.module.css";
-import { BackgroundItemData } from "types/minihome";
+import type { BackgroundItemData } from "types/minihome";
 
 
 function MinihomeAdornBackground({
@@ -12,14 +13,13 @@ function MinihomeAdornBackground({
 }: {
   getBack: (data: BackgroundItemData) => void;
 }) {
-  const SERVER_API = import.meta.env.VITE_SERVER_API;
   const user = useUserStore((state) => state.user);
   const [backgroundItemList, setBackgroundItemList] = useState<
     BackgroundItemData[]
   >([]);
   const getBackgroundItems = async () => {
     const response = await fetch(
-      `${SERVER_API}/backgrounds/${user?.nickname}`,
+      `${ENV.SERVER_API}/backgrounds/${user?.nickname}`,
       {
         method: "GET",
         headers: {
