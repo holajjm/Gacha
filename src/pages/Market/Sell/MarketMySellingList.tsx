@@ -14,14 +14,14 @@ import MarketMySellingItem from "./MarketMySellingItem";
 import { SlArrowLeft } from "react-icons/sl";
 import style from "@styles/Market/Sell/MarketMySellingList.module.css";
 import { MySellingItemData } from "types/market";
-
+import ItemListNavbar from "@components/ItemListNavbar";
 
 function MarketMyList() {
   usePageTitle("Market - MySelling");
   usePageUpper();
   const axios = useCustomAxios();
-  const { user } = useUserStore((state) => state);
-  const { modal } = useModalState((state) => state);
+  const user = useUserStore((state) => state.user);
+  const modal = useModalState((state) => state).modal;
   const { ref, inView } = useInView();
   const [selected, setSelected] = useState<string>("latest");
   const [navClick, setNavClick] = useState<string>("");
@@ -102,54 +102,11 @@ function MarketMyList() {
             </select>
           </header>
           <section className={style.section}>
-            <nav onClick={handleClick} className={style.section_nav}>
-              <button
-                datatype=""
-                className={navClick === "" ? style.active_button : style.button}
-              >
-                All
-              </button>
-              <button
-                datatype="S"
-                className={
-                  navClick === "S" ? style.active_button : style.button
-                }
-              >
-                S등급
-              </button>
-              <button
-                datatype="A"
-                className={
-                  navClick === "A" ? style.active_button : style.button
-                }
-              >
-                A등급
-              </button>
-              <button
-                datatype="B"
-                className={
-                  navClick === "B" ? style.active_button : style.button
-                }
-              >
-                B등급
-              </button>
-              <button
-                datatype="C"
-                className={
-                  navClick === "C" ? style.active_button : style.button
-                }
-              >
-                C등급
-              </button>
-              <button
-                datatype="D"
-                className={
-                  navClick === "D" ? style.active_button : style.button
-                }
-              >
-                D등급
-              </button>
-            </nav>
+            <ItemListNavbar
+              handleClick={handleClick}
+              click={navClick}
+              type={"market"}
+            />
             <article className={style.article}>
               <aside className={style.article_aside}>
                 <p className={style.article_aside_background}></p>
