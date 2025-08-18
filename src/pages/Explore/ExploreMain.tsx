@@ -16,7 +16,7 @@ import { ExploreItemData, ParamData } from "types/explore";
 function ExploreMain() {
   usePageTitle("둘러보기");
   usePageUpper();
-  const { user } = useUserStore((state) => state);
+  const user = useUserStore((state) => state.user);
   const axios = useCustomAxios();
   const { ref, inView } = useInView();
 
@@ -51,7 +51,7 @@ function ExploreMain() {
     console.log(baseURL);
     return response?.data;
   };
-  
+
   console.log(select);
   console.log(paramData);
 
