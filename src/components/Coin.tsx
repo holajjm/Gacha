@@ -8,8 +8,8 @@ import style from "@styles/Layouts/Coin.module.css";
 
 function Coin() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
-  const { coinUpdate } = useCoinState((state) => state);
+  const user = useUserStore((state) => state.user);
+  const coinUpdate = useCoinState((state) => state.coinUpdate);
   const axios = useCustomAxios();
   const getCoin = async () => {
     const response = await axios.get(`${SERVER_API}/coin`);

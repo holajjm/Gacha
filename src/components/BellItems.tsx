@@ -9,7 +9,8 @@ import { NotiData } from "types/component";
 
 function BellItems({ data }: { data: NotiData }) {
   console.log(data);
-  const { modal, modalClose } = useLottoModalState((state) => state);
+  const modal = useLottoModalState((state) => state.modal);
+  const modalClose = useLottoModalState((state) => state.modalClose);
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (e.key === "Escape") {

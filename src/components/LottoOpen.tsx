@@ -7,7 +7,7 @@ import useCustomAxios from "@hooks/useCustomAxios";
 import style from "@styles/Layouts/Lotto.module.css";
 
 function LottoOpen() {
-  const { user } = useUserStore((state) => state);
+  const user = useUserStore((state) => state.user);
   const modalClose = useLottoModalState((state) => state.modalClose);
   const axios = useCustomAxios();
   const [open, setOpen] = useState(false);
