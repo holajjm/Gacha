@@ -222,6 +222,9 @@
  ┃ ┃ ┃ ┣ 📜useEditQuery.ts
  ┃ ┃ ┃ ┗ 📜useNewQuery.ts
  ┃ ┃ ┣ 📂user
+ ┃ ┃ ┃ ┣ 📜useDeletsMutate.ts
+ ┃ ┃ ┃ ┣ 📜useEditMutate.ts
+ ┃ ┃ ┃ ┣ 📜useJoinMutate.ts
  ┃ ┃ ┃ ┣ 📜useGetUserInfo.ts
  ┃ ┃ ┃ ┗ 📜useUserLogout.ts
  ┃ ┣ 📂hooks
