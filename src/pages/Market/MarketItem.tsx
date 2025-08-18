@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 import useImage from "@hooks/useImage";
 import style from "@styles/Market/MarketItem.module.css";
@@ -13,12 +13,6 @@ function MarketItem({
   onSelect: (itemId: number) => void;
   onClick: () => void;
 }) {
-  const imgRef = useRef<HTMLImageElement>(null);
-  useEffect(() => {
-    if (imgRef.current) {
-      imgRef.current.setAttribute("fetchpriority", "high");
-    }
-  }, []);
   const handleClick = () => {
     onSelect(data?.itemId);
     onClick();
@@ -30,7 +24,8 @@ function MarketItem({
         className={style.article_img}
         src={useImage(data?.imageUrl)}
         alt="item"
-        ref={imgRef}
+        {...{ fetchpriority: "high" }}
+        decoding="async"
         width={96}
         height={96}
       />
