@@ -14,7 +14,7 @@ function MarketMySellingItem({
   data: MySellingItemData;
   handleClickItemId: (itemId: number) => void;
 }) {
-  const { modalOpen } = useModalState((state) => state);
+  const modalOpen = useModalState((state) => state.modalOpen);
   const handleClick = () => {
     handleClickItemId(data?.productId);
     modalOpen();
