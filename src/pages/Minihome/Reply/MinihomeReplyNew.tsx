@@ -15,7 +15,7 @@ import type { ReplyItemData, ReplySendData } from "types/minihome";
 
 function MinihomeReplyNew() {
   const axios = useCustomAxios();
-  const { user } = useUserStore((state) => state);
+  const user = useUserStore((state) => state.user);
   const { nickname } = useParams<{ nickname: string }>();
   usePageTitle(`미니홈 - ${nickname}`);
   const {
