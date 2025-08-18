@@ -16,7 +16,7 @@ interface Options {
 }
 function useSSE() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
+  const user = useUserStore((state) => state.user);
   const [SSECompleted, setSSECompleted] = useState<string>("");
   const [SSETestData, setSSETestData] = useState<Notis>({
     id: 0,

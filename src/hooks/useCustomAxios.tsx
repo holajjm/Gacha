@@ -9,7 +9,8 @@ interface Config extends InternalAxiosRequestConfig {
 
 function useCustomAxios() {
   const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user, setUser } = useUserStore((state) => state);
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
   // console.log(user);
   const navigate = useNavigate();
 
