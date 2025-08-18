@@ -22,7 +22,7 @@ function MarketSellingItemModal({
   const axios = useCustomAxios();
   const queryClient = useQueryClient();
   const divRef = useRef<HTMLDivElement>(null);
-  const { modalClose } = useModalState((state) => state);
+  const modalClose = useModalState((state) => state.modalClose);
 
   const data = filterArray?.find(
     (e: MySellingItemData) => e.productId === clickItemId,

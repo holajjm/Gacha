@@ -18,8 +18,8 @@ function MarketItemModal({
 }) {
   const axios = useCustomAxios();
   const queryClient = useQueryClient();
-  const { user } = useUserStore((state) => state);
-  const { modalClose } = useModalState((state) => state);
+  const user = useUserStore((state) => state.user);
+  const modalClose = useModalState((state) => state.modalClose);
   const divRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     divRef.current?.focus();

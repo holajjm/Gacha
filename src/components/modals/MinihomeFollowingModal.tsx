@@ -17,8 +17,8 @@ function MinihomeFollowingModal() {
   //   handleFollowingClose: () => void;
   // },
   const SERVER_API = import.meta.env.VITE_SERVER_API;
-  const { user } = useUserStore((state) => state);
-  const { modalClose } = useFollowingModalState((state) => state);
+  const user = useUserStore((state) => state.user);
+  const modalClose = useFollowingModalState((state) => state.modalClose);
   const { nickname } = useParams<{ nickname: string }>();
   const axios = useCustomAxios();
   const following = async () => {
